@@ -6,7 +6,7 @@ import map.Dir;
 
 public class Targaryen extends Pj {
 	/**
-	 * 
+	 * Parameterized constructor
 	 * @param name
 	 * @param M
 	 * @param turn
