@@ -1,11 +1,16 @@
 package pj;
 
+/**
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ */
 import api.Queue;
 
 public class WhiteWalkers extends Pj {
+	/** Pjs Queue */
 	private Queue<Pj> pjs;
 
 	/**
+	 * Parameterized constructor
 	 * 
 	 * @param name
 	 * @param M
@@ -17,6 +22,9 @@ public class WhiteWalkers extends Pj {
 		pjs = new Queue<Pj>();
 	}
 
+	/**
+	 * public method for watch pj's information
+	 */
 	public void showPj() {
 		// TODO Auto-generated method stub
 

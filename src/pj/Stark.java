@@ -1,9 +1,12 @@
 package pj;
 
-import map.Dir;
+/**
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ */
 
 public class Stark extends Pj {
 	/**
+	 * Parameterized constructor
 	 * 
 	 * @param name
 	 * @param M
@@ -15,10 +18,4 @@ public class Stark extends Pj {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * 
-	 */
-	/**
-	 * 
-	 */
 }

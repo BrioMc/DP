@@ -1,5 +1,8 @@
 package pj;
 
+/**
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ */
 import java.util.ArrayList;
 
 import map.Dir;
@@ -48,16 +51,18 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
+	 * Public method for take pj's tag
 	 * 
-	 * @return
+	 * @return tag
 	 */
 	public char getTag() {
 		return tag;
 	}
 
 	/**
+	 * Public method for take pj's identifier
 	 * 
-	 * @return
+	 * @return id
 	 */
 	public int getId() {
 		// TODO Auto-generated method stub
@@ -65,34 +70,43 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
+	 * Public method for take pj's name
 	 * 
-	 * @return
+	 * @return name
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
+	 * Public method for take pj's initial turn
 	 * 
-	 * @return
+	 * @return turn
 	 */
 	public int getTurn() {
 		return turnInitial;
 	}
 
 	/**
+	 * Public method for take pj's room
 	 * 
-	 * @return
+	 * @return room
 	 */
 	public int getRoom() {
 		return room;
 	}
 
+	/**
+	 * Public method for set pj's room
+	 * 
+	 * @param i
+	 */
 	public void setRoom(int i) {
 		this.room = i;
 	}
 
 	/**
+	 * Public method for set array rutes
 	 * 
 	 * @param rutes
 	 */
@@ -101,17 +115,21 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
- * 
- */
+	 * public method for watch pj's information
+	 */
 	protected void showPj(String house) {
 		System.out.print("(" + house + ":" + getTag() + ":" + getRoom() + ":"
 				+ turnAct + ":");
 	}
 
 	/**
+	 * Method for movement action, if can do movement, then delete from actual
+	 * room and insert in next
 	 * 
 	 * @param i
+	 *            direction
 	 * @param map
+	 *            Map on which to move
 	 */
 	protected void move(Dir i, Square[][] map) {
 		int x = this.room / map.length;
@@ -119,31 +137,31 @@ public abstract class Pj implements Compare<Pj> {
 		switch (i) {
 		case S:
 			if (x < map.length) {
-				map[x][y].removePj(this);
 				map[x + 1][y].insertPj(this);
+				map[x][y].removePj(this);
 				setRoom(map[x + 1][y].getId());
 			}
 			break;
 		case W:
 			if (y > 0) {
-				map[x][y].removePj(this);
 				map[x][y - 1].insertPj(this);
+				map[x][y].removePj(this);
 				setRoom(map[x][y - 1].getId());
 
 			}
 			break;
 		case N:
 			if (x > 0) {
-				map[x][y].removePj(this);
 				map[x - 1][y].insertPj(this);
+				map[x][y].removePj(this);
 				setRoom(map[x - 1][y].getId());
 
 			}
 			break;
 		case E:
 			if (y < map.length) {
-				map[x][y].removePj(this);
 				map[x][y + 1].insertPj(this);
+				map[x][y].removePj(this);
 				setRoom(map[x][y + 1].getId());
 
 			}
@@ -152,17 +170,17 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
- * 
- */
-	protected void actionPj(Map x) {
+	 * Method for action pj
+	 */
+	protected void actionPj(Map x, char c) {
 		if (x.getDRoom() == getRoom()) {
-			actionDoor(x, 'c');
+			actionDoor(x, c);
 		}
 	}
 
 	/**
- * 
- */
+	 * Method for action door, can be open (O) or close (C)
+	 */
 	protected boolean actionDoor(Map x, char c) {
 		boolean doorRoom = false;
 		doorRoom = true;
@@ -184,15 +202,15 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
- * 
- */
+	 * CompareTo
+	 */
 	public int compareTo(Pj t) {
 		return (this.id.compareTo(t.getId()));
 	}
 
 	/**
- * 
- */
+	 * Equals
+	 */
 	public boolean isEqual(Pj t) {
 		return (this.id.equals(t.getId()));
 	}

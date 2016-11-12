@@ -1,10 +1,13 @@
 package api;
 
+/**
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ */
 import java.util.LinkedList;
 
 public class Queue<E> extends LinkedList<E> {
 	/**
-	 * Añade un elemento E a la lista.
+	 * Add element to Queue
 	 */
 	@Override
 	public boolean add(E arg0) {
@@ -13,23 +16,26 @@ public class Queue<E> extends LinkedList<E> {
 	}
 
 	/**
- * 
- */
+	 * Remove if exist, the element take for param
+	 */
 	@Override
-	public E getFirst() {
+	public boolean remove(Object arg0) {
 		// TODO Auto-generated method stub
-		return super.getFirst();
+		return super.remove(arg0);
 	}
 
 	/**
- * 
- */
+	 * return queue size
+	 */
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
 		return super.size();
 	}
 
+	/**
+	 * Take first in
+	 */
 	@Override
 	public E peek() {
 		// TODO Auto-generated method stub
@@ -37,29 +43,12 @@ public class Queue<E> extends LinkedList<E> {
 	}
 
 	/**
- * 
- */
-	@Override
-	public E getLast() {
-		// TODO Auto-generated method stub
-		return super.getLast();
-	}
-
-	/**
- * 
- */
+	 * return true if Queue is empty
+	 */
 	@Override
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return super.isEmpty();
 	}
 
-	/**
- * 
- */
-	@Override
-	public E remove() {
-		// TODO Auto-generated method stub
-		return super.remove();
-	}
 }

@@ -5,12 +5,17 @@ import pj.Pj;
 import api.*;
 import door.Key;
 
+/**
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ */
 public class Square implements Compare<Square> {
+	/** Square identif */
 	private Integer id;
+	/** Arraylist with keys */
 	private ArrayList<Key> keys;
+	/** Queue with pjs in this square */
 	private Queue<Pj> pjs;
 
-	// Debe ser una cola (el primero que entra,el primero que sale)
 	/**
 	 * 
 	 * @param i
@@ -33,8 +38,9 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
+	 * Publiv method for take array size
 	 * 
-	 * @return
+	 * @return array size
 	 */
 	public int nkeys() {
 		return this.keys.size();

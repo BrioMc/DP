@@ -1,5 +1,7 @@
 package pj;
-
+/**
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ */
 import map.Dir;
 
 public class Targaryen extends Pj {

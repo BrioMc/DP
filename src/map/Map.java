@@ -37,7 +37,7 @@ public class Map {
 	}
 
 	/**
-	 * s
+	 * Public method for initializing the map
 	 */
 	private void iniMap() {
 		for (int i = 0; i < map.length; i++) {
@@ -49,15 +49,15 @@ public class Map {
 	}
 
 	/**
- * 
- */
+	 * Public method that return door
+	 */
 	public ThroneDoor getDoor() {
 		return door;
 	}
 
 	/**
- * 
- */
+	 * Public method, return Throne room
+	 */
 	public Square getThrone() {
 		// TODO Auto-generated method stub
 		return addit;
@@ -82,8 +82,9 @@ public class Map {
 	}
 
 	/**
+	 * Return the map size
 	 * 
-	 * @return
+	 * @return map size
 	 */
 	public int getTMap() {
 		return (this.map.length * this.map.length) - 1;
@@ -122,6 +123,7 @@ public class Map {
 	}
 
 	/**
+	 * Public method for insert pj in map
 	 * 
 	 * @param pj
 	 */
@@ -132,6 +134,7 @@ public class Map {
 	}
 
 	/**
+	 * Public method for key distribution
 	 * 
 	 * @param rooms
 	 */
@@ -173,8 +176,8 @@ public class Map {
 	}
 
 	/**
-	 * 
- 	 */
+	 * Public Method for paint map summary
+	 */
 	public void paintMap() {
 		System.out.println("(turno:" + this.turn + ")");
 		System.out.println("(mapa:" + getTMap() + ")");
