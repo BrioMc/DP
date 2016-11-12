@@ -1,6 +1,6 @@
 package door;
 
-import api.Arbol;
+import api.Tree;
 
 /**
  * We are your waifu 
@@ -12,122 +12,147 @@ import api.Arbol;
 
 /**
  * 
- * Clase Puerta del Trono, con sus atributos necesarios, una bandera cómo estado
- * de la puerta(abierta, cerrada) Un vector que no se modifica y guarda la
- * combinación para reset de la cerradura La cerradura, en arbol. Las llaves
- * probadas, en arbol. Un entero, profundidad, cómo requisito necesario para
- * abrir la puerta.
+ * Class ThroneDoor, with all it's essential attributes: *A flag as a state of
+ * the door(open, close) *An array which is not modified and stores the reset
+ * combination of the lock of the door in a Tree. *The tested keys in a Tree *An
+ * Integer (depth) as a needed requerioment in order to open the door.
  * 
  */
 public class ThroneDoor {
 	private boolean isOpen;
 	private Key[] comb;
-	private Arbol<Key> cerradura = new Arbol();
-	private Arbol<Key> probadas = new Arbol();
-	private int prof;
+	private Tree<Key> lock = new Tree<Key>();
+	private Tree<Key> tested = new Tree<Key>();
+	private int depth;
 
 	/**
-	 * Constructor por defecto
+	 * Default constructor
 	 */
 	public ThroneDoor() {
 		isOpen = false;
-		prof = 0;
-		cerradura = new Arbol<Key>();
-		cerradura = new Arbol<Key>();
+		depth = 0;
+		lock = new Tree<Key>();
+		lock = new Tree<Key>();
 		comb = new Key[200];
 	}
 
 	/**
-	 * Constructor parametrizado, con la profundidad y el vector de llaves cómo
-	 * parametros.
+	 * Parametrized constructor with the depth and the Key's array as parameters
+	 * * parametros.
 	 */
-	public ThroneDoor(Key[] keys, int profn) {
+	public ThroneDoor(Key[] keys, int depthn) {
 		isOpen = false;
-		prof = profn;
-		cerradura = new Arbol<Key>();
-		probadas = new Arbol<Key>();
+		depth = depthn;
+		lock = new Tree<Key>();
+		tested = new Tree<Key>();
 		comb = keys;
-		cfgCerradura(0, keys.length - 1);
+		cfglock(0, keys.length - 1);
 	}
 
 	/**
-	 * Método para configurar la cerraura a partir del vector pasado.
+	 * Method for setting the door up with the array that has been received
+	 * previously.
 	 * 
 	 * @param ini
-	 *            entero con el primer valor a tener en cuenta
+	 *            integer with the first value to take into account
 	 * @param fin
-	 *            entero con el último valor a tener en cuenta
+	 *            integer with the last value to take into account
 	 */
 
-	private void cfgCerradura(int ini, int fin) {
-		int mitad = (ini + fin) / 2;
-		cerradura.insertar(comb[mitad]);
+	private void cfglock(int start, int end) {
+		int half = (start + end) / 2;
+		lock.insert(comb[half]);
 		// System.out.print(comb[mitad].toString() + ",");
-		if (ini < fin) {
-			cfgCerradura(ini, mitad - 1);
-			cfgCerradura(mitad + 1, fin);
+		if (start < end) {
+			cfglock(start, half - 1);
+			cfglock(half + 1, end);
 		}
 
 	}
 
 	/**
-	 * Muestra el estado de la cerradura inOrden.
-	 */
-	public void mostrarCerradura() {
-
-		cerradura.inOrden();
-
-	}
-
-	/**
-	 * Muestra el estado de las llaves probadas inOrden.
-	 */
-	public void mostrarProbadas() {
-		probadas.inOrden();
-	}
-
-	/**
-	 * Método que devuelve el estado de la puerta abierta/cerrada abierta=true
-	 * cerrada=false
+	 * Method for close the door with initial combination
 	 * 
-	 * @return estado de la puerta
+	 */
+	public void closeDoor() {
+		lock = new Tree<Key>();
+		cfglock(0, comb.length - 1);
+	}
+
+	/**
+	 * Shows the state of the lock inOrden.
+	 */
+	public void showLock() {
+
+		lock.inOrden();
+
+	}
+
+	/**
+	 * Shows the state of the tested keys inOrden.
+	 */
+	public void showTested() {
+		tested.inOrden();
+	}
+
+	/**
+	 * Method which returns wether the door is open or closed open=true
+	 * closed=false
+	 * 
+	 * @return state of the door
 	 */
 	private boolean isOp() {
 		return isOpen;
 	}
 
+	// /**
+	// * Method which checks the state of the door and, in case of being open,
+	// * returns the corresponding message.
+	// *
+	// * @return state of the door
+	// */
+	// public boolean estaAbierta() {
+	// return isOpen;
+	//
+	// }
 	/**
-	 * Método que comprueba el estado de la puerta, y en caso de ser abierta
-	 * devolver el mensaje correspondiente.
 	 * 
-	 * @return estado de la puerta
 	 */
-	public boolean estaAbierta() {
-		return isOpen;
-
+	public void showDoor() {
+		System.out.print("(Door");
+		if (isOp()) {
+			System.out.print(":open:");
+		} else {
+			System.out.print(":close:");
+		}
+		System.out.print(this.depth + ":");
+		showLock();
+		System.out.print(":");
+		showTested();
+		System.out.println();
 	}
 
 	/**
 	 * 
 	 * @param key
-	 *            Llave que se introduce con un valor !=Null
+	 *            Key which is introduced with a value !=Null
 	 * @return
 	 */
 	public boolean open(Key key) {
-		if (!probadas.pertenece(key)) {
-			if (cerradura.pertenece(key)) {
-				cerradura.borrar(key);
-				probadas.insertar(key);
-				if (cerradura.nHojas() <= (cerradura.nNodos() - cerradura
-						.nHojas()) && cerradura.depth() < this.prof) {
+		if (!tested.belongs(key)) {
+			if (lock.belongs(key)) {
+				lock.remove(key);
+				tested.insert(key);
+				if (lock.nHojas() <= (lock.nNodos() - lock.nHojas())
+						&& lock.depth() < this.depth) {
 					isOpen = true;
 				}
 			} else {
-				System.out.println("La llave no pertenece a la cerradura");
+				System.out.println("The key does not match with the door lock");
 			}
 		} else {
 			System.out
-					.println("Esta llave ya se ha probado, no se puede repetir.");
+					.println("This key has already been tested, it can't be repeated.");
 		}
 		return isOpen;
 	}
