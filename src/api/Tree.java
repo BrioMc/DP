@@ -6,7 +6,7 @@ import door.Key;
  * Implementation of the Binary Search Tree.
  * 
  * @version 1.0
- * @author Javier Ballesteros Morón Ignacio Caro Cumplido
+ * @author Javier Ballesteros Morï¿½n Ignacio Caro Cumplido
  */
 
 public class Tree<T extends Compare<T>> {
@@ -239,17 +239,17 @@ public class Tree<T extends Compare<T>> {
 	/**
 	 * InOrder travel in the door.
 	 */
-	public void inOrden() {
+	public void inOrder() {
 		Tree<T> aux = null;
 		if (!empty()) {
 			if ((aux = getTLeft()) != null) {
-				aux.inOrden();
+				aux.inOrder();
 			}
 
 			System.out.print(" " + this.rootData.toString());
 
 			if ((aux = getTRight()) != null) {
-				aux.inOrden();
+				aux.inOrder();
 			}
 		}
 	}
