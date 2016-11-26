@@ -1,11 +1,14 @@
 package pj;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2ï¿½
  */
 import api.Queue;
+import map.Map;
+import map.Dir;
 
 public class WhiteWalkers extends Pj {
+	char houseTag= 'W';
 	/** Pjs Queue */
 	private Queue<Pj> pjs;
 
@@ -34,5 +37,12 @@ public class WhiteWalkers extends Pj {
 		}
 		System.out.println(")");
 	}
+
+	@Override
+	protected void actionPj(Map x, Dir i) {
+		super.actionPj(x, Dir i,this.houseTag);
+	}
+
+
 
 }
