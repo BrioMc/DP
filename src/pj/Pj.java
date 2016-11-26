@@ -1,7 +1,7 @@
 package pj;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2ï¿½
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
 import java.util.ArrayList;
 
@@ -10,14 +10,14 @@ import map.Map;
 import map.Square;
 import api.Compare;
 import door.Key;
-import door.ThroneDoor;
+
 
 public abstract class Pj implements Compare<Pj> {
 	/** Pj Identifier */
 	protected Integer id;
 	/** Pj Name */
 	protected String name;
-	/** Turn when pj spawns. */
+	/** Turn when pj begin. */
 	protected int turnInitial;
 	/** Room in which the player is */
 	protected int room;
@@ -30,29 +30,30 @@ public abstract class Pj implements Compare<Pj> {
 	/** Movement Flag */
 	protected boolean move;
 	/** Current turn */
-	protected int currTurn;
+	protected int turnAct;
 
 	/**
 	 * Parameterized constructor
-	 *
+	 * 
 	 * @param name
 	 * @param M
 	 * @param turn
 	 * @param room
 	 */
 	protected Pj(String name, char M, int turn, int room) {
-		this.currTurn = 0;
+		this.turnAct = 0;
 		this.move = false;
 		this.tag = M;
 		this.name = name;
 		this.room = room;
 		this.turnInitial = turn;
 		this.rutes = new Dir[200];
+		this.keys=new ArrayList<Key>();
 	}
 
 	/**
 	 * Public method for take pj's tag
-	 *
+	 * 
 	 * @return tag
 	 */
 	public char getTag() {
@@ -61,7 +62,7 @@ public abstract class Pj implements Compare<Pj> {
 
 	/**
 	 * Public method for take pj's identifier
-	 *
+	 * 
 	 * @return id
 	 */
 	public int getId() {
@@ -110,7 +111,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * 
 	 * @param rutes
 	 */
-	public void setRoutes(Dir[] rutes) {
+	public void setRutes(Dir[] rutes) {
 		this.rutes = rutes;
 	}
 
@@ -119,7 +120,7 @@ public abstract class Pj implements Compare<Pj> {
 	 */
 	protected void showPj(String house) {
 		System.out.print("(" + house + ":" + getTag() + ":" + getRoom() + ":"
-				+ currTurn + ":");
+				+ turnAct + ":");
 	}
 
 	/**
@@ -169,68 +170,33 @@ public abstract class Pj implements Compare<Pj> {
 		}
 	}
 
-	protected void keyAction(Square[][] map, char c){
-		int x = this.room / map.length;
-		int y = this.room % map[0].length;
-		switch (c) {
-			case 'L': //Lannister loses keys
-				if (this.room%2==1)
-					map[x][y].insertKey(this.keys.remove(this.keys.size()));
-
-
-				break;
-			case 'T': //Targaryen and Stark picks up keys
-			case 'S':
-				if(map[x][y].nkeys() > 0){
-					this.keys.add(map[x][y].removeKey());
-				}
-				break;
-			default:
-				break;
-		}
-
-	}
-
-
 	/**
 	 * Method for action pj
 	 */
-	protected void actionPj(Map x, Dir i, char c) {
+	protected void actionPj(Map x, char c) {
 		if (x.getDRoom() == getRoom()) {
-			if(!actionDoor(x, c))
-				move(x.getMap(), Dir i);
+			actionDoor(x, c);
 		}
-		else{
-			keyAction(x.getMap(), c);
-
-		}
-
 	}
 
 	/**
 	 * Method for action door, can be open (O) or close (C)
 	 */
-
-	abstract protected void actionPj(Map x, Dir i);
-
-	private boolean actionDoor(Map x, char c) {
+	protected boolean actionDoor(Map x, char c) {
 		boolean doorRoom = false;
+		doorRoom = true;
 		switch (c) {
-			case 'W':
-			case 'L':
-				x.getDoor().closeDoor();
+		case 'C':
+			x.getDoor().closeDoor();
+			;
+			break;
+		case 'O':
+			if (x.getDoor().open(keys.remove(keys.size()))) {
+				x.getMap()[0][0].removePj(this);
+				x.getThrone().insertPj(this);
+			}
+			break;
 
-				break;
-			case 'T':
-			case 'S':
-				if (x.getDoor().open(keys.remove(keys.size()))) {
-					x.getMap()[0][0].removePj(this);
-					x.getThrone().insertPj(this);
-					doorRoom=true;
-				}
-				break;
-			default:
-				break;
 		}
 		return doorRoom;
 

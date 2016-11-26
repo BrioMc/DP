@@ -7,9 +7,10 @@ import pj.Targaryen;
 import pj.WhiteWalkers;
 import door.Key;
 import door.ThroneDoor;
+import java.util.ArrayList;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2ï¿½
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
 
 public class Map {
@@ -18,14 +19,14 @@ public class Map {
 	private ThroneDoor door;
 	private int doorRoom;
 	private Square addit;
+	private ArrayList<Walls> walls;
 
 	/**
-	 * Constructor for the class Map
-	 *
-	 * @param doorRoom The room where the throne door is located
-	 * @param dimX     Dimension of the X axis (Columns of the map)
-	 * @param dimY	   Dimension of the Y axis (Rows of the map)
-	 * @param door	   A previously created door of the throne.
+	 * 
+	 * @param doorRoom
+	 * @param dimX
+	 * @param dimY
+	 * @param door
 	 */
 	public Map(int doorRoom, int dimX, int dimY, ThroneDoor door) {
 		this.map = new Square[dimX][dimY];
@@ -34,11 +35,12 @@ public class Map {
 		this.door = door;
 		this.doorRoom = doorRoom;
 		this.addit = new Square(1111);
-
+		this.walls = new ArrayList<Walls>();
+		iniWalls();
 	}
 
 	/**
-	 * Public method for initializing the map
+	 * Private method for initializing the map
 	 */
 	private void iniMap() {
 		for (int i = 0; i < map.length; i++) {
@@ -48,11 +50,30 @@ public class Map {
 
 		}
 	}
+	
+	/**
+	 * Private method for initializing the walls
+	 */
+	private void iniWalls(){
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map.length; j++) {
+				if(i!=map.length-1)
+					walls.add(new Walls(map[i][j].getId(), map[i+1][j].getId()));
+				
+				if(i!=0)			
+					walls.add(new Walls(map[i][j].getId(), map[i-1][j].getId()));
+				
+				if(j!=map.length-1)
+					walls.add(new Walls(map[i][j].getId(), map[i][j+1].getId()));
+				
+				if(j!=0)			
+					walls.add(new Walls(map[i][j].getId(), map[i][j-1].getId()));
+			}
+		}
+	}
 
 	/**
-	 * Public method that returns the door of the throne
-	 *
-	 * @return {@code ThroneDoor} door
+	 * Public method that return door
 	 */
 	public ThroneDoor getDoor() {
 		return door;
@@ -60,8 +81,6 @@ public class Map {
 
 	/**
 	 * Public method, return Throne room
-	 *
-	 * @return
 	 */
 	public Square getThrone() {
 		// TODO Auto-generated method stub
@@ -99,7 +118,7 @@ public class Map {
 	 * 
 	 * @return
 	 */
-	public int southE() {
+	public int surE() {
 		return map[map.length - 1][map.length - 1].getId();
 	}
 
@@ -107,7 +126,7 @@ public class Map {
 	 * 
 	 * @return
 	 */
-	public int southW() {
+	public int surW() {
 		return map[map.length - 1][0].getId();
 	}
 
@@ -115,7 +134,7 @@ public class Map {
 	 * 
 	 * @return
 	 */
-	public int northW() {
+	public int norW() {
 		return map[0][0].getId();
 	}
 
@@ -123,7 +142,7 @@ public class Map {
 	 * 
 	 * @return
 	 */
-	public int northE() {
+	public int norE() {
 		return map[0][map.length - 1].getId();
 	}
 
@@ -148,7 +167,8 @@ public class Map {
 		int x = 0;
 		int y = 0;
 		boolean rest = false;
-		boolean tst;
+		boolean tst = false;
+		
 
 		for (int i = 0; i < rooms.length; i++) {
 			x = rooms[i] / map[0].length;
@@ -183,7 +203,7 @@ public class Map {
 	/**
 	 * Public Method for paint map summary
 	 */
-	public void paint() {
+	public void paintMap() {
 		System.out.println("(turno:" + this.turn + ")");
 		System.out.println("(mapa:" + getTMap() + ")");
 		door.showDoor();
@@ -231,6 +251,10 @@ public class Map {
 			System.out.print("|");
 
 			System.out.println("");
+			if (i == map.length - 1) {
+				
+			}
+			
 
 		}
 		for (int i = 0; i < map.length; i++) {
@@ -246,14 +270,18 @@ public class Map {
 	public static void main(String args[]) {
 		int dimX = 6;
 		int dimY = 6;
-		int throneRoom = (dimX * dimY) - 1;
+		int salaPuerta = (dimX * dimY) - 1;
 		int altLock = 3;
-		int MAXTURNS = 50;
+	//	int maxTurnos = 50;
 		int numKeys = 15;
+		Grafo g = new Grafo();
+		
 		//
-		// // Creation and configuration of the door. It's not especified here because
-		// it must continue the indicated in the previous delivery
-		//  Add a door to the map (that will be stored into the throne room)
+		// // Creación y configuración de la Puerta. No se especifica aquí pues
+		// se debe seguir
+
+		// // lo indicado en la entrega anterior
+		// // Añadir la puerta al mapa (quedará almacenada en la sala del Trono)
 		// mapa.insertarPuerta(puerta);
 		//
 		int[] listaIdKeys = new int[numKeys];
@@ -267,99 +295,101 @@ public class Map {
 			combination[i] = new Key(listaIdKeys[i]);
 		}
 		ThroneDoor door = new ThroneDoor(combination, altLock);
-		// Creating the map
-		// Parameters: door square, columns number, rows number,
-		// depth for the lock
-		// The constructor must create the different squares for the map
-		Map map = new Map(throneRoom, dimX, dimY, door);
-		// Generate the keys and distribute them. In this stage, we pass to the map an array
-		// with the identifiers of the squares where the keys are going to be distributed
-				int [] idSquaresWithKeys = {3,4,6,8,9,10,11,12,13};
-				map.distKeys(idSquaresWithKeys);
-		// The generation of the keys will be performed by the map
-		// The distribution is as follows:
-		// (square:3: 0 1 1 2 3)
-		// (square:4: 3 4 5 5 6)
-		// (square:6: 7 7 8 9 9)
-		// (square:8: 10 11 11 12 13)
-		// (square:9: 13 14 15 15 16)
-		// (square:10: 17 17 18 19 19)
-		// (square:11: 20 21 21 22 23)
-		// (square:12: 23 24 25 25 26)
-		// (square:13: 27 27 28 29 29)
+		// Creación del mapa
+		// Parámetros: sala de la puerta, nº columnas, nº filas,
+		// profundidad de la cerradura para la apertura de la puerta
+		// El constructor del mapa deberá crear las diferentes salas de las que
+		// consta
+		Map mapa = new Map(salaPuerta, dimX, dimY, door);
+		// Generar llaves y distribuirlas. En esta entrega, pasamos al mapa un
+		// array
+		// con los identificadores de las salas en las que se distribuirán las
+		// llaves
+		int[] idSalasConLlaves = { 3, 4, 6, 8, 9, 10, 11, 12, 13 };
+		mapa.distKeys(idSalasConLlaves); // La generación de llaves la hará
+		// el
+		// mapa
+		// La distribución de llaves quedará de la siguiente forma:
+		// (sala:3: 0 1 1 2 3)
+		// (sala:4: 3 4 5 5 6)
+		// (sala:6: 7 7 8 9 9)
+		// (sala:8: 10 11 11 12 13)
+		// (sala:9: 13 14 15 15 16)
+		// (sala:10: 17 17 18 19 19)
+		// (sala:11: 20 21 21 22 23)
+		// (sala:12: 23 24 25 25 26)
+		// (sala:13: 27 27 28 29 29)
 
+		// // Creación de personajes
+		// // Creación de Stark
+		// // Parámetros: nombre, marca, turno en el que debe comenzar a moverse
+		// y sala inicial
+		Stark starkE = new Stark("Eddard", 'E', 1, 0);
 
-		// Creating and configuring the door. It is not specified here since
-		// it was specified in the previous stage
-		// Add the door to the map (it will be stored into the Throne square)
+		// // Creación de la ruta de Stark:
+		// // (ruta:E: S S E E N E N E S E S S O S E E)
+		Dir[] direccionesE = { Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N,
+				Dir.E, Dir.S, Dir.E, Dir.S, Dir.S, Dir.W, Dir.S, Dir.E, Dir.S };
+		starkE.setRutes(direccionesE);
+		//
+		// // Inserción de personaje en el mapa
+		mapa.insertPj(starkE);
+		//
+		//
+		// // Creación de Targaryen
+		// // Parámetros: nombre, marca, turno en el que debe comenzar a moverse
+		// y sala inicial
+		Targaryen targaryenD = new Targaryen("Daenerys", 'D', 1, 0);
+		// // (ruta:D: E S S S O S E E N E S S E E)
+		Dir[] direccionesD = { Dir.E, Dir.S, Dir.S, Dir.S, Dir.W, Dir.S, Dir.E,
+				Dir.E, Dir.N, Dir.E, Dir.S, Dir.S, Dir.E, Dir.E };
 
-		// Creating the characters
-		// Creating a Stark
-		// Parameters: name, mark, turn in which it will start the simulation and initial square
-				Stark starkE = new Stark("Eddard", 'E', 1, 0);
-		// Creating the route for the Stark:
-		// (route:E: S S E E N E N E S E S S W S E E)
-				Dir[] directionsE = {Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S,
-						Dir.E, Dir.S, Dir.S, Dir.W, Dir.S, Dir.E, Dir.S};
-				starkE.setRoutes(directionsE);
+		targaryenD.setRutes(direccionesD);
+		// Inserción de personaje en la sala
+		mapa.insertPj(targaryenD);
 
-		// Adding the character into the map
-				map.insertPj(starkE);
+		// Creación de Caminante Blanco
+		// Parámetros: nombre, marca, turno en el que debe comenzar a moverse
+		// y sala inicial
+		WhiteWalkers caminante = new WhiteWalkers("Caminante", 'C', 1,
+				mapa.surW());
+		// // (ruta:C: N N N E S E N N E N E E S S S S S )
+		// EDLineal<Dir> direccionesC = {Dir.N, Dir.N, Dir.N, Dir.E, Dir.S,
+		// Dir.E, Dir.N, Dir.N,
+		// Dir.E, Dir.N, Dir.E, Dir.E, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S};
+		// caminante.asignarRuta(direccionesC);
+		// // Inserción de personaje en el mapa
+		mapa.insertPj(caminante);
 
+		// Creación de Lannister
+		// Parámetros: nombre, marca, turno en el que debe comenzar a moverse
+		// y sala inicial
+		Lannister lannisterT = new Lannister("Tyrion", 'T', 1, mapa.getDRoom());
+		// (ruta:T: N N O N N O S O O N N O S S S S S E E E E E )
+		Dir[] direccionesT = { Dir.N, Dir.N, Dir.W, Dir.N, Dir.N, Dir.W, Dir.S,
+				Dir.W, Dir.W, Dir.N, Dir.N, Dir.W, Dir.S, Dir.S, Dir.S, Dir.S,
+				Dir.S, Dir.E, Dir.E, Dir.E, Dir.E, Dir.E };
+		lannisterT.setRutes(direccionesT);
+		// Inserción de personaje en el mapa
+		mapa.insertPj(lannisterT);
 
-		// Creating a Targaryen
-		// Parameters: name, mark, turn in which it will start the simulation and initial square
-				Targaryen targaryenD = new Targaryen("Daenerys", 'D', 1, 0);
-		// (route:D: E S S S W S E E N E S S E E)
-				Dir[] directionsD = {Dir.E, Dir.S, Dir.S, Dir.S, Dir.W, Dir.S, Dir.E, Dir.E, Dir.N,
-						Dir.E, Dir.S, Dir.S, Dir.E, Dir.E};
+		// Ejecución de la simulación
+		// El método procesar se ejecutará turno a turno, recorriendo el mapa
+		// desde la sala
+		// de entrada hasta la de salida y los personajes almacenados en cada
+		// sala ejecutarán
+		// sus acciones según orden de llegada
+		// for (int i = 0; i < MAXTURNOS; i++) {
+		// mapa.procesar(i);
+		// }
 
-
-				targaryenD.setRoutes(directionsD);
-		// Adding the character into the map
-
-		map.insertPj(targaryenD);
-
-
-		// Creating a White Walker
-		// Parameters: name, mark, turn in which it will start the simulation and initial square
-			WhiteWalkers walker = new WhiteWalkers("Walker", 'W', 1, map.southW());
-		// (route:C: N N N E S E N N E N E E S S S S S )
-			Dir[] directionsW = {Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N,
-				Dir.E, Dir.N, Dir.E, Dir.E, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S};
-		walker.setRoutes(directionsW);
-		// Adding the character into the map
-		map.insertPj(walker);
-
-
-		// Creating a Lannister
-		// Parameters: name, mark, turn in which it will start the simulation and initial square
-		Lannister lannisterT = new Lannister("Tyrion", 'T', 1, map.getDRoom());
-		// (ruta:T: N N W N N W S W W N N W S S S S S E E E E E )
-			Dir[] directionsT = {Dir.N, Dir.N, Dir.W, Dir.N, Dir.N, Dir.W, Dir.S, Dir.W,
-					Dir.W, Dir.N, Dir.N, Dir.W, Dir.S, Dir.S, Dir.S, Dir.S, Dir.S,
-					Dir.E, Dir.E, Dir.E, Dir.E, Dir.E};
-		lannisterT.setRoutes(directionsT);
-		// Adding the character into the map
-		map.insertPj(lannisterT);
-
-
-		map.paint();
-		// Executing the simulation
-		// The process method must be executed turn after turn, traversing the map from square 0
-		// to the last square and the characters stored in each square must execute their actions
-		// in a chronologically order (the characters that arrived first are the first in leaving the square)
-	//	for (int i=0; i<maxturns;i++) {
-	//		map.process(i);
-	//	}
-
-
-		map.paint();
+		mapa.paintMap();
 	}
+
 }
 
 // // Creation of the map board
-// // @param: room of the ThroneDoor, nï¿½ columns, nï¿½ rows y
+// // @param: room of the ThroneDoor, nº columns, nº rows y
 // // depth of
 // // and secret combination
 // int dimX = 6;
@@ -373,18 +403,18 @@ public class Map {
 // // Algorithm which reorders the identifiers in order to create the keys
 // // in a correct order
 // // listaIdKeys = map.generarcombination(listaIdKeys);
-// // Combinaciï¿½n de Keys que se insertarï¿½n en la ThroneDoor del Trono
+// // Combinación de Keys que se insertarán en la ThroneDoor del Trono
 // Key[] combination = new Key[numKeys];
 // for (int i = 0; i < combination.length; i++) {
 // combination[i] = new Key(listaIdKeys[i]);
 // }
 // // Crear la ThroneDoor del Trono
 // ThroneDoor ThroneDoor = new ThroneDoor(combination, 4);
-// // Configurar la ThroneDoor introduciendo la combinaciï¿½n de Keys
+// // Configurar la ThroneDoor introduciendo la combinación de Keys
 // // ThroneDoor.configurar(combination);
-// // Cerrar la ThroneDoor, por si inicialmente estï¿½ abierta
+// // Cerrar la ThroneDoor, por si inicialmente está abierta
 // // ThroneDoor.cerrar();
-// // Aï¿½adir la ThroneDoor al mapa
+// // Añadir la ThroneDoor al mapa
 // // mapa.insertarThroneDoor(ThroneDoor);
 // // Realizar distintas pruebas de apertura de la ThroneDoor
 // for (int i = 0; !ThroneDoor.estaAbierta(); i++) {
@@ -401,10 +431,10 @@ public class Map {
 // System.out.println("The Door of the Throne stays closed");
 // }
 // ThroneDoor.showTested();
-// // mapa.pintar(); // se mostrarï¿½ en este caso ï¿½nicamente la informaciï¿½n
+// // mapa.pintar(); // se mostrará en este caso únicamente la información
 // // del
 // // mapa
-// // Realizar mï¿½s pruebas
+// // Realizar más pruebas
 //
 // // TODO
 // }
