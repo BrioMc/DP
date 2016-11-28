@@ -1,21 +1,14 @@
 package pj;
 
-<<<<<<< HEAD
 import map.Map;
 import door.Key;
 import map.Dir;
 
-=======
->>>>>>> refs/remotes/origin/master
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
 
 public class Lannister extends Pj {
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/master
 	/**
 	 * 
 	 * @param name
@@ -38,7 +31,6 @@ public class Lannister extends Pj {
 		// TODO Auto-generated constructor stub
 	}
 
-<<<<<<< HEAD
 	public void showPj() {
 		// TODO Auto-generated method stub
 		super.showPj("Lannister");
@@ -49,6 +41,4 @@ public class Lannister extends Pj {
 
 	}
 
-=======
->>>>>>> refs/remotes/origin/master
 }

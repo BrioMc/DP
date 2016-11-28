@@ -20,19 +20,17 @@ public class Square implements Compare<Square> {
 	private ArrayList<Key> keys;
 	/** Queue with pjs in this square */
 	private Queue<Pj> pjs;
-	
+
 	private Integer mark;
 
 	/**
-<<<<<<< HEAD
-	 * Constructor for the class Square
+	 * <<<<<<< HEAD Constructor for the class Square
 	 * 
 	 * @param i
-	 *            is the ID we want to assign to the square
-=======
+	 *            is the ID we want to assign to the square =======
 	 * 
 	 * @param i
->>>>>>> refs/remotes/origin/master
+	 *            >>>>>>> refs/remotes/origin/master
 	 */
 	public Square(int i) {
 		id = i;
@@ -42,13 +40,10 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Method which shows all the keys stored in the square arrayList
+	 * <<<<<<< HEAD Method which shows all the keys stored in the square
+	 * arrayList
 	 */
-=======
- * 
- */
->>>>>>> refs/remotes/origin/master
+
 	public void showKeys() {
 		System.out.print("(sala:" + getId() + ": ");
 		for (int x = 0; x < this.keys.size(); x++) {
@@ -57,16 +52,16 @@ public class Square implements Compare<Square> {
 		System.out.println(")");
 	}
 
-	
-	public Integer getMark(){
+	public Integer getMark() {
 		return mark;
 	}
-	
-	public void setMark(Integer mark){
-		this.mark=mark;
+
+	public void setMark(Integer mark) {
+		this.mark = mark;
 	}
+
 	/**
-<<<<<<< HEAD
+	 * <<<<<<< HEAD
 	 * 
 	 */
 	public void showPj() {
@@ -96,10 +91,8 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-	 * Public method for getting array size
-=======
-	 * Publiv method for take array size
->>>>>>> refs/remotes/origin/master
+	 * Public method for getting array size ======= Publiv method for take array
+	 * size >>>>>>> refs/remotes/origin/master
 	 * 
 	 * @return array size
 	 */
@@ -108,14 +101,11 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Method to get the number of pjs inside the
+	 * <<<<<<< HEAD Method to get the number of pjs inside the
 	 * 
-	 * @return the number of pjs inside the square
-=======
+	 * @return the number of pjs inside the square =======
 	 * 
-	 * @return
->>>>>>> refs/remotes/origin/master
+	 * @return >>>>>>> refs/remotes/origin/master
 	 */
 	public int nPj() {
 		return this.pjs.size();
@@ -131,7 +121,8 @@ public class Square implements Compare<Square> {
 
 	/**
 	 * 
-<<<<<<< HEAD
+	 * <<<<<<< HEAD
+	 * 
 	 * @return
 	 */
 	public Pj takePj() {
@@ -188,16 +179,14 @@ public class Square implements Compare<Square> {
 	 * Method to insert a key into the square's arrayList
 	 * 
 	 * @param kye
-	 *            is the key to be inserted
-=======
+	 *            is the key to be inserted =======
 	 * @param kye
->>>>>>> refs/remotes/origin/master
+	 *            >>>>>>> refs/remotes/origin/master
 	 */
 	public void insertKey(Key kye) {
 		this.keys.add(kye);
 	}
 
-<<<<<<< HEAD
 	/**
 	 * 
 	 * @return
@@ -210,33 +199,28 @@ public class Square implements Compare<Square> {
 	 * Method to insert a pj into the square's queue
 	 * 
 	 * @param pj
-	 *            is the pj to be inserted
-=======
-	/**
+	 *            is the pj to be inserted ======= /**
 	 * 
 	 * @param pj
->>>>>>> refs/remotes/origin/master
+	 *            >>>>>>> refs/remotes/origin/master
 	 */
 	public void insertPj(Pj pj) {
 		pjs.add(pj);
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Method to remove a character from the queue
 	 * 
 	 * @param pj
 	 *            is the pj to be removed from the queue
 	 */
-=======
->>>>>>> refs/remotes/origin/master
+
 	public void removePj(Pj pj) {
 		pjs.remove(pj);
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Compares two squares in a numerically way
+	 * <<<<<<< HEAD Compares two squares in a numerically way
 	 * 
 	 * @param t
 	 *            is the square we want to compare to
@@ -246,42 +230,32 @@ public class Square implements Compare<Square> {
 	 *         this {@code Square} ID is lower than the argument {@code Square}
 	 *         t ID.
 	 */
-=======
- * 
- */
->>>>>>> refs/remotes/origin/master
+
 	public int compareTo(Square t) {
 		// TODO Auto-generated method stub
 		return this.id.compareTo(t.getId());
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Compares two squares in a logic way
+	 * <<<<<<< HEAD Compares two squares in a logic way
 	 * 
 	 * @param t
 	 *            is the square we want to compare to
 	 * @return {@code true} if this {@code sqaure} equals the argument
 	 *         {@code square} t ID, Otherwise returns {@code false}.
 	 */
-=======
- * 
- */
->>>>>>> refs/remotes/origin/master
+
 	public boolean isEqual(Square t) {
 		// TODO Auto-generated method stub
 		return this.id.equals(t.getId());
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Method to get the square's ID
+	 * <<<<<<< HEAD Method to get the square's ID
 	 * 
-	 * @return {@code int} the ID of this square
-=======
+	 * @return {@code int} the ID of this square =======
 	 * 
-	 * @return
->>>>>>> refs/remotes/origin/master
+	 * @return >>>>>>> refs/remotes/origin/master
 	 */
 	public int getId() {
 		// TODO Auto-generated method stub

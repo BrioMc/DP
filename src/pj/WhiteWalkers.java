@@ -4,12 +4,10 @@ package pj;
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
 import api.Queue;
+import map.Map;
 
 public class WhiteWalkers extends Pj {
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
 	/** Pjs Queue */
 	private Queue<Pj> pjsT;
 
@@ -40,7 +38,6 @@ public class WhiteWalkers extends Pj {
 		}
 		System.out.println(")");
 
-<<<<<<< HEAD
 	}
 
 	private void takepj() {
@@ -65,6 +62,4 @@ public class WhiteWalkers extends Pj {
 		takepj();
 	}
 
-=======
->>>>>>> refs/remotes/origin/master
 }
