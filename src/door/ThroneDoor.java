@@ -38,7 +38,9 @@ public class ThroneDoor {
 
 	/**
 	 * Parametrized constructor with the depth and the Key's array as parameters
-	 * @param keys {@code Key[]}
+	 * 
+	 * @param keys
+	 *            {@code Key[]}
 	 * @param depthn
 	 */
 	public ThroneDoor(Key[] keys, int depthn) {
@@ -76,6 +78,7 @@ public class ThroneDoor {
 	 * 
 	 */
 	public void closeDoor() {
+		isOpen = false;
 		lock = new Tree<Key>();
 		cfglock(0, comb.length - 1);
 	}
@@ -102,7 +105,7 @@ public class ThroneDoor {
 	 * 
 	 * @return state of the door
 	 */
-	private boolean isOp() {
+	public boolean isOp() {
 		return isOpen;
 	}
 

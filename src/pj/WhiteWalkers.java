@@ -8,9 +8,9 @@ import map.Map;
 import map.Dir;
 
 public class WhiteWalkers extends Pj {
-	char houseTag= 'W';
+
 	/** Pjs Queue */
-	private Queue<Pj> pjs;
+	private Queue<Pj> pjsT;
 
 	/**
 	 * Parameterized constructor
@@ -22,7 +22,9 @@ public class WhiteWalkers extends Pj {
 	 */
 	public WhiteWalkers(String name, char M, int turn, int Room) {
 		super(name, M, turn, Room);
-		pjs = new Queue<Pj>();
+		this.currTurn = 0;
+		pjsT = new Queue<Pj>();
+		this.houseTag = 'W';
 	}
 
 	/**
@@ -32,17 +34,33 @@ public class WhiteWalkers extends Pj {
 		// TODO Auto-generated method stub
 
 		super.showPj("WhiteWalkers");
-		while (pjs.iterator().hasNext()) {
-			System.out.print(" " + pjs.iterator().next().getTag());
+		for (int i = 0; i < pjsT.size(); i++) {
+			System.out.print(" " + pjsT.get(i).getTag());
 		}
 		System.out.println(")");
+
 	}
 
-	@Override
-	protected void actionPj(Map x, Dir i) {
-		super.actionPj(x, Dir i,this.houseTag);
+	private void takepj() {
+		Map x = Map.getInstance();
+		int j = this.room / x.getMap().length;
+		int y = this.room % x.getMap()[0].length;
+		boolean take = false;
+		int i = 0;
+		while (!take && i < x.getMap()[j][y].nPj()) {
+			i++;
+			if (x.getMap()[j][y].nPj() != 0) {
+				if (x.getMap()[j][y].checkPj().getHTag() != 'W') {
+					take = true;
+					pjsT.add(x.getMap()[j][y].takePj());
+				}
+			}
+		}
 	}
 
-
+	public void actionPj() {
+		super.actionPj(this.rutes, this.houseTag);
+		takepj();
+	}
 
 }

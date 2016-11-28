@@ -5,12 +5,11 @@ package pj;
  */
 import java.util.ArrayList;
 
+import api.Compare;
+import door.Key;
 import map.Dir;
 import map.Map;
 import map.Square;
-import api.Compare;
-import door.Key;
-import door.ThroneDoor;
 
 public abstract class Pj implements Compare<Pj> {
 	/** Pj Identifier */
@@ -31,10 +30,12 @@ public abstract class Pj implements Compare<Pj> {
 	protected boolean move;
 	/** Current turn */
 	protected int currTurn;
+	/** House tag */
+	protected char houseTag;
 
 	/**
 	 * Parameterized constructor
-	 *
+	 * 
 	 * @param name
 	 * @param M
 	 * @param turn
@@ -48,11 +49,12 @@ public abstract class Pj implements Compare<Pj> {
 		this.room = room;
 		this.turnInitial = turn;
 		this.rutes = new Dir[200];
+		this.keys = new ArrayList<Key>();
 	}
 
 	/**
 	 * Public method for take pj's tag
-	 *
+	 * 
 	 * @return tag
 	 */
 	public char getTag() {
@@ -60,8 +62,16 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public char getHTag() {
+		return houseTag;
+	}
+
+	/**
 	 * Public method for take pj's identifier
-	 *
+	 * 
 	 * @return id
 	 */
 	public int getId() {
@@ -106,6 +116,29 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
+	 * 
+	 */
+	public void moveOn() {
+		this.move = true;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean getMove() {
+		// TODO Auto-generated method stub
+		return move;
+	}
+
+	/**
+	 * 
+	 */
+	public void sumTurn() {
+		this.currTurn++;
+	}
+
+	/**
 	 * Public method for set array rutes
 	 * 
 	 * @param rutes
@@ -118,13 +151,18 @@ public abstract class Pj implements Compare<Pj> {
 	 * public method for watch pj's information
 	 */
 	protected void showPj(String house) {
-		System.out.print("(" + house + ":" + getTag() + ":" + getRoom() + ":"
-				+ currTurn + ":");
+		System.out.print("(" + house + ":" + getTag() + ":" + getRoom() + ":" + currTurn + ":");
+		if (houseTag != 'W') {
+			for (int x = 0; x < this.keys.size(); x++) {
+				System.out.print(keys.get(x).toString() + " ");
+			}
+			System.out.println(")");
+		}
 	}
 
 	/**
 	 * Method for movement action, if can do movement, then delete from actual
-	 * room and insert in next
+	 * room and insert in
 	 * 
 	 * @param i
 	 *            direction
@@ -132,6 +170,7 @@ public abstract class Pj implements Compare<Pj> {
 	 *            Map on which to move
 	 */
 	protected void move(Dir i, Square[][] map) {
+
 		int x = this.room / map.length;
 		int y = this.room % map[0].length;
 		switch (i) {
@@ -159,7 +198,7 @@ public abstract class Pj implements Compare<Pj> {
 			}
 			break;
 		case E:
-			if (y < map.length) {
+			if (y < map[0].length) {
 				map[x][y + 1].insertPj(this);
 				map[x][y].removePj(this);
 				setRoom(map[x][y + 1].getId());
@@ -169,68 +208,102 @@ public abstract class Pj implements Compare<Pj> {
 		}
 	}
 
-	protected void keyAction(Square[][] map, char c){
+	/**
+	 * 
+	 * @param map
+	 * @param c
+	 */
+	protected void keyAction(Square[][] map, char c) {
 		int x = this.room / map.length;
 		int y = this.room % map[0].length;
+
 		switch (c) {
-			case 'L': //Lannister loses keys
-				if (this.room%2==1)
-					map[x][y].insertKey(this.keys.remove(this.keys.size()));
+		case 'L': // Lannister loses keys
+			if (this.keys.size() != 0) {
+				if (this.room % 2 == 1) {
 
-
-				break;
-			case 'T': //Targaryen and Stark picks up keys
-			case 'S':
-				if(map[x][y].nkeys() > 0){
-					this.keys.add(map[x][y].removeKey());
+					map[x][y].insertKey(this.keys.get(this.keys.size() - 1));
+					this.keys.remove(this.keys.get(this.keys.size() - 1));
 				}
-				break;
-			default:
-				break;
+			}
+
+			break;
+		case 'T': // Targaryen and Stark picks up keys
+		case 'S':
+			if (map[x][y].nkeys() > 0) {
+				this.keys.add(map[x][y].removeKey());
+			}
+			break;
+		default:
+			break;
 		}
 
 	}
 
-
 	/**
 	 * Method for action pj
+	 * 
+	 * @param x
+	 * @param i
+	 * @param c
 	 */
-	protected void actionPj(Map x, Dir i, char c) {
+	protected void actionPj(Dir[] i, char c) {
+		Map x = Map.getInstance();
 		if (x.getDRoom() == getRoom()) {
-			if(!actionDoor(x, c))
-				move(x.getMap(), Dir i);
-		}
-		else{
-			keyAction(x.getMap(), c);
+			if (!actionDoor(x, c)) {
 
+			}
+			if (c == 'W' || c == 'L') {
+				move(i[this.currTurn - 1], x.getMap());
+			}
+
+		} else {
+			move(i[this.currTurn - 1], x.getMap());
+		}
+
+		if (c != 'W') {
+			keyAction(x.getMap(), c);
 		}
 
 	}
 
 	/**
 	 * Method for action door, can be open (O) or close (C)
+	 * 
+	 * @param x
+	 *            Map
+	 * @param c
+	 *            identifier character of HouseTag
+	 * @return True if door is open
 	 */
-
-	abstract protected void actionPj(Map x, Dir i);
-
 	private boolean actionDoor(Map x, char c) {
 		boolean doorRoom = false;
 		switch (c) {
-			case 'W':
-			case 'L':
-				x.getDoor().closeDoor();
 
-				break;
-			case 'T':
-			case 'S':
-				if (x.getDoor().open(keys.remove(keys.size()))) {
-					x.getMap()[0][0].removePj(this);
-					x.getThrone().insertPj(this);
-					doorRoom=true;
+		case 'W':
+		case 'L':
+			x.getDoor().closeDoor();
+
+			break;
+		case 'T':
+		case 'S':
+			if (!x.getDoor().isOp()) {
+				if (!keys.isEmpty()) {
+					if (x.getDoor().open(keys.remove(keys.size() - 1))) {
+						x.getMap()[this.getRoom() / x.getTMap()][this.getRoom() % x.getTMap()].removePj(this);
+						x.getThrone().insertPj(this);
+
+					}
 				}
-				break;
-			default:
-				break;
+			} else {
+				x.getMap()[this.getRoom() / x.getTMap()][this.getRoom() % x.getTMap()].removePj(this);
+				x.getThrone().insertPj(this);
+
+			}
+			doorRoom = true;
+			break;
+		default:
+			break;
 		}
 		return doorRoom;
 
@@ -249,4 +322,10 @@ public abstract class Pj implements Compare<Pj> {
 	public boolean isEqual(Pj t) {
 		return (this.id.equals(t.getId()));
 	}
+
+	public void resetT() {
+		this.move = false;
+
+	}
+
 }

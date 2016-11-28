@@ -1,7 +1,12 @@
 package map;
 
 import java.util.ArrayList;
+
+import pj.Lannister;
 import pj.Pj;
+import pj.Stark;
+import pj.Targaryen;
+import pj.WhiteWalkers;
 import api.*;
 import door.Key;
 
@@ -18,7 +23,9 @@ public class Square implements Compare<Square> {
 
 	/**
 	 * Constructor for the class Square
-     * @param i is the ID we want to assign to the square
+	 * 
+	 * @param i
+	 *            is the ID we want to assign to the square
 	 */
 	public Square(int i) {
 		id = i;
@@ -26,16 +33,44 @@ public class Square implements Compare<Square> {
 		pjs = new Queue<Pj>();
 	}
 
-
 	/**
-     * Method which shows all the keys stored in the square arrayList
-     */
+	 * Method which shows all the keys stored in the square arrayList
+	 */
 	public void showKeys() {
 		System.out.print("(square:" + getId() + ": ");
 		for (int x = 0; x < this.keys.size(); x++) {
 			System.out.print(keys.get(x).toString() + " ");
 		}
 		System.out.println(")");
+	}
+
+	/**
+	 * 
+	 */
+	public void showPj() {
+		for (int i = 0; i < pjs.size(); i++) {
+			Pj temp = pjs.get(i);
+			switch (temp.getHTag()) {
+			case 'S':
+				Stark stark = (Stark) pjs.get(i);
+				stark.showPj();
+				break;
+			case 'W':
+				WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(i);
+				whiteWalkers.showPj();
+				break;
+			case 'T':
+				Targaryen targaryen = (Targaryen) pjs.get(i);
+				targaryen.showPj();
+				break;
+			case 'L':
+				Lannister lannister = (Lannister) pjs.get(i);
+				lannister.showPj();
+				break;
+
+			}
+
+		}
 	}
 
 	/**
@@ -49,75 +84,145 @@ public class Square implements Compare<Square> {
 
 	/**
 	 * Method to get the number of pjs inside the
-     *
+	 * 
 	 * @return the number of pjs inside the square
 	 */
 	public int nPj() {
 		return this.pjs.size();
 	}
 
-	public Pj takePj() {
+	/**
+	 * 
+	 * @return
+	 */
+	public Pj checkPj() {
 		return pjs.peek();
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public Pj takePj() {
+		return pjs.pollFirst();
+	}
+
+	/**
+	 * 
+	 */
+	public void resetTurn() {
+		for (int y = 0; y < pjs.size(); y++) {
+			Pj temp = pjs.get(y);
+			temp.resetT();
+		}
+	}
+
+	/**
+	 * 
+	 * @param i
+	 * @param m
+	 */
+	public void proccessT(int i) {
+		for (int y = 0; y < pjs.size(); y++) {
+			Pj temp = pjs.get(y);
+			if (!temp.getMove() && temp.getTurn() <= i) {
+				temp.sumTurn();
+				temp.moveOn();
+				switch (temp.getHTag()) {
+				case 'S':
+					Stark stark = (Stark) temp;
+					stark.actionPj();
+					break;
+				case 'W':
+					WhiteWalkers whiteWalkers = (WhiteWalkers) temp;
+					whiteWalkers.actionPj();
+					break;
+				case 'T':
+					Targaryen targaryen = (Targaryen) temp;
+					targaryen.actionPj();
+					break;
+				case 'L':
+					Lannister lannister = (Lannister) temp;
+					lannister.actionPj();
+					break;
+
+				}
+
+			}
+
+		}
+	}
+
+	/**
 	 * Method to insert a key into the square's arrayList
-     *
-	 * @param kye is the key to be inserted
+	 * 
+	 * @param kye
+	 *            is the key to be inserted
 	 */
 	public void insertKey(Key kye) {
 		this.keys.add(kye);
 	}
 
-	public Key removeKey(){
-		return this.keys.remove(this.keys.size());
+	/**
+	 * 
+	 * @return
+	 */
+	public Key removeKey() {
+		return this.keys.remove(this.keys.size() - 1);
 	}
+
 	/**
 	 * Method to insert a pj into the square's queue
-     *
-	 * @param pj is the pj to be inserted
+	 * 
+	 * @param pj
+	 *            is the pj to be inserted
 	 */
 	public void insertPj(Pj pj) {
 		pjs.add(pj);
 	}
 
 	/**
-     * Method to remove a character from the queue
-     *
-     * @param pj is the pj to be removed from the queue
-     */
+	 * Method to remove a character from the queue
+	 * 
+	 * @param pj
+	 *            is the pj to be removed from the queue
+	 */
 	public void removePj(Pj pj) {
 		pjs.remove(pj);
 	}
 
 	/**
-     * Compares two squares in a numerically way
-     *
-     *@param t is the square we want to compare to
-     *@return {@code 0} if this {@code Square} equals the argument {@code Square} t ID,
-     *        {@code 1} if this {@code Square} ID is greater than the argument {@code Square} t ID
-     *        and {@code -1} if  this {@code Square} ID is lower than the argument {@code Square} t ID.
-     */
+	 * Compares two squares in a numerically way
+	 * 
+	 * @param t
+	 *            is the square we want to compare to
+	 * @return {@code 0} if this {@code Square} equals the argument
+	 *         {@code Square} t ID, {@code 1} if this {@code Square} ID is
+	 *         greater than the argument {@code Square} t ID and {@code -1} if
+	 *         this {@code Square} ID is lower than the argument {@code Square}
+	 *         t ID.
+	 */
 	public int compareTo(Square t) {
 		// TODO Auto-generated method stub
 		return this.id.compareTo(t.getId());
 	}
 
-    /**
-     *Compares two squares in a logic way
-     *
-     *@param t is the square we want to compare to
-     *@return {@code true} if this {@code sqaure} equals the argument {@code square} t ID,
-     *        Otherwise returns {@code false}.
-     */
-    public boolean isEqual(Square t) {
+	/**
+	 * Compares two squares in a logic way
+	 * 
+	 * @param t
+	 *            is the square we want to compare to
+	 * @return {@code true} if this {@code sqaure} equals the argument
+	 *         {@code square} t ID, Otherwise returns {@code false}.
+	 */
+	public boolean isEqual(Square t) {
 		// TODO Auto-generated method stub
 		return this.id.equals(t.getId());
 	}
 
 	/**
 	 * Method to get the square's ID
-     *
+	 * 
 	 * @return {@code int} the ID of this square
 	 */
 	public int getId() {
