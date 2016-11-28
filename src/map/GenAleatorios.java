@@ -57,6 +57,8 @@ public class GenAleatorios {
 		return numGenerados;
 	}
 	
+<<<<<<< HEAD
+=======
 	public static void main(String[] args) {
 		
 		for (int i=20; i>10; i--) {
@@ -64,4 +66,5 @@ public class GenAleatorios {
 		}
 		System.out.println("Números generados: " + GenAleatorios.getNumGenerados());
 	}	
+>>>>>>> refs/remotes/origin/master
 }

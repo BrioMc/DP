@@ -1,10 +1,21 @@
 package pj;
 
+<<<<<<< HEAD
+import map.Map;
+import door.Key;
+import map.Dir;
+
+=======
+>>>>>>> refs/remotes/origin/master
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
 
 public class Lannister extends Pj {
+<<<<<<< HEAD
+
+=======
+>>>>>>> refs/remotes/origin/master
 	/**
 	 * 
 	 * @param name
@@ -14,7 +25,30 @@ public class Lannister extends Pj {
 	 */
 	public Lannister(String name, char M, int turn, int Room) {
 		super(name, M, turn, Room);
+		this.houseTag = 'L';
+		Key k;
+		for (int i = 0; i < 30; i++) {
+			k = new Key(i);
+			keys.add(k);
+			if (i % 2 != 0) {
+				keys.add(k);
+			}
+		}
+
 		// TODO Auto-generated constructor stub
 	}
 
+<<<<<<< HEAD
+	public void showPj() {
+		// TODO Auto-generated method stub
+		super.showPj("Lannister");
+	}
+
+	public void actionPj() {
+		super.actionPj(this.rutes, this.houseTag);
+
+	}
+
+=======
+>>>>>>> refs/remotes/origin/master
 }

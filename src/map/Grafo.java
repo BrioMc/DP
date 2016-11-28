@@ -340,6 +340,12 @@ public class Grafo {
           return sig;
       }
 
+<<<<<<< HEAD
+	/**
+	 * @param args
+	 */
+
+=======
     
 	
 	/**
@@ -395,5 +401,6 @@ public class Grafo {
 	   }
 	   // ------------------------------------------------------------------------------
 	}
+>>>>>>> refs/remotes/origin/master
 }
 

@@ -49,6 +49,15 @@ public class Queue<E> extends LinkedList<E> {
 	}
 
 	/**
+ * 
+ */
+	@Override
+	public E pollFirst() {
+		// TODO Auto-generated method stub
+		return super.pollFirst();
+	}
+
+	/**
 	 * return true if Queue is empty
 	 */
 	@Override
