@@ -7,7 +7,7 @@ import api.Tree;
  * Ignacio Caro Cumplido 
  * Javier Ballesteros Moron
  * EC1
- * 2ï¿½
+ * 2º
  */
 
 /**
@@ -38,10 +38,14 @@ public class ThroneDoor {
 
 	/**
 	 * Parametrized constructor with the depth and the Key's array as parameters
+<<<<<<< HEAD
 	 * 
 	 * @param keys
 	 *            {@code Key[]}
 	 * @param depthn
+=======
+	 * * parametros.
+>>>>>>> refs/remotes/origin/master
 	 */
 	public ThroneDoor(Key[] keys, int depthn) {
 		isOpen = false;
@@ -56,10 +60,10 @@ public class ThroneDoor {
 	 * Method for setting the door up with the array that has been received
 	 * previously.
 	 * 
-	 * @param start
-	 *            {@code int} with the first value to take into account
-	 * @param end
-	 *            {@code int} with the last value to take into account
+	 * @param ini
+	 *            integer with the first value to take into account
+	 * @param fin
+	 *            integer with the last value to take into account
 	 */
 
 	private void cfglock(int start, int end) {
@@ -84,24 +88,24 @@ public class ThroneDoor {
 	}
 
 	/**
-	 * Shows the state of the lock inOrder.
+	 * Shows the state of the lock inOrden.
 	 */
 	public void showLock() {
 
-		lock.inOrder();
+		lock.inOrden();
 
 	}
 
 	/**
-	 * Shows the state of the tested keys inOrder.
+	 * Shows the state of the tested keys inOrden.
 	 */
 	public void showTested() {
-		tested.inOrder();
+		tested.inOrden();
 	}
 
 	/**
-	 * Method which returns wether the door is open or closed. open={@code true}
-	 * closed={@code false}
+	 * Method which returns wether the door is open or closed open=true
+	 * closed=false
 	 * 
 	 * @return state of the door
 	 */

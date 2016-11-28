@@ -6,6 +6,12 @@ package api;
 import java.util.LinkedList;
 
 public class Queue<E> extends LinkedList<E> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Add element to Queue
 	 */

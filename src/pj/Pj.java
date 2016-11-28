@@ -1,7 +1,7 @@
 package pj;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2ï¿½
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
 import java.util.ArrayList;
 
@@ -10,13 +10,19 @@ import door.Key;
 import map.Dir;
 import map.Map;
 import map.Square;
+<<<<<<< HEAD
+=======
+import api.Compare;
+import door.Key;
+
+>>>>>>> refs/remotes/origin/master
 
 public abstract class Pj implements Compare<Pj> {
 	/** Pj Identifier */
 	protected Integer id;
 	/** Pj Name */
 	protected String name;
-	/** Turn when pj spawns. */
+	/** Turn when pj begin. */
 	protected int turnInitial;
 	/** Room in which the player is */
 	protected int room;
@@ -29,9 +35,13 @@ public abstract class Pj implements Compare<Pj> {
 	/** Movement Flag */
 	protected boolean move;
 	/** Current turn */
+<<<<<<< HEAD
 	protected int currTurn;
 	/** House tag */
 	protected char houseTag;
+=======
+	protected int turnAct;
+>>>>>>> refs/remotes/origin/master
 
 	/**
 	 * Parameterized constructor
@@ -42,14 +52,18 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param room
 	 */
 	protected Pj(String name, char M, int turn, int room) {
-		this.currTurn = 0;
+		this.turnAct = 0;
 		this.move = false;
 		this.tag = M;
 		this.name = name;
 		this.room = room;
 		this.turnInitial = turn;
 		this.rutes = new Dir[200];
+<<<<<<< HEAD
 		this.keys = new ArrayList<Key>();
+=======
+		this.keys=new ArrayList<Key>();
+>>>>>>> refs/remotes/origin/master
 	}
 
 	/**
@@ -143,7 +157,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * 
 	 * @param rutes
 	 */
-	public void setRoutes(Dir[] rutes) {
+	public void setRutes(Dir[] rutes) {
 		this.rutes = rutes;
 	}
 
@@ -151,6 +165,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * public method for watch pj's information
 	 */
 	protected void showPj(String house) {
+<<<<<<< HEAD
 		System.out.print("(" + house + ":" + getTag() + ":" + getRoom() + ":" + currTurn + ":");
 		if (houseTag != 'W') {
 			for (int x = 0; x < this.keys.size(); x++) {
@@ -158,6 +173,10 @@ public abstract class Pj implements Compare<Pj> {
 			}
 			System.out.println(")");
 		}
+=======
+		System.out.print("(" + house + ":" + getTag() + ":" + getRoom() + ":"
+				+ turnAct + ":");
+>>>>>>> refs/remotes/origin/master
 	}
 
 	/**
@@ -208,6 +227,7 @@ public abstract class Pj implements Compare<Pj> {
 		}
 	}
 
+<<<<<<< HEAD
 	/**
 	 * 
 	 * @param map
@@ -240,6 +260,8 @@ public abstract class Pj implements Compare<Pj> {
 
 	}
 
+=======
+>>>>>>> refs/remotes/origin/master
 	/**
 	 * Method for action pj
 	 * 
@@ -247,6 +269,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param i
 	 * @param c
 	 */
+<<<<<<< HEAD
 	protected void actionPj(Dir[] i, char c) {
 		Map x = Map.getInstance();
 		if (x.getDRoom() == getRoom()) {
@@ -263,8 +286,12 @@ public abstract class Pj implements Compare<Pj> {
 
 		if (c != 'W') {
 			keyAction(x.getMap(), c);
+=======
+	protected void actionPj(Map x, char c) {
+		if (x.getDRoom() == getRoom()) {
+			actionDoor(x, c);
+>>>>>>> refs/remotes/origin/master
 		}
-
 	}
 
 	/**
@@ -276,9 +303,15 @@ public abstract class Pj implements Compare<Pj> {
 	 *            identifier character of HouseTag
 	 * @return True if door is open
 	 */
+<<<<<<< HEAD
 	private boolean actionDoor(Map x, char c) {
+=======
+	protected boolean actionDoor(Map x, char c) {
+>>>>>>> refs/remotes/origin/master
 		boolean doorRoom = false;
+		doorRoom = true;
 		switch (c) {
+<<<<<<< HEAD
 
 		case 'W':
 		case 'L':
@@ -304,6 +337,19 @@ public abstract class Pj implements Compare<Pj> {
 			break;
 		default:
 			break;
+=======
+		case 'C':
+			x.getDoor().closeDoor();
+			;
+			break;
+		case 'O':
+			if (x.getDoor().open(keys.remove(keys.size()))) {
+				x.getMap()[0][0].removePj(this);
+				x.getThrone().insertPj(this);
+			}
+			break;
+
+>>>>>>> refs/remotes/origin/master
 		}
 		return doorRoom;
 
