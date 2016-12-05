@@ -10,18 +10,34 @@ public class Walls {
 		destination = y;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getOrigin() {
 		return origin;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getDestination() {
 		return destination;
 	}
 
+	/**
+	 * 
+	 */
 	public void showWalls() {
 		System.out.println(origin + "->" + destination);
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @return
+	 */
 	public boolean equals(Walls x) {
 		boolean equals = false;
 		if ((this.origin == x.origin && this.destination == x.destination)

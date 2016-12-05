@@ -2,7 +2,13 @@ package dp.cargador;
 
 import java.util.List;
 
+import door.ThroneDoor;
+import map.Dir;
 import map.Map;
+import pj.Lannister;
+import pj.Stark;
+import pj.Targaryen;
+import pj.WhiteWalkers;
 
 /**
  * Clase creada para ser usada en la utilidad cargador contiene el main del
@@ -83,23 +89,26 @@ public class Cargador {
 			switch (numElto) {
 			case 0:
 				crearMapa(numCampos, vCampos);
-				Map map = new Map(Integer.parseInt(vCampos.get(4)), Integer.parseInt(vCampos.get(1)),
-						Integer.parseInt(vCampos.get(2)), null);
-				map.paint();
+
 				break;
 			case 1:
 				crearStark(numCampos, vCampos);
+
 				break;
 			case 2:
 				crearTargaryen(numCampos, vCampos);
+
 				break;
 			case 3:
 				crearLannister(numCampos, vCampos);
+
 				break;
 			case 4:
 				crearCaminante(numCampos, vCampos);
+
 				break;
 			}
+
 		} else
 			System.out.println(
 					"ERROR Cargador::crear: Datos de configuración incorrectos... " + elto + "," + numCampos + "\n");
@@ -114,7 +123,10 @@ public class Cargador {
 	 *            array que contiene los valores de cada atributo
 	 */
 	private void crearMapa(int numCampos, List<String> vCampos) {
-		System.out.println("Creado Mapa: " + vCampos.get(1) + "\n");
+
+		ThroneDoor door = new ThroneDoor(Integer.parseInt(vCampos.get(4)));
+		Map.generateInstance(Integer.parseInt(vCampos.get(3)), Integer.parseInt(vCampos.get(2)),
+				Integer.parseInt(vCampos.get(1)), door);
 		// inicializar mapa
 	}
 
@@ -127,7 +139,12 @@ public class Cargador {
 	 *            array que contiene los valores de cada atributo
 	 */
 	private void crearStark(int numCampos, List<String> vCampos) {
-		System.out.println("Creado Stark: " + vCampos.get(1) + "\n");
+
+		Stark stark = new Stark(vCampos.get(1), vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)), 0);
+		Dir[] direccionesE = { Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S,
+				Dir.W, Dir.S, Dir.E, Dir.S };
+		stark.setRoutes(direccionesE);
+		Map.getInstance().insertPj(stark);
 		// Registrar Stark en el mapa
 	}
 
@@ -140,7 +157,13 @@ public class Cargador {
 	 *            array que contiene los valores de cada atributo
 	 */
 	private void crearTargaryen(int numCampos, List<String> vCampos) {
-		System.out.println("Creado Targaryen: " + vCampos.get(1) + "\n");
+		Targaryen targaryen = new Targaryen(vCampos.get(1), vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)),
+				0);
+		Dir[] direccionesD = { Dir.E, Dir.S, Dir.S, Dir.S, Dir.W, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.S, Dir.S,
+				Dir.E, Dir.E };
+
+		targaryen.setRoutes(direccionesD);
+		Map.getInstance().insertPj(targaryen);
 		// Registrar Targaryen en el mapa
 	}
 
@@ -153,7 +176,12 @@ public class Cargador {
 	 *            array que contiene los valores de cada atributo
 	 */
 	private void crearLannister(int numCampos, List<String> vCampos) {
-		System.out.println("Creado Lannister: " + vCampos.get(1) + "\n");
+		Lannister lannister = new Lannister(vCampos.get(1), vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)),
+				Map.getInstance().getDRoom());
+		Dir[] direccionesT = { Dir.N, Dir.N, Dir.W, Dir.N, Dir.N, Dir.W, Dir.S, Dir.W, Dir.W, Dir.N, Dir.N, Dir.W,
+				Dir.S, Dir.S, Dir.S, Dir.S, Dir.S, Dir.E, Dir.E, Dir.E, Dir.E, Dir.E };
+		lannister.setRoutes(direccionesT);
+		Map.getInstance().insertPj(lannister);
 		// Registrar Lannister en el mapa
 	}
 
@@ -166,7 +194,12 @@ public class Cargador {
 	 *            array que contiene los valores de cada atributo
 	 */
 	private void crearCaminante(int numCampos, List<String> vCampos) {
-		System.out.println("Creado Caminante Blanco: " + vCampos.get(1) + "\n");
+		WhiteWalkers whiteWalkers = new WhiteWalkers(vCampos.get(1), vCampos.get(2).charAt(0),
+				Integer.parseInt(vCampos.get(3)), Map.getInstance().surW());
+		Dir[] direccionesC = { Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N, Dir.E, Dir.N, Dir.E, Dir.E,
+				Dir.S, Dir.S, Dir.S, Dir.S, Dir.S };
+		whiteWalkers.setRoutes(direccionesC);
+		Map.getInstance().insertPj(whiteWalkers);
 		// Registrar Baratheon en el mapa
 	}
 

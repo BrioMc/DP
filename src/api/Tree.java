@@ -1,5 +1,8 @@
 package api;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import door.Key;
 
 /**
@@ -237,21 +240,23 @@ public class Tree<T extends Compare<T>> {
 	}
 
 	/**
-	 * InOrder travel in the door.
+	 * return String InOrder travel in the door.
 	 */
-	public void inOrden() {
+	public String inOrden() {
 		Tree<T> aux = null;
+		String m = "";
 		if (!empty()) {
 			if ((aux = getTLeft()) != null) {
-				aux.inOrden();
+				m += aux.inOrden();
 			}
 
-			System.out.print(" " + this.rootData.toString());
+			m += (" " + this.rootData.toString());
 
 			if ((aux = getTRight()) != null) {
-				aux.inOrden();
+				m += aux.inOrden();
 			}
 		}
+		return m;
 	}
 
 	public int depth() {
@@ -359,8 +364,7 @@ public class Tree<T extends Compare<T>> {
 		Tree<Key> Tree = new Tree<Key>();
 		System.out.println("Ejemplos sesion árbol binario de búsqueda");
 
-		Key[] datas = { new Key(20), new Key(7), new Key(18), new Key(22),
-				new Key(5), new Key(2), new Key(1) };
+		Key[] datas = { new Key(20), new Key(7), new Key(18), new Key(22), new Key(5), new Key(2), new Key(1) };
 
 		for (int i = 0; i < datas.length; i++) {
 			Tree.insert(datas[i]);

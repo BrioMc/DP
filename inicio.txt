@@ -5,4 +5,3 @@ LANNISTER#Tyrion#L#2#
 STARK#Eddard#S#1#
 CAMINANTE#IceMan#I#3#
 TARGARYEN#Daenerys#T#3#
-LANNISTER#Jaime#J#1#

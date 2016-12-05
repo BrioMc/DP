@@ -1,8 +1,6 @@
 package pj;
 
-import map.Map;
 import door.Key;
-import map.Dir;
 
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
@@ -31,14 +29,21 @@ public class Lannister extends Pj {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void showPj() {
-		// TODO Auto-generated method stub
-		super.showPj("Lannister");
-	}
-
+	/**
+	 * 
+	 */
 	public void actionPj() {
 		super.actionPj(this.rutes, this.houseTag);
 
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String showPj() {
+		// TODO Auto-generated method stub
+		return super.showPj("Lannister");
 	}
 
 }

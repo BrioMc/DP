@@ -1,8 +1,5 @@
 package pj;
 
-import map.Map;
-import map.Dir;
-
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
@@ -23,13 +20,20 @@ public class Stark extends Pj {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void showPj() {
-		// TODO Auto-generated method stub
-		super.showPj("Stark");
-	}
-
+	/**
+	 * 
+	 */
 	public void actionPj() {
 		super.actionPj(this.rutes, this.houseTag);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String showPj() {
+		// TODO Auto-generated method stub
+		return super.showPj("Stark");
 	}
 
 }

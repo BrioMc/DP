@@ -1,5 +1,8 @@
 package door;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import api.Tree;
 
 /**
@@ -28,9 +31,9 @@ public class ThroneDoor {
 	/**
 	 * Default constructor
 	 */
-	public ThroneDoor() {
+	public ThroneDoor(int dp) {
 		isOpen = false;
-		depth = 0;
+		depth = dp;
 		lock = new Tree<Key>();
 		lock = new Tree<Key>();
 		comb = new Key[200];
@@ -38,14 +41,11 @@ public class ThroneDoor {
 
 	/**
 	 * Parametrized constructor with the depth and the Key's array as parameters
-<<<<<<< HEAD
 	 * 
 	 * @param keys
 	 *            {@code Key[]}
 	 * @param depthn
-=======
-	 * * parametros.
->>>>>>> refs/remotes/origin/master
+	 *            * parametros.
 	 */
 	public ThroneDoor(Key[] keys, int depthn) {
 		isOpen = false;
@@ -90,17 +90,17 @@ public class ThroneDoor {
 	/**
 	 * Shows the state of the lock inOrden.
 	 */
-	public void showLock() {
+	public String showLock() {
 
-		lock.inOrden();
+		return lock.inOrden();
 
 	}
 
 	/**
 	 * Shows the state of the tested keys inOrden.
 	 */
-	public void showTested() {
-		tested.inOrden();
+	public String showTested() {
+		return tested.inOrden();
 	}
 
 	/**
@@ -126,18 +126,20 @@ public class ThroneDoor {
 	/**
 	 * 
 	 */
-	public void showDoor() {
+	public String showDoor() {
+		String m = "";
 		System.out.print("(Door");
 		if (isOp()) {
-			System.out.print(":open:");
+			m += (":open:");
 		} else {
-			System.out.print(":close:");
+			m += (":close:");
 		}
-		System.out.print(this.depth + ":");
-		showLock();
-		System.out.print(":");
-		showTested();
-		System.out.println();
+		m += (this.depth + ":");
+		m += showLock();
+		m += (":");
+		m += showTested();
+		m += ("\n");
+		return m;
 	}
 
 	/**
@@ -151,16 +153,14 @@ public class ThroneDoor {
 			if (lock.belongs(key)) {
 				lock.remove(key);
 				tested.insert(key);
-				if (lock.nHojas() <= (lock.nNodos() - lock.nHojas())
-						&& lock.depth() < this.depth) {
+				if (lock.nHojas() <= (lock.nNodos() - lock.nHojas()) && lock.depth() < this.depth) {
 					isOpen = true;
 				}
 			} else {
 				System.out.println("The key does not match with the door lock");
 			}
 		} else {
-			System.out
-					.println("This key has already been tested, it can't be repeated.");
+			System.out.println("This key has already been tested, it can't be repeated.");
 		}
 		return isOpen;
 	}

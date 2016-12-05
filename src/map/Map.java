@@ -1,13 +1,16 @@
 package map;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import door.Key;
+import door.ThroneDoor;
 import pj.Lannister;
 import pj.Pj;
 import pj.Stark;
 import pj.Targaryen;
 import pj.WhiteWalkers;
-import door.Key;
-import door.ThroneDoor;
-import java.util.ArrayList;
 
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
@@ -20,36 +23,8 @@ public class Map {
 	protected int doorRoom;
 	protected Square addit;
 	protected ArrayList<Walls> walls;
-	public static Map instance = null;
-	protected Grafo graph;
-
-	/**
-	 * 
-	 * @param doorRoom
-	 * @param dimX
-	 * @param dimY
-	 * @param door
-	 */
-
-	public static Map getInstance() {
-		return instance;
-	}
-
-	public static void generateInstance(int doorRoom, int dimX, int dimY, ThroneDoor door) {
-		instance = new Map(doorRoom, dimX, dimY, door);
-	}
-
-	public Map(int doorRoom, int dimX, int dimY, ThroneDoor door) {
-		this.map = new Square[dimX][dimY];
-		iniMap();
-		this.turn = 0;
-		this.door = door;
-		this.doorRoom = doorRoom;
-		this.addit = new Square(1111);
-		this.walls = new ArrayList<Walls>();
-		iniWalls();
-		this.graph = new Grafo();
-	}
+	protected Graph graph;
+	public static Map instance;
 
 	/**
 	 * Private method for initializing the map
@@ -70,13 +45,11 @@ public class Map {
 			for (int j = 0; j < map[i].length; j++) {
 
 				if (i != 0)
-
-					walls.add(new Walls(map[i][j].getId(), map[i - 1][j].getId()));
+					walls.add(new Walls(i * getWidth() + j, (i - 1) * getWidth() + j));
 				if (j != map[i].length - 1)
 					walls.add(new Walls(map[i][j].getId(), map[i][j + 1].getId()));
 				if (i != map.length - 1)
 					walls.add(new Walls(map[i][j].getId(), map[i + 1][j].getId()));
-
 				if (j != 0)
 					walls.add(new Walls(map[i][j].getId(), map[i][j - 1].getId()));
 
@@ -84,6 +57,106 @@ public class Map {
 		}
 	}
 
+	/**
+	 * 
+	 */
+	protected boolean[] retWalls(int i, int j) {
+		boolean[] wa = new boolean[4];
+		int n = 0, m = 0;
+		// E
+		wa[3] = false;
+		// S
+		wa[1] = false;
+		// N
+		wa[0] = false;
+		// W
+		wa[2] = false;
+
+		// charge wallBool
+		for (int z = 0; z < walls.size(); z++) {
+			// n = walls.get(z).getOrigin() / map[i].length;
+			// m = walls.get(z).getOrigin() % map[i].length;
+			n = (i * map.length + j);
+			m = walls.get(z).getOrigin();
+			// System.out.println(n+"-"+m);
+			if (n == m) {
+				// System.out.println("entra");
+				if (walls.get(z).getOrigin() == walls.get(z).getDestination() - map[i].length) {
+					// S
+					wa[1] = true;
+				}
+				if (walls.get(z).getOrigin() == (walls.get(z).getDestination() - 1)) {
+					// E
+					wa[3] = true;
+				}
+				if (walls.get(z).getOrigin() == walls.get(z).getDestination() + map[i].length) {
+					// N
+					wa[0] = true;
+				}
+				if (walls.get(z).getOrigin() == (walls.get(z).getDestination() + 1)) {
+					// W
+					wa[2] = true;
+				}
+			}
+
+		}
+
+		return wa;
+	}
+
+	/**
+	 * 
+	 * @param doorRoom
+	 * @param dimX
+	 * @param dimY
+	 * @param door
+	 */
+	public Map(int doorRoom, int dimX, int dimY, ThroneDoor door) {
+		this.map = new Square[dimX][dimY];
+		iniMap();
+		this.turn = 0;
+		this.door = door;
+		this.doorRoom = doorRoom;
+		this.addit = new Square(1111);
+		this.walls = new ArrayList<Walls>();
+		iniWalls();
+		this.graph = new Graph(dimX * dimY);
+	}
+
+	/**
+	 * 
+	 * @param doorRoom
+	 * @param dimX
+	 * @param dimY
+	 * @param door
+	 */
+	public static void generateInstance(int doorRoom, int dimX, int dimY, ThroneDoor door) {
+		instance = new Map(doorRoom, dimX, dimY, door);
+	}
+
+	/**
+	 * 
+	 * @param doorRoom
+	 * @param dimX
+	 * @param dimY
+	 * @param door
+	 */
+
+	public static Map getInstance() {
+		return instance;
+	}
+
+	/**
+	 * 
+	 * @param x
+	 */
+	public void setWalls(ArrayList<Walls> x) {
+		walls = x;
+	}
+
+	/**
+	 * 
+	 */
 	public void showW() {
 		for (int i = 0; i < walls.size(); i++) {
 			walls.get(i).showWalls();
@@ -101,7 +174,7 @@ public class Map {
 	 * Public method, return Throne room
 	 */
 	public Square getThrone() {
-		// TODO Auto-generated method stub
+
 		return addit;
 	}
 
@@ -124,12 +197,32 @@ public class Map {
 	}
 
 	/**
-	 * Return the map size
+	 * 
+	 * @return
+	 */
+	public int getLength() {
+		return this.map.length;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public int getWidth() {
+		return this.map[0].length;
+	}
+
+	/**
+	 * /** Return the map size
 	 * 
 	 * @return map size
 	 */
 	public int getTMap() {
 		return (this.map.length * this.map[0].length) - 1;
+	}
+
+	public ArrayList<Walls> getWalls() {
+		return walls;
 	}
 
 	/**
@@ -162,6 +255,13 @@ public class Map {
 	 */
 	public int norE() {
 		return map[0][map[0].length - 1].getId();
+	}
+
+	/**
+	 * 
+	 */
+	public void doKruskal() {
+		this.graph.Kruskal();
 	}
 
 	/**
@@ -203,10 +303,8 @@ public class Map {
 				}
 				if (count % 2 != 0 && map[x][y].nkeys() < 5 && !rest) {
 					map[x][y].insertKey(key);
-
 				}
 				rest = false;
-
 				// System.out.println(count);
 				count++;
 
@@ -231,160 +329,196 @@ public class Map {
 				map[i][j].resetTurn();
 			}
 		}
-
 		this.turn++;
+	}
+
+	private String writeMapG() {
+		String ma = "";
+		int origin = 0, destination = 0;
+		for (int x = 0; x < map[0].length; x++) {
+			ma += (" _");
+		}
+
+		ma += "\n";
+		for (int i = 0; i < map.length; i++) {
+			ma += ("|");
+			for (int j = 0; j < map[i].length; j++) {
+				origin = i * getWidth() + j;
+				destination = origin + 1;
+				// Show if have 1 pj only in square
+				if (map[i][j].nPj() == 1) {
+					if (j != map[i].length - 1) {
+						ma += (map[i][j].checkPj().getTag());
+						if (graph.getArc(origin, destination) != 1) {
+							ma += ("|");
+						} else {
+							ma += (" ");
+						}
+					} else {
+						ma += (map[i][j].checkPj().getTag());
+					}
+				}
+				// Show if have more that 1 pj in square
+				else if (map[i][j].nPj() > 1) {
+					if (j != map[0].length - 1) {
+						ma += (String.valueOf(map[i][j].nPj()));
+						if (graph.getArc(origin, destination) != 1) {
+							ma += ("|");
+						} else {
+							ma += (" ");
+						}
+					} else {
+						ma += (String.valueOf(map[i][j].nPj()));
+					}
+				}
+				// Print if square is empty
+				else {
+					destination = origin + getWidth();
+					if (j != map[0].length - 1) {
+						// Paint botton wall if exist
+						if (graph.getArc(origin, destination) != 1 || i == map.length - 1) {
+							ma += ("_");
+						} else {
+							ma += (" ");
+						}
+						// Paint left wall if exist
+						destination = origin + 1;
+
+						if (graph.getArc(origin, destination) != 1) {
+							ma += ("|");
+						} else {
+							ma += (" ");
+						}
+					} else {
+						if (graph.getArc(origin, destination) != 1 || i == map.length - 1) {
+							ma += ("_");
+						} else {
+							ma += (" ");
+						}
+					}
+				}
+			}
+			ma += ("|");
+			ma += "\n";
+		}
+		return ma;
+	}
+
+	/**
+	 * 
+	 * @param bufferOut
+	 * @throws IOException
+	 */
+	public void writelog(BufferedWriter bufferOut) throws IOException {
+		// Write Turn data
+		bufferOut.write("(turn:" + this.turn + ")");
+		bufferOut.newLine();
+		// Write Map data
+		bufferOut.write("(map:" + getTMap() + ")");
+		bufferOut.newLine();
+		// Write Door data
+		bufferOut.write(door.showDoor());
+		bufferOut.newLine();
+		// Write Map look
+		bufferOut.write(writeMapG());
+		bufferOut.newLine();
+		// Write squares with keys
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				if (map[i][j].nkeys() != 0) {
+					bufferOut.write(map[i][j].showKeys());
+					bufferOut.newLine();
+				}
+			}
+		}
+		// Write Pjs
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+
+				bufferOut.write(map[i][j].showPj());
+				bufferOut.newLine();
+			}
+		}
 	}
 
 	/**
 	 * Public Method for paint map summary
 	 */
 	public void paintMap() {
-		System.out.println("(turno:" + this.turn + ")");
-		System.out.println("(mapa:" + getTMap() + ")");
-		door.showDoor();
-		// walls, N E S W
-		boolean[] wa = new boolean[2];
-		int n = 0, m = 0;
-
-		for (int x = 0; x < map[0].length; x++) {
-
-			System.out.print(" _");
-		}
-		System.out.println();
-		for (int i = 0; i < map.length; i++) {
-
-			System.out.print("|");
-
-			for (int j = 0; j < map[i].length; j++) {
-				// E
-				wa[0] = false;
-				// S
-				wa[1] = false;
-
-				// charge wallBool
-				for (int z = 0; z < walls.size(); z++) {
-					n = walls.get(z).getOrigin() / map[i].length;
-					m = walls.get(z).getOrigin() % map[i].length;
-					if (n == i && m == j) {
-						n = walls.get(z).getDestination() / map[i].length;
-						m = walls.get(z).getDestination() % map[i].length;
-						if (i < n) {
-							// S
-							wa[1] = true;
-						}
-						if (j < m) {
-							// E
-							wa[0] = true;
-						}
-					}
-					n = walls.get(z).getDestination() / map[i].length;
-					m = walls.get(z).getDestination() % map[i].length;
-
-					if (n == i && m == j) {
-						n = walls.get(z).getOrigin() / map[i].length;
-						m = walls.get(z).getOrigin() % map[i].length;
-						if (i > n) {
-							// S
-							wa[1] = true;
-						}
-						if (j > m) {
-							// E
-							wa[0] = true;
-						}
-					}
-
-				}
-				// Show if have 1 pj only in square
-				if (map[i][j].nPj() == 1) {
-					if (j != map[i].length - 1) {
-						System.out.print(map[i][j].takePj().getTag());
-						if (wa[0]) {
-							System.out.print("|");
-
-						} else {
-
-							System.out.print(" ");
-						}
-					} else {
-						System.out.print(map[i][j].takePj().getTag());
-
-					}
-					// Show if have more that 1 pj in square
-
-				} else if (map[i][j].nPj() > 1) {
-					if (j != map[0].length - 1) {
-						System.out.print(map[i][j].nPj());
-						if (wa[0]) {
-							System.out.print("|");
-
-						} else {
-
-							System.out.print(" ");
-						}
-
-					} else {
-						System.out.print(map[i][j].nPj());
-
-					}
-
-				} // Print if square is empty
-				else {
-
-					if (j != map[0].length - 1) {
-						// Paint botton wall if exist
-						if (wa[1]) {
-							System.out.print("_");
-
-						} else {
-
-							System.out.print(" ");
-						}
-						// Paint left wall if exist
-
-						if (wa[0]) {
-							System.out.print("|");
-
-						} else {
-							System.out.print(" ");
-						}
-
-					} else {
-
-						if (wa[1]) {
-							System.out.print("_");
-
-						} else {
-
-							System.out.print(" ");
-						}
-
-					}
-
-				}
-
-			}
-
-			System.out.print("|");
-
-			System.out.println("");
-
-		}
+		// paint turn data
+		System.out.println("(turn:" + this.turn + ")");
+		// Paint Map data
+		System.out.println("(map:" + getTMap() + ")");
+		// Paint door data
+		System.out.print(door.showDoor());
+		// Paint Map look
+		System.out.print(writeMapG());
+		// Paint squares with keys
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
 				if (map[i][j].nkeys() != 0) {
-					map[i][j].showKeys();
+					System.out.print(map[i][j].showKeys());
 				}
-
+			}
+		}
+		// Paint pjs in map
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				System.out.print(map[i][j].showPj());
 			}
 		}
 	}
 
+	/**
+	 * 
+	 * @param args
+	 */
+	public void paintMarks() {
+		for (int x = 0; x < map[0].length; x++) {
+			System.out.print(" _");
+		}
+
+		System.out.println();
+		for (int i = 0; i < map.length; i++) {
+			System.out.print("|");
+			for (int j = 0; j < map[i].length; j++) {
+				boolean[] wa = retWalls(i, j);
+				// Show if have 1 pj only in square
+				System.out.print(map[i][j].getMark());
+				if (j != map[0].length - 1) {
+					// Paint botton wall if exist
+					if (wa[1] || i == map.length - 1) {
+						System.out.print("_");
+					} else {
+						System.out.print(" ");
+					}
+					// Paint left wall if exist
+					if (wa[3]) {
+						System.out.print("|");
+					} else {
+						System.out.print(" ");
+					}
+				} else {
+					if (wa[1] || i == map.length - 1) {
+						System.out.print("_");
+					} else {
+						System.out.print(" ");
+					}
+				}
+			}
+			System.out.print("|");
+			System.out.println();
+		}
+
+		System.out.println();
+	}
+
 	public static void main(String args[]) {
-		int dimX = 6;
-		int dimY = 8;
+		int dimX = 4;
+		int dimY = 4;
 		int doorRoom = (dimX * dimY) - 1;
 		int altLock = 3;
-		// int maxTurns = 50;
+		int maxTurns = 50;
 		int numKeys = 15;
 
 		// Creating and configuring the door. It is not specified here since
@@ -487,6 +621,12 @@ public class Map {
 		// execute their actions
 		// in a chronologically order (the characters that arrived first are the
 		// first in leaving the square)
+		map.graph.Kruskal();
+		// for (int i = 0; i < maxTurns; i++) {
+		// map.paintMap();
+		// map.process(i);
+		// }
+		// map.graph.showArcs();
 		map.paintMap();
 
 	}

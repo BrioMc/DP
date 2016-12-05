@@ -2,13 +2,14 @@ package map;
 
 import java.util.ArrayList;
 
+import api.Compare;
+import api.Queue;
+import door.Key;
 import pj.Lannister;
 import pj.Pj;
 import pj.Stark;
 import pj.Targaryen;
 import pj.WhiteWalkers;
-import api.*;
-import door.Key;
 
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
@@ -40,59 +41,129 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-	 * <<<<<<< HEAD Method which shows all the keys stored in the square
-	 * arrayList
+	 * <<<<<<< HEAD Method to get the square's ID
+	 * 
+	 * @return {@code int} the ID of this square =======
+	 * 
+	 * @return >>>>>>> refs/remotes/origin/master
 	 */
-
-	public void showKeys() {
-		System.out.print("(sala:" + getId() + ": ");
-		for (int x = 0; x < this.keys.size(); x++) {
-			System.out.print(keys.get(x).toString() + " ");
-		}
-		System.out.println(")");
+	public int getId() {
+		// TODO Auto-generated method stub
+		return id;
 	}
 
-	public Integer getMark() {
-		return mark;
-	}
-
+	/**
+	 * 
+	 * @param mark
+	 */
 	public void setMark(Integer mark) {
 		this.mark = mark;
 	}
 
 	/**
-	 * <<<<<<< HEAD
+	 * 
+	 * @return
+	 */
+	public Integer getMark() {
+		return mark;
+	}
+
+	/**
+	 * Method to insert a key into the square's arrayList
+	 * 
+	 * @param kye
+	 *            is the key to be inserted =======
+	 * @param kye
+	 *            >>>>>>> refs/remotes/origin/master
+	 */
+	public void insertKey(Key kye) {
+		this.keys.add(kye);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Key removeKey() {
+		return this.keys.remove(this.keys.size() - 1);
+	}
+
+	/**
+	 * Method which shows all the keys stored in the square arrayList
+	 */
+
+	public String showKeys() {
+		String m = "";
+		m += ("(square:" + getId() + ": ");
+		for (int x = 0; x < this.keys.size(); x++) {
+			m += (keys.get(x).toString() + " ");
+		}
+		m += (")\n");
+		return m;
+	}
+
+	/**
+	 * Method to insert a pj into the square's queue
+	 * 
+	 * @param pj
+	 *            is the pj to be inserted ======= /**
+	 * 
+	 * @param pj
+	 *            >>>>>>> refs/remotes/origin/master
+	 */
+	public void insertPj(Pj pj) {
+		pjs.add(pj);
+	}
+
+	/**
+	 * Method to remove a character from the queue
+	 * 
+	 * @param pj
+	 *            is the pj to be removed from the queue
+	 */
+
+	public void removePj(Pj pj) {
+		pjs.remove(pj);
+	}
+
+	/**
+	 * 
 	 * 
 	 */
-	public void showPj() {
+	public String showPj() {
+		String m = "";
 		for (int i = 0; i < pjs.size(); i++) {
 			Pj temp = pjs.get(i);
 			switch (temp.getHTag()) {
 			case 'S':
 				Stark stark = (Stark) pjs.get(i);
-				stark.showPj();
+				m = stark.showPj();
+				m += "\n";
 				break;
 			case 'W':
 				WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(i);
-				whiteWalkers.showPj();
+				m = whiteWalkers.showPj();
+				m += "\n";
 				break;
 			case 'T':
 				Targaryen targaryen = (Targaryen) pjs.get(i);
-				targaryen.showPj();
+				m = targaryen.showPj();
+				m += "\n";
 				break;
 			case 'L':
 				Lannister lannister = (Lannister) pjs.get(i);
-				lannister.showPj();
+				m = lannister.showPj();
+				m += "\n";
 				break;
 
 			}
 
 		}
+		return m;
 	}
 
 	/**
-	 * Public method for getting array size ======= Publiv method for take array
-	 * size >>>>>>> refs/remotes/origin/master
+	 * Public method for getting array size
 	 * 
 	 * @return array size
 	 */
@@ -101,12 +172,10 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-	 * <<<<<<< HEAD Method to get the number of pjs inside the
 	 * 
-	 * @return the number of pjs inside the square =======
-	 * 
-	 * @return >>>>>>> refs/remotes/origin/master
+	 * @return
 	 */
+
 	public int nPj() {
 		return this.pjs.size();
 	}
@@ -120,9 +189,6 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-	 * 
-	 * <<<<<<< HEAD
-	 * 
 	 * @return
 	 */
 	public Pj takePj() {
@@ -176,50 +242,6 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-	 * Method to insert a key into the square's arrayList
-	 * 
-	 * @param kye
-	 *            is the key to be inserted =======
-	 * @param kye
-	 *            >>>>>>> refs/remotes/origin/master
-	 */
-	public void insertKey(Key kye) {
-		this.keys.add(kye);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public Key removeKey() {
-		return this.keys.remove(this.keys.size() - 1);
-	}
-
-	/**
-	 * Method to insert a pj into the square's queue
-	 * 
-	 * @param pj
-	 *            is the pj to be inserted ======= /**
-	 * 
-	 * @param pj
-	 *            >>>>>>> refs/remotes/origin/master
-	 */
-	public void insertPj(Pj pj) {
-		pjs.add(pj);
-	}
-
-	/**
-	 * Method to remove a character from the queue
-	 * 
-	 * @param pj
-	 *            is the pj to be removed from the queue
-	 */
-
-	public void removePj(Pj pj) {
-		pjs.remove(pj);
-	}
-
-	/**
 	 * <<<<<<< HEAD Compares two squares in a numerically way
 	 * 
 	 * @param t
@@ -248,18 +270,6 @@ public class Square implements Compare<Square> {
 	public boolean isEqual(Square t) {
 		// TODO Auto-generated method stub
 		return this.id.equals(t.getId());
-	}
-
-	/**
-	 * <<<<<<< HEAD Method to get the square's ID
-	 * 
-	 * @return {@code int} the ID of this square =======
-	 * 
-	 * @return >>>>>>> refs/remotes/origin/master
-	 */
-	public int getId() {
-		// TODO Auto-generated method stub
-		return id;
 	}
 
 }
