@@ -1,8 +1,5 @@
 package door;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-
 import api.Tree;
 
 /**

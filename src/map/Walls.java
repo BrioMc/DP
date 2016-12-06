@@ -1,6 +1,8 @@
 package map;
 
-public class Walls {
+import api.Compare;
+
+public class Walls implements Compare<Walls> {
 
 	private int origin;
 	private int destination;
@@ -33,15 +35,23 @@ public class Walls {
 		System.out.println(origin + "->" + destination);
 	}
 
-	/**
-	 * 
-	 * @param x
-	 * @return
-	 */
-	public boolean equals(Walls x) {
+	@Override
+	public int compareTo(Walls x) {
+		int equals = 0;
+
+		if ((this.origin == x.getOrigin() && this.destination == x.getDestination())
+				|| (this.origin == x.getDestination() && this.destination == this.getOrigin())) {
+			equals = 1;
+		}
+		return equals;
+	}
+
+	@Override
+	public boolean isEqual(Walls x) {
 		boolean equals = false;
-		if ((this.origin == x.origin && this.destination == x.destination)
-				|| (this.origin == x.destination && this.destination == this.origin)) {
+
+		if ((this.origin == x.getOrigin() && this.destination == x.getDestination())
+				|| (this.origin == x.getDestination() && this.destination == this.getOrigin())) {
 			equals = true;
 		}
 		return equals;

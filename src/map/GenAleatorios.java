@@ -1,6 +1,5 @@
 package map;
 
-import java.io.IOException;
 import java.util.Random;
 
 /**

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.ws.RequestWrapper;
-
 /**
  * @file grafo.h Declaracion de la clase grafo
  * @author <b> Profesores DP </b><br>
@@ -102,7 +100,7 @@ public class Graph {
 	private Square getSquare(Integer i) {
 		Map map = Map.getInstance();
 		Square x;
-		x = map.map[i / map.getWidth()][i % map.getWidth()];
+		x = map.map[i / map.getDimY()][i % map.getDimY()];
 		return x;
 	}
 
@@ -138,60 +136,47 @@ public class Graph {
 	public void doAtach() {
 		Map map = Map.getInstance();
 		int count = 0;
+		int max = (int) ((numNodes * 0.05));
 		// Other positions
-		while (count < (numNodes * 0.05) / 1) {
+		while (count < max) {
 			// take random square
-			int rnd = GenAleatorios.generarNumero(map.getTMap());
-			int i = rnd / map.getWidth();
-			int j = rnd % map.getWidth();
-			int nw = rnd - map.getWidth() - 1;
-			int ne = rnd - map.getWidth() + 1;
-			int sw = rnd + map.getWidth() - 1;
-			int se = rnd + map.getWidth() + 1;
-			int s = rnd + map.getWidth();
+			int rnd = GenAleatorios.generarNumero(map.getDimX() * map.getDimY());
+			int i = rnd / map.getDimY();
+			int j = rnd % map.getDimY();
+			int s = rnd + map.getDimY();
 			int w = rnd - 1;
 			int e = rnd + 1;
-			int n = rnd - map.getWidth();
-			boolean[] x = Map.getInstance().retWalls(i, j);
+			int n = rnd - map.getDimY();
+			boolean[] x = map.retWalls(i, j);
 			// N
-			if (x[0]) {
-				if (getArc(rnd, w) != 1 || getArc(w, nw) != 1 || getArc(nw, n) != 1 || getArc(rnd, e) != 1
-						|| getArc(n, ne) != 1 || getArc(e, ne) != 1) {
-					newArc(rnd, n, 1);
-					newArc(n, rnd, 1);
-					map.walls.remove(new Walls(rnd, n));
-					count++;
-				}
-			} // S
-			else if (x[1]) {
-				if (getArc(rnd, w) != 1 || getArc(w, sw) != 1 || getArc(sw, s) != 1 || getArc(s, se) != 1
-						|| getArc(se, e) != 1 || getArc(e, rnd) != 1) {
-					newArc(rnd, s, 1);
-					newArc(s, rnd, 1);
-					map.walls.remove(new Walls(rnd, s));
-					count++;
-				}
+			if (x[0] && map.notEmptySquare(rnd, 'n')) {
+				newArc(rnd, n, 1);
+				newArc(n, rnd, 1);
+				System.out.println(map.walls.remove(new Walls(rnd, n)));
+				count++;
+			}
+			// S
+			else if (x[1] && map.notEmptySquare(rnd, 'n')) {
+				newArc(rnd, s, 1);
+				newArc(s, rnd, 1);
+				map.walls.remove(new Walls(rnd, s));
+				count++;
 
 			} // W
-			else if (x[2]) {
-				if (getArc(rnd, n) != 1 || getArc(n, nw) != 1 || getArc(nw, w) != 1 || getArc(w, sw) != 1
-						|| getArc(sw, s) != 1 || getArc(s, rnd) != 1) {
-					newArc(rnd, w, 1);
-					newArc(w, rnd, 1);
-					map.walls.remove(new Walls(rnd, w));
-					count++;
-				}
+			else if (x[2] && map.notEmptySquare(rnd, 'w')) {
+				newArc(rnd, w, 1);
+				newArc(w, rnd, 1);
+				map.walls.remove(new Walls(rnd, w));
+				count++;
 			} // E
-			else {
-				if (getArc(rnd, n) != 1 || getArc(n, ne) != 1 || getArc(ne, e) != 1 || getArc(e, se) != 1
-						|| getArc(se, s) != 1 || getArc(s, rnd) != 1) {
-					newArc(rnd, e, 1);
-					newArc(e, rnd, 1);
-					map.walls.remove(new Walls(rnd, e));
-					count++;
-				}
+			else if (x[3] && map.notEmptySquare(rnd, 'e')) {
+				newArc(rnd, e, 1);
+				newArc(e, rnd, 1);
+
+				count++;
 			}
 		}
+
 	}
 
 	/**
@@ -208,7 +193,6 @@ public class Graph {
 		// fillArcs();
 
 		while (!map.walls.isEmpty()) {
-			map.paintMarks();
 			rnd = GenAleatorios.generarNumero(map.walls.size());
 			aux = map.walls.remove(rnd);
 			origin = getSquare(aux.getOrigin());
@@ -220,19 +204,22 @@ public class Graph {
 				this.newArc(destination.getId(), origin.getId(), 1);
 				// mark = map.map[origin.getId() /
 				// map.getLength()][origin.getId() % map.getWidth()].getMark();
+
 				mark = getSquare(aux.getDestination()).getMark();
 				markPropagation(origin, mark);
 
 			} else {
-				// if ((this.getArc(origin.getId(), destination.getId()) == 1)
-				// || (this.getArc(destination.getId(), origin.getId()) == 1)) {
-				selected.add(aux);
+				if ((getArc(origin.getId(), destination.getId()) != 1)
+						|| (getArc(destination.getId(), origin.getId()) != 1)) {
+					selected.add(aux);
 
-				// }
+				}
 			}
 
 		}
-		map.walls = selected;
+		map.walls.addAll(selected);
+		doAtach();
+
 	}
 
 	/**

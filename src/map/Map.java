@@ -19,6 +19,8 @@ import pj.WhiteWalkers;
 public class Map {
 	private int turn;
 	public Square[][] map;
+	private int dimX;
+	private int dimY;
 	protected ThroneDoor door;
 	protected int doorRoom;
 	protected Square addit;
@@ -45,7 +47,7 @@ public class Map {
 			for (int j = 0; j < map[i].length; j++) {
 
 				if (i != 0)
-					walls.add(new Walls(i * getWidth() + j, (i - 1) * getWidth() + j));
+					walls.add(new Walls(i * getDimY() + j, (i - 1) * getDimY() + j));
 				if (j != map[i].length - 1)
 					walls.add(new Walls(map[i][j].getId(), map[i][j + 1].getId()));
 				if (i != map.length - 1)
@@ -63,45 +65,130 @@ public class Map {
 	protected boolean[] retWalls(int i, int j) {
 		boolean[] wa = new boolean[4];
 		int n = 0, m = 0;
-		// E
-		wa[3] = false;
-		// S
-		wa[1] = false;
 		// N
 		wa[0] = false;
+		// S
+		wa[1] = false;
 		// W
 		wa[2] = false;
+		// E
+		wa[3] = false;
 
 		// charge wallBool
 		for (int z = 0; z < walls.size(); z++) {
 			// n = walls.get(z).getOrigin() / map[i].length;
 			// m = walls.get(z).getOrigin() % map[i].length;
-			n = (i * map.length + j);
+			n = (i * getDimY() + j);
 			m = walls.get(z).getOrigin();
 			// System.out.println(n+"-"+m);
 			if (n == m) {
 				// System.out.println("entra");
-				if (walls.get(z).getOrigin() == walls.get(z).getDestination() - map[i].length) {
-					// S
-					wa[1] = true;
-				}
-				if (walls.get(z).getOrigin() == (walls.get(z).getDestination() - 1)) {
-					// E
-					wa[3] = true;
-				}
-				if (walls.get(z).getOrigin() == walls.get(z).getDestination() + map[i].length) {
+				if (walls.get(z).getOrigin() == walls.get(z).getDestination() + getDimY()) {
 					// N
 					wa[0] = true;
+				}
+				if (walls.get(z).getOrigin() == walls.get(z).getDestination() - getDimY()) {
+					// S
+					wa[1] = true;
 				}
 				if (walls.get(z).getOrigin() == (walls.get(z).getDestination() + 1)) {
 					// W
 					wa[2] = true;
 				}
+				if (walls.get(z).getOrigin() == (walls.get(z).getDestination() - 1)) {
+					// E
+					wa[3] = true;
+				}
+
 			}
 
 		}
 
 		return wa;
+	}
+
+	/**
+	 * 
+	 * @param rnd
+	 * @param x
+	 * @return
+	 */
+	protected boolean notEmptySquare(int rnd, char x) {
+
+		int nw = rnd - getDimY() - 1;
+		int ne = rnd - getDimY() + 1;
+		int sw = rnd + getDimY() - 1;
+		int se = rnd + getDimY() + 1;
+		int s = rnd + getDimY();
+		int w = rnd - 1;
+		int e = rnd + 1;
+		int n = rnd - getDimY();
+		boolean vacia = false;
+		switch (x) {
+		case ('n'):
+			// if ((graph.getArc(rnd, w) != 1 && graph.getArc(rnd, w) > 1
+			// || graph.getArc(w, nw) != 1 && graph.getArc(w, nw) > 1
+			// || graph.getArc(nw, n) != 1 && graph.getArc(nw, n) > 1)
+			// && (graph.getArc(n, ne) != 1 && graph.getArc(n, ne) > 1
+			// || graph.getArc(ne, e) != 1 && graph.getArc(ne, e) > 1
+			// || graph.getArc(rnd, e) != 1 && graph.getArc(rnd, e) > 1)) {
+			// vacia = true;
+			// }
+			if ((graph.getArc(rnd, w) != 1 || graph.getArc(w, nw) != 1 || graph.getArc(nw, n) != 1)
+					&& (graph.getArc(n, ne) != 1 || graph.getArc(ne, e) != 1 || graph.getArc(rnd, e) != 1)) {
+				vacia = true;
+			}
+
+			break;
+		case ('s'):
+
+			// if ((graph.getArc(rnd, w) != 1 && graph.getArc(rnd, w) > 1
+			// || graph.getArc(w, sw) != 1 && graph.getArc(w, sw) > 1
+			// || graph.getArc(sw, s) != 1 && graph.getArc(sw, s) > 1)
+			// && (graph.getArc(s, se) != 1 && graph.getArc(s, se) > 1
+			// || graph.getArc(se, e) != 1 && graph.getArc(se, e) > 1
+			// || graph.getArc(rnd, e) != 1 && graph.getArc(rnd, e) > 1)) {
+			// vacia = true;
+			// }
+			if ((graph.getArc(rnd, w) != 1 || graph.getArc(w, sw) != 1 || graph.getArc(sw, s) != 1)
+					&& (graph.getArc(s, se) != 1 || graph.getArc(se, e) != 1 || graph.getArc(rnd, e) != 1)) {
+				vacia = true;
+			}
+			break;
+		case ('w'):
+
+			// if ((graph.getArc(rnd, n) != 1 && graph.getArc(rnd, n) > 1
+			// || graph.getArc(n, nw) != 1 && graph.getArc(n, nw) > 1
+			// || graph.getArc(nw, w) != 1 && graph.getArc(nw, w) > 1)
+			// && (graph.getArc(w, sw) != 1 && graph.getArc(w, sw) > 1
+			// || graph.getArc(sw, s) != 1 && graph.getArc(sw, s) > 1
+			// || graph.getArc(rnd, s) != 1 && graph.getArc(rnd, s) > 1)) {
+			// vacia = true;
+			// }
+			if ((graph.getArc(rnd, n) != 1 || graph.getArc(n, nw) != 1 || graph.getArc(nw, w) != 1
+					&& (graph.getArc(w, sw) != 1 || graph.getArc(sw, s) != 1 || graph.getArc(rnd, s) != 1))) {
+				vacia = true;
+			}
+
+			break;
+		case ('e'):
+			// if ((graph.getArc(rnd, n) != 1 && graph.getArc(rnd, n) > 1
+			// || graph.getArc(n, ne) != 1 && graph.getArc(n, ne) > 1
+			// || graph.getArc(ne, e) != 1 && graph.getArc(ne, e) > 1)
+			// && (graph.getArc(e, se) != 1 && graph.getArc(e, se) > 1
+			// || graph.getArc(se, s) != 1 && graph.getArc(se, s) > 1
+			// || graph.getArc(rnd, s) != 1 && graph.getArc(rnd, s) > 1)) {
+			// vacia = true;
+			// }
+			if ((graph.getArc(rnd, n) != 1 || graph.getArc(n, ne) != 1 || graph.getArc(ne, e) != 1)
+					&& (graph.getArc(e, se) != 1 || graph.getArc(se, s) != 1 || graph.getArc(s, rnd) != 1)) {
+				vacia = true;
+			}
+			break;
+
+		}
+
+		return vacia;
 	}
 
 	/**
@@ -115,6 +202,8 @@ public class Map {
 		this.map = new Square[dimX][dimY];
 		iniMap();
 		this.turn = 0;
+		this.dimX = dimX;
+		this.dimY = dimY;
 		this.door = door;
 		this.doorRoom = doorRoom;
 		this.addit = new Square(1111);
@@ -200,16 +289,16 @@ public class Map {
 	 * 
 	 * @return
 	 */
-	public int getLength() {
-		return this.map.length;
+	public int getDimX() {
+		return this.dimX;
 	}
 
 	/**
 	 * 
 	 * @return
 	 */
-	public int getWidth() {
-		return this.map[0].length;
+	public int getDimY() {
+		return this.dimY;
 	}
 
 	/**
@@ -343,7 +432,7 @@ public class Map {
 		for (int i = 0; i < map.length; i++) {
 			ma += ("|");
 			for (int j = 0; j < map[i].length; j++) {
-				origin = i * getWidth() + j;
+				origin = i * getDimY() + j;
 				destination = origin + 1;
 				// Show if have 1 pj only in square
 				if (map[i][j].nPj() == 1) {
@@ -373,7 +462,7 @@ public class Map {
 				}
 				// Print if square is empty
 				else {
-					destination = origin + getWidth();
+					destination = origin + getDimY();
 					if (j != map[0].length - 1) {
 						// Paint botton wall if exist
 						if (graph.getArc(origin, destination) != 1 || i == map.length - 1) {
@@ -514,11 +603,11 @@ public class Map {
 	}
 
 	public static void main(String args[]) {
-		int dimX = 4;
-		int dimY = 4;
+		int dimX = 6;
+		int dimY = 6;
 		int doorRoom = (dimX * dimY) - 1;
 		int altLock = 3;
-		int maxTurns = 50;
+		// int maxTurns = 50;
 		int numKeys = 15;
 
 		// Creating and configuring the door. It is not specified here since
