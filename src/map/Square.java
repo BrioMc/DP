@@ -24,20 +24,20 @@ public class Square implements Compare<Square> {
 
 	private Integer mark;
 
+	private Integer freq;
+
 	/**
-	 * <<<<<<< HEAD Constructor for the class Square
+	 * Constructor for the class Square
 	 * 
 	 * @param i
-	 *            is the ID we want to assign to the square =======
-	 * 
-	 * @param i
-	 *            >>>>>>> refs/remotes/origin/master
+	 *            is the ID we want to assign to the square
 	 */
 	public Square(int i) {
-		id = i;
-		keys = new ArrayList<Key>();
-		pjs = new Queue<Pj>();
-		mark = id;
+		this.id = i;
+		this.freq = 0;
+		this.keys = new ArrayList<Key>();
+		this.pjs = new Queue<Pj>();
+		this.mark = id;
 	}
 
 	/**
@@ -86,6 +86,22 @@ public class Square implements Compare<Square> {
 	 */
 	public Key removeKey() {
 		return this.keys.remove(this.keys.size() - 1);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer getFreq() {
+		return freq;
+	}
+
+	/**
+	 * 
+	 * @param freq
+	 */
+	public void setFreq(Integer freq) {
+		this.freq = freq;
 	}
 
 	/**

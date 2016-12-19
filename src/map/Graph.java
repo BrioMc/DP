@@ -1,7 +1,5 @@
 package map;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -93,136 +91,6 @@ public class Graph {
 	}
 
 	/**
-	 * 
-	 * @param i
-	 * @return
-	 */
-	private Square getSquare(Integer i) {
-		Map map = Map.getInstance();
-		Square x;
-		x = map.map[i / map.getDimY()][i % map.getDimY()];
-		return x;
-	}
-
-	private void fillArcs() {
-		Map map = Map.getInstance();
-		ArrayList<Walls> x = map.getWalls();
-		for (int i = 0; i < x.size(); i++) {
-			Walls m = x.get(i);
-			newArc(m.getOrigin(), m.getDestination(), 0);
-		}
-	}
-
-	/**
-	 * 
-	 * @param node
-	 * @param mark
-	 */
-	private void markPropagation(Square node, int mark) {
-		if (mark != node.getMark()) {
-			Set<Integer> ady = new HashSet<Integer>();
-			node.setMark(mark);
-			this.adyacentes(node.getId(), ady);
-			if (!ady.isEmpty()) {
-				for (Integer i : ady)
-					markPropagation(getSquare(i), mark);
-			}
-		}
-	}
-
-	/**
-	 * 
-	 */
-	public void doAtach() {
-		Map map = Map.getInstance();
-		int count = 0;
-		int max = (int) ((numNodes * 0.05));
-		// Other positions
-		while (count < max) {
-			// take random square
-			int rnd = GenAleatorios.generarNumero(map.getDimX() * map.getDimY());
-			int i = rnd / map.getDimY();
-			int j = rnd % map.getDimY();
-			int s = rnd + map.getDimY();
-			int w = rnd - 1;
-			int e = rnd + 1;
-			int n = rnd - map.getDimY();
-			boolean[] x = map.retWalls(i, j);
-			// N
-			if (x[0] && map.notEmptySquare(rnd, 'n')) {
-				newArc(rnd, n, 1);
-				newArc(n, rnd, 1);
-				System.out.println(map.walls.remove(new Walls(rnd, n)));
-				count++;
-			}
-			// S
-			else if (x[1] && map.notEmptySquare(rnd, 'n')) {
-				newArc(rnd, s, 1);
-				newArc(s, rnd, 1);
-				map.walls.remove(new Walls(rnd, s));
-				count++;
-
-			} // W
-			else if (x[2] && map.notEmptySquare(rnd, 'w')) {
-				newArc(rnd, w, 1);
-				newArc(w, rnd, 1);
-				map.walls.remove(new Walls(rnd, w));
-				count++;
-			} // E
-			else if (x[3] && map.notEmptySquare(rnd, 'e')) {
-				newArc(rnd, e, 1);
-				newArc(e, rnd, 1);
-
-				count++;
-			}
-		}
-
-	}
-
-	/**
-	 * 
-	 */
-	protected void Kruskal() {
-		Map map = Map.getInstance();
-		ArrayList<Walls> selected = new ArrayList<>();
-		int rnd; // random number
-		int mark;
-		Walls aux;
-		Square origin;
-		Square destination;
-		// fillArcs();
-
-		while (!map.walls.isEmpty()) {
-			rnd = GenAleatorios.generarNumero(map.walls.size());
-			aux = map.walls.remove(rnd);
-			origin = getSquare(aux.getOrigin());
-			destination = getSquare(aux.getDestination());
-
-			if (origin.getMark() != destination.getMark()) {
-
-				this.newArc(origin.getId(), destination.getId(), 1);
-				this.newArc(destination.getId(), origin.getId(), 1);
-				// mark = map.map[origin.getId() /
-				// map.getLength()][origin.getId() % map.getWidth()].getMark();
-
-				mark = getSquare(aux.getDestination()).getMark();
-				markPropagation(origin, mark);
-
-			} else {
-				if ((getArc(origin.getId(), destination.getId()) != 1)
-						|| (getArc(destination.getId(), origin.getId()) != 1)) {
-					selected.add(aux);
-
-				}
-			}
-
-		}
-		map.walls.addAll(selected);
-		doAtach();
-
-	}
-
-	/**
 	 * Metodo que inserta un nuevo arco en el grafo
 	 * 
 	 * @param origin
@@ -286,7 +154,6 @@ public class Graph {
 	 */
 	public void showArcs() {
 		int x, y;
-		fillArcs();
 		System.out.println("ARCOS:");
 		for (x = 0; x < numNodes; x++) {
 			for (y = 0; y < numNodes; y++) {

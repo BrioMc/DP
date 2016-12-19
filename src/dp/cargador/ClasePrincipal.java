@@ -26,7 +26,7 @@ public class ClasePrincipal {
 			 */
 			FicheroCarga.procesarFichero("inicio.txt", cargador);
 			Map map = Map.getInstance();
-			map.doKruskal();
+			map.Kruskal();
 			map.paintMap();
 			for (int i = 0; i < 50; i++) {
 				map.process(i);
