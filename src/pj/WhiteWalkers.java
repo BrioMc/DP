@@ -5,6 +5,7 @@ package pj;
  */
 import api.Queue;
 import map.Map;
+import map.Square;
 
 public class WhiteWalkers extends Pj {
 
@@ -23,7 +24,7 @@ public class WhiteWalkers extends Pj {
 		while (!take && i < x.getMap()[j][y].nPj()) {
 			i++;
 			if (x.getMap()[j][y].nPj() != 0) {
-				if (x.getMap()[j][y].checkPj().getHTag() != 'W') {
+				if (!(x.getMap()[j][y].checkPj() instanceof WhiteWalkers)) {
 					take = true;
 					pjsT.add(x.getMap()[j][y].takePj());
 				}
@@ -43,17 +44,32 @@ public class WhiteWalkers extends Pj {
 		super(name, M, turn, Room);
 		this.currTurn = 0;
 		pjsT = new Queue<Pj>();
-		this.houseTag = 'W';
 	}
 
 	/**
 	 * 
 	 */
 	public void actionPj() {
-		super.actionPj(this.rutes, this.houseTag);
+		super.actionPj();
 		takepj();
 	}
+	protected boolean actionDoor(Map x){
+		boolean doorRoom = false;
 
+		if(this.room ==x.getDRoom()){
+			x.getDoor().closeDoor();
+			doorRoom = true;
+		}
+			
+		return doorRoom;
+
+	}
+	
+
+
+	protected void keyAction(Square[][] map){
+		
+	}
 	/**
 	 * public method for watch pj's information
 	 * 

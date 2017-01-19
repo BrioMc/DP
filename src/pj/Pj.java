@@ -31,7 +31,7 @@ public abstract class Pj implements Compare<Pj> {
 	/** Current turn */
 	protected int currTurn;
 	/** House tag */
-	protected char houseTag;
+
 
 	/**
 	 * Parameterized constructor
@@ -126,13 +126,7 @@ public abstract class Pj implements Compare<Pj> {
 		return move;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public char getHTag() {
-		return houseTag;
-	}
+
 
 	/**
 	 * 
@@ -161,32 +155,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param map
 	 * @param c
 	 */
-	protected void keyAction(Square[][] map, char c) {
-		int x = this.room / map[0].length;
-		int y = this.room % map[0].length;
-
-		switch (c) {
-		case 'L': // Lannister loses keys
-			if (this.keys.size() != 0) {
-				if (this.room % 2 == 1) {
-
-					map[x][y].insertKey(this.keys.get(this.keys.size() - 1));
-					this.keys.remove(this.keys.get(this.keys.size() - 1));
-				}
-			}
-
-			break;
-		case 'T': // Targaryen and Stark picks up keys
-		case 'S':
-			if (map[x][y].nkeys() > 0) {
-				this.keys.add(map[x][y].removeKey());
-			}
-			break;
-		default:
-			break;
-		}
-
-	}
+	protected abstract void keyAction(Square[][] map);
 
 	/**
 	 * Method for movement action, if can do movement, then delete from actual
@@ -247,14 +216,16 @@ public abstract class Pj implements Compare<Pj> {
 	 * @return True if door is open
 	 */
 
-	protected boolean actionDoor(Map x, char c) {
+	protected abstract boolean actionDoor(Map x){
 		boolean doorRoom = false;
-		doorRoom = true;
-		switch (c) {
+		
 
 		case 'W':
 		case 'L':
-			x.getDoor().closeDoor();
+			if(this.room =x.getDoor()){
+				x.getDoor().closeDoor();
+				doorRoom = true;
+			}
 
 			break;
 		case 'T':
@@ -299,28 +270,16 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param i
 	 * @param c
 	 */
-	protected void actionPj(Dir[] i, char c) {
+	 public void actionPj() {
 		Map x = Map.getInstance();
-		if (x.getDRoom() == getRoom()) {
-			if (!actionDoor(x, c)) {
+		if (x.getDRoom() == getRoom())
+			actionDoor(x);
+		
+		if ((this.currTurn - 1) < this.rutes.length) 
+			move(this.rutes[this.currTurn - 1], x.getMap());
 
-			}
-			if (c == 'W' || c == 'L') {
-				if ((this.currTurn - 1) < i.length) {
-					move(i[this.currTurn - 1], x.getMap());
-				}
-			}
-
-		} else {
-			if ((this.currTurn - 1) < i.length) {
-				move(i[this.currTurn - 1], x.getMap());
-			}
+		keyAction(x.getMap());
 		}
-
-		if (c != 'W') {
-			keyAction(x.getMap(), c);
-		}
-	}
 
 	/**
 	 * public method for watch pj's information
