@@ -134,14 +134,17 @@ public class Map {
 		switch (x) {
 		case ('n'):
 
-			if ((graph.getArc(rnd, w) != 1 && graph.getArc(rnd, w) > 1
-					|| graph.getArc(w, nw) != 1 && graph.getArc(w, nw) > 1
-					|| graph.getArc(nw, n) != 1 && graph.getArc(nw, n) > 1)
-					&& (graph.getArc(n, ne) != 1 && graph.getArc(n, ne) > 1
-							|| graph.getArc(ne, e) != 1 && graph.getArc(ne, e) > 1
-							|| graph.getArc(rnd, e) != 1 && graph.getArc(rnd, e) > 1)) {
-				vacia = true;
-			}
+			 if ((graph.getArc(rnd, w) != 1 && graph.getArc(rnd, w) > 1
+			 || graph.getArc(w, nw) != 1 && graph.getArc(w, nw) > 1
+			 || graph.getArc(nw, n) != 1 && graph.getArc(nw, n) > 1)
+			 && (graph.getArc(n, ne) != 1 && graph.getArc(n, ne) > 1
+			 || graph.getArc(ne, e) != 1 && graph.getArc(ne, e) > 1
+			 || graph.getArc(rnd, e) != 1 && graph.getArc(rnd, e) > 1)) {
+			 vacia = true;
+			 }
+			// if (distance(rnd, n) > 3) {
+			// vacia = true;
+			// }
 			// if ((graph.getArc(rnd, w) != 1 || graph.getArc(w, nw) != 1 ||
 			// graph.getArc(nw, n) != 1)
 			// && (graph.getArc(n, ne) != 1 || graph.getArc(ne, e) != 1 ||
@@ -151,15 +154,17 @@ public class Map {
 
 			break;
 		case ('s'):
-
-			if ((graph.getArc(rnd, w) != 1 && graph.getArc(rnd, w) > 1
-					|| graph.getArc(w, sw) != 1 && graph.getArc(w, sw) > 1
-					|| graph.getArc(sw, s) != 1 && graph.getArc(sw, s) > 1)
-					&& (graph.getArc(s, se) != 1 && graph.getArc(s, se) > 1
-							|| graph.getArc(se, e) != 1 && graph.getArc(se, e) > 1
-							|| graph.getArc(rnd, e) != 1 && graph.getArc(rnd, e) > 1)) {
-				vacia = true;
-			}
+//			if (distance(rnd, s) > 3) {
+//				vacia = true;
+//			}
+			 if ((graph.getArc(rnd, w) != 1 && graph.getArc(rnd, w) > 1
+			 || graph.getArc(w, sw) != 1 && graph.getArc(w, sw) > 1
+			 || graph.getArc(sw, s) != 1 && graph.getArc(sw, s) > 1)
+			 && (graph.getArc(s, se) != 1 && graph.getArc(s, se) > 1
+			 || graph.getArc(se, e) != 1 && graph.getArc(se, e) > 1
+			 || graph.getArc(rnd, e) != 1 && graph.getArc(rnd, e) > 1)) {
+			 vacia = true;
+			 }
 			// if ((graph.getArc(rnd, w) != 1 || graph.getArc(w, sw) != 1 ||
 			// graph.getArc(sw, s) != 1)
 			// && (graph.getArc(s, se) != 1 || graph.getArc(se, e) != 1 ||
@@ -168,15 +173,17 @@ public class Map {
 			// }
 			break;
 		case ('w'):
-
-			if ((graph.getArc(rnd, n) != 1 && graph.getArc(rnd, n) > 1
-					|| graph.getArc(n, nw) != 1 && graph.getArc(n, nw) > 1
-					|| graph.getArc(nw, w) != 1 && graph.getArc(nw, w) > 1)
-					&& (graph.getArc(w, sw) != 1 && graph.getArc(w, sw) > 1
-							|| graph.getArc(sw, s) != 1 && graph.getArc(sw, s) > 1
-							|| graph.getArc(rnd, s) != 1 && graph.getArc(rnd, s) > 1)) {
-				vacia = true;
-			}
+//			if (distance(rnd, w) > 3) {
+//				vacia = true;
+//			}
+			 if ((graph.getArc(rnd, n) != 1 && graph.getArc(rnd, n) > 1
+			 || graph.getArc(n, nw) != 1 && graph.getArc(n, nw) > 1
+			 || graph.getArc(nw, w) != 1 && graph.getArc(nw, w) > 1)
+			 && (graph.getArc(w, sw) != 1 && graph.getArc(w, sw) > 1
+			 || graph.getArc(sw, s) != 1 && graph.getArc(sw, s) > 1
+			 || graph.getArc(rnd, s) != 1 && graph.getArc(rnd, s) > 1)) {
+			 vacia = true;
+			 }
 			// if ((graph.getArc(rnd, n) != 1 || graph.getArc(n, nw) != 1 ||
 			// graph.getArc(nw, w) != 1
 			// && (graph.getArc(w, sw) != 1 || graph.getArc(sw, s) != 1 ||
@@ -186,15 +193,17 @@ public class Map {
 
 			break;
 		case ('e'):
-
-			if ((graph.getArc(rnd, n) != 1 && graph.getArc(rnd, n) > 1
-					|| graph.getArc(n, ne) != 1 && graph.getArc(n, ne) > 1
-					|| graph.getArc(ne, e) != 1 && graph.getArc(ne, e) > 1)
-					&& (graph.getArc(e, se) != 1 && graph.getArc(e, se) > 1
-							|| graph.getArc(se, s) != 1 && graph.getArc(se, s) > 1
-							|| graph.getArc(rnd, s) != 1 && graph.getArc(rnd, s) > 1)) {
-				vacia = true;
-			}
+//			if (distance(rnd, e) > 3) {
+//				vacia = true;
+//			}
+			 if ((graph.getArc(rnd, n) != 1 && graph.getArc(rnd, n) > 1
+			 || graph.getArc(n, ne) != 1 && graph.getArc(n, ne) > 1
+			 || graph.getArc(ne, e) != 1 && graph.getArc(ne, e) > 1)
+			 && (graph.getArc(e, se) != 1 && graph.getArc(e, se) > 1
+			 || graph.getArc(se, s) != 1 && graph.getArc(se, s) > 1
+			 || graph.getArc(rnd, s) != 1 && graph.getArc(rnd, s) > 1)) {
+			 vacia = true;
+			 }
 			// if ((graph.getArc(rnd, n) != 1 || graph.getArc(n, ne) != 1 ||
 			// graph.getArc(ne, e) != 1)
 			// && (graph.getArc(e, se) != 1 || graph.getArc(se, s) != 1 ||
@@ -491,6 +500,25 @@ public class Map {
 
 	}
 
+	/**
+	 * 
+	 */
+	public int distance(int o, int d) {
+		int i = 0;
+		int destination = o;
+		while (destination != d && destination != -1) {
+			destination = graph.next(destination, d);
+			i++;
+		}
+		return i;
+
+	}
+
+	/**
+	 * 
+	 * @param ady
+	 * @param i
+	 */
 	public void mostFreq(Set<Integer> ady, Integer i) {
 		if (i == getDRoom()) {
 
