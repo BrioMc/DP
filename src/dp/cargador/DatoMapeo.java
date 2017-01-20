@@ -6,7 +6,7 @@ package dp.cargador;
  * @version 4.0 -  15/10/2014 
  * @author Profesores DP
  */
-public class DatoMapeo {
+class DatoMapeo {
   private String nombre;
   private int numCampos;
  /**
@@ -32,7 +32,7 @@ public class DatoMapeo {
    * devuelve el nombre del tipo
    * @return nombre
    */
-  public String getNombre() {
+  String getNombre() {
 	  return nombre;
   }
   
@@ -40,7 +40,7 @@ public class DatoMapeo {
    * devuelve el número de campos del tipo
    * @return numCampos
    */
-  public int getCampos() {
+  int getCampos() {
 	  return numCampos;
   }
   

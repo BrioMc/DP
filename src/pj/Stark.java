@@ -9,7 +9,7 @@ import map.Map;
 import map.Square;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2ï¿½
  */
 
 public class Stark extends Pj {
@@ -39,7 +39,7 @@ public class Stark extends Pj {
 		super.actionPj();
 	}
 
-	public boolean starkWay(ArrayList<Integer> x, int actRoom) {
+	private boolean starkWay(ArrayList<Integer> x, int actRoom) {
 
 		x.add(actRoom);
 		Map m = Map.getInstance();

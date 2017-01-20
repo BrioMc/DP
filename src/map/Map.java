@@ -3,10 +3,7 @@ package map;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 import door.Key;
 import door.ThroneDoor;
@@ -17,7 +14,7 @@ import pj.Targaryen;
 import pj.WhiteWalkers;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2ï¿½
  */
 
 public class Map {
@@ -25,12 +22,12 @@ public class Map {
 	public Square[][] map;
 	private int dimX;
 	private int dimY;
-	protected ThroneDoor door;
-	protected int doorRoom;
-	protected Square addit;
-	protected ArrayList<Walls> walls;
-	protected Graph graph;
-	public static Map instance;
+	private ThroneDoor door;
+	private int doorRoom;
+	private Square addit;
+	private ArrayList<Walls> walls;
+	private Graph graph;
+	private static Map instance;
 
 	/**
 	 * Private method for initializing the map
@@ -79,31 +76,31 @@ public class Map {
 		wa[3] = false;
 
 		// charge wallBool
-		for (int z = 0; z < walls.size(); z++) {
+		for (Walls wall : walls) {
 			// n = walls.get(z).getOrigin() / map[i].length;
 			// m = walls.get(z).getOrigin() % map[i].length;
 			n = (i * getDimY() + j);
-			m = walls.get(z).getOrigin();
+			m = wall.getOrigin();
 			// System.out.println(n+"-"+m);
 			if (n == m) {
 				// System.out.println("entra");
-				if (walls.get(z).getOrigin() == walls.get(z).getDestination() + getDimY()
-						&& graph.getArc(walls.get(z).getOrigin(), walls.get(z).getDestination()) != 1) {
+				if (wall.getOrigin() == wall.getDestination() + getDimY()
+						&& graph.getArc(wall.getOrigin(), wall.getDestination()) != 1) {
 					// N
 					wa[0] = true;
 				}
-				if (walls.get(z).getOrigin() == walls.get(z).getDestination() - getDimY()
-						&& graph.getArc(walls.get(z).getOrigin(), walls.get(z).getDestination()) != 1) {
+				if (wall.getOrigin() == wall.getDestination() - getDimY()
+						&& graph.getArc(wall.getOrigin(), wall.getDestination()) != 1) {
 					// S
 					wa[1] = true;
 				}
-				if (walls.get(z).getOrigin() == (walls.get(z).getDestination() + 1)
-						&& graph.getArc(walls.get(z).getOrigin(), walls.get(z).getDestination()) != 1) {
+				if (wall.getOrigin() == (wall.getDestination() + 1)
+						&& graph.getArc(wall.getOrigin(), wall.getDestination()) != 1) {
 					// W
 					wa[2] = true;
 				}
-				if (walls.get(z).getOrigin() == (walls.get(z).getDestination() - 1)
-						&& graph.getArc(walls.get(z).getOrigin(), walls.get(z).getDestination()) != 1) {
+				if (wall.getOrigin() == (wall.getDestination() - 1)
+						&& graph.getArc(wall.getOrigin(), wall.getDestination()) != 1) {
 					// E
 					wa[3] = true;
 				}
@@ -116,13 +113,14 @@ public class Map {
 	}
 
 	/**
-	 * 
-	 * @param doorRoom
-	 * @param dimX
-	 * @param dimY
-	 * @param door
+	 * Parametrized constructor of the class map.
+	 *
+	 * @param doorRoom : The room where the Throne Door is located (int)
+	 * @param dimX : The number of rows of the map (int)
+	 * @param dimY : The number of columns of the map (int)
+	 * @param door : The door of the throne (ThroneDoor)
 	 */
-	public Map(int doorRoom, int dimX, int dimY, ThroneDoor door) {
+	private Map(int doorRoom, int dimX, int dimY, ThroneDoor door) {
 		this.map = new Square[dimX][dimY];
 		iniMap();
 		this.turn = 0;
@@ -137,42 +135,47 @@ public class Map {
 	}
 
 	/**
-	 * 
-	 * @param doorRoom
-	 * @param dimX
-	 * @param dimY
-	 * @param door
+	 *  Method used for generating the map with a Singleton.
+	 *
+	 * @param doorRoom : The room where the Throne Door is located (int)
+	 * @param dimX : The number of rows of the map (int)
+	 * @param dimY : The number of columns of the map (int)
+	 * @param door : The door of the throne (ThroneDoor)
 	 */
 	public static void generateInstance(int doorRoom, int dimX, int dimY, ThroneDoor door) {
 		instance = new Map(doorRoom, dimX, dimY, door);
 	}
 
+	/**
+	 *  Method for obtaining the graph of the map
+	 *
+	 * @return graph : Graph with the paths between squares (Graph)
+	 */
 	public Graph getGraph() {
 		return this.graph;
 	}
 
 	/**
-	 * 
-	 * @param doorRoom
-	 * @param dimX
-	 * @param dimY
-	 * @param door
+	 *  Method for obtaining an instance of the map (Singleton Design Pattern)
+	 *
+	 * @return instace : Instance of the class map (Map)
 	 */
-
 	public static Map getInstance() {
 		return instance;
 	}
 
 	/**
-	 * 
-	 * @param x
+	 * Method that assigns an ArrayList of walls to the map.
+	 *
+	 * @param x : ArrayList that contains all the walls that we want to put into the map. (ArrayList<Walls>)
 	 */
 	public void setWalls(ArrayList<Walls> x) {
 		walls = x;
 	}
 
 	/**
-	 * 
+	 *  Method that shows all the walls of the map
+	 *
 	 */
 	public void showW() {
 		for (int i = 0; i < walls.size(); i++) {
@@ -181,14 +184,18 @@ public class Map {
 	}
 
 	/**
-	 * Public method that return door
+	 * Public method that returns the Throne Door
+	 *
+	 * @return door : The door of the throne (ThroneDoor)
 	 */
 	public ThroneDoor getDoor() {
 		return door;
 	}
 
 	/**
-	 * Public method, return Throne room
+	 * Public method, returns the additional room (1111)
+	 *
+	 * @return addit : The additional room with the ID 1111 (Square)
 	 */
 	public Square getThrone() {
 
@@ -196,17 +203,18 @@ public class Map {
 	}
 
 	/**
-	 * 
-	 * @return The id of the room where the door is.
+	 *  Public method, returns the door room
+	 *
+	 * @return doorRoom : The id of the room where the door is (int).
 	 */
-
 	public int getDRoom() {
 		return this.doorRoom;
 	}
 
 	/**
-	 * 
-	 * @return
+	 *
+	 *
+	 * @return map : Returns the "mapping" of all the rooms (Square[][])
 	 */
 	public Square[][] getMap() {
 
@@ -217,7 +225,7 @@ public class Map {
 	 * 
 	 * @return
 	 */
-	public int getDimX() {
+	private int getDimX() {
 		return this.dimX;
 	}
 
@@ -230,7 +238,7 @@ public class Map {
 	}
 
 	/**
-	 * /** Return the map size
+	 *  Return the map size
 	 * 
 	 * @return map size
 	 */
@@ -309,7 +317,7 @@ public class Map {
 	/**
 	 * 
 	 */
-	public void doShortcut() {
+	private void doShortcut() {
 		int count = 0;
 		int max = (int) (((getDimX() * getDimY()) * 0.05));
 		// Other positions
@@ -371,7 +379,7 @@ public class Map {
 			origin = getSquare(aux.getOrigin());
 			destination = getSquare(aux.getDestination());
 
-			if (origin.getMark() != destination.getMark()) {
+			if (!Objects.equals(origin.getMark(), destination.getMark())) {
 
 				this.graph.newArc(origin.getId(), destination.getId(), 1);
 				this.graph.newArc(destination.getId(), origin.getId(), 1);
@@ -400,7 +408,7 @@ public class Map {
 	/**
 	 * 
 	 */
-	public int distance(int o, int d) {
+	private int distance(int o, int d) {
 		int i = 0;
 		int destination = o;
 		while (destination != d && destination != -1) {
@@ -430,16 +438,16 @@ public class Map {
 	 * 
 	 * @param rooms
 	 */
-	public void distKeys(int[] rooms) {
+	private void distKeys(int[] rooms) {
 		int count = 0;
 		int x = 0;
 		int y = 0;
 		boolean rest = false;
 		boolean tst = false;
 
-		for (int i = 0; i < rooms.length; i++) {
-			x = rooms[i] / map.length;
-			y = rooms[i] % map[1].length;
+		for (int room : rooms) {
+			x = room / map.length;
+			y = room % map[1].length;
 			tst = false;
 			do {
 				Key key = new Key(count);
@@ -597,7 +605,7 @@ public class Map {
 		}
 	}
 	
-	public void keyDistribution(){
+	private void keyDistribution(){
 		ArrayList<Integer> x = new ArrayList<>();
 		mostFreq(x, 0);
 		int[] rooms = new int[dimY*dimX];
@@ -608,13 +616,11 @@ public class Map {
 		}
 		
 		bubbleSorting(rooms);
-		for(int i =0;i<9;i++){
-			keyRooms[i]=rooms[i];
-		}
+		System.arraycopy(rooms, 0, keyRooms, 0, 9);
 		
 		distKeys(keyRooms);
-		for(int i =0;i<keyRooms.length;i++){
-			System.out.print(keyRooms[i]+" ");
+		for (int keyRoom : keyRooms) {
+			System.out.print(keyRoom + " ");
 		}
 	}
 

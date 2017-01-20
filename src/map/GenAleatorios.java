@@ -3,8 +3,8 @@ package map;
 import java.util.Random;
 
 /**
- * Generador de números aleatorios - proyecto12_13 Implementacion de la clase
- * que permite generar números aleatorios
+ * Generador de nï¿½meros aleatorios - proyecto12_13 Implementacion de la clase
+ * que permite generar nï¿½meros aleatorios
  * 
  * @version 1.0
  * @author <b> Profesores DP </b><br>
@@ -14,22 +14,22 @@ import java.util.Random;
 public class GenAleatorios {
 
 	/**
-	 * Instancia de la clase Random que permite generar los números aleatorios.
+	 * Instancia de la clase Random que permite generar los nï¿½meros aleatorios.
 	 */
 	private static Random r;
 
 	/**
-	 * Constante con la semilla para inicializar la generación de números
-	 * aleatorios. ¡¡No cambiar!!
+	 * Constante con la semilla para inicializar la generaciï¿½n de nï¿½meros
+	 * aleatorios. ï¿½ï¿½No cambiar!!
 	 */
 	private static final int SEMILLA = 1987;
 
-	/** Contador de números aleatorios generados */
+	/** Contador de nï¿½meros aleatorios generados */
 	private static int numGenerados;
 
 	/**
-	 * Instancia de la propia clase (sólo habrá una en el sistema). Ver PATRÓN
-	 * DE DISEÑO SINGLETON
+	 * Instancia de la propia clase (sï¿½lo habrï¿½ una en el sistema). Ver PATRï¿½N
+	 * DE DISEï¿½O SINGLETON
 	 */
 	private static GenAleatorios instancia = null;
 
@@ -39,22 +39,22 @@ public class GenAleatorios {
 	 * @return Devuelve un objeto de tipo GenAleatorio inicializado
 	 */
 	private GenAleatorios() {
-		// Inicialización de la semilla para generar los números aleatorios
+		// Inicializaciï¿½n de la semilla para generar los nï¿½meros aleatorios
 		r = new Random(GenAleatorios.SEMILLA);
-		// Inicialización del atributo que cuenta cuántos números aleatorios se
+		// Inicializaciï¿½n del atributo que cuenta cuï¿½ntos nï¿½meros aleatorios se
 		// han generado
 		numGenerados = 0;
 	}
 
 	/**
-	 * Metodo generarNumero. Genera un número aleatorio entre 0 y
+	 * Metodo generarNumero. Genera un nï¿½mero aleatorio entre 0 y
 	 * (limiteRango-1)
 	 * 
 	 * @param limiteRango
-	 *            El límite del rango en el que generar los aleatorios
-	 * @return Devuelve el número aleatorio generado
+	 *            El lï¿½mite del rango en el que generar los aleatorios
+	 * @return Devuelve el nï¿½mero aleatorio generado
 	 */
-	public static int generarNumero(int limiteRango) {
+	static int generarNumero(int limiteRango) {
 		if (instancia == null)
 			instancia = new GenAleatorios();
 		numGenerados++;
@@ -62,19 +62,19 @@ public class GenAleatorios {
 	}
 
 	/**
-	 * Devuelve el número de aleatorios generados
+	 * Devuelve el nï¿½mero de aleatorios generados
 	 * 
-	 * @return Número de aleatorios generados
+	 * @return Nï¿½mero de aleatorios generados
 	 */
-	public static int getNumGenerados() {
+	private static int getNumGenerados() {
 		return numGenerados;
 	}
 
 	public static void main(String[] args) {
 
 		for (int i = 20; i > 10; i--) {
-			System.out.println("Número generado (entre 0 y " + i + "): " + GenAleatorios.generarNumero(i));
+			System.out.println("Nï¿½mero generado (entre 0 y " + i + "): " + GenAleatorios.generarNumero(i));
 		}
-		System.out.println("Números generados: " + GenAleatorios.getNumGenerados());
+		System.out.println("Nï¿½meros generados: " + GenAleatorios.getNumGenerados());
 	}
 }

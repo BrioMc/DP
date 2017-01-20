@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FicheroCarga {
+class FicheroCarga {
 	/**
 	 * atributo de la clase que indica el numero máximo de campos que se pueden
 	 * leer
@@ -37,7 +37,7 @@ public class FicheroCarga {
 	 *             Puede lanzar una excepci�n en la apertura del buffer de
 	 *             lectura
 	 */
-	public static void procesarFichero(String nombreFichero, Cargador cargador)
+	static void procesarFichero(String nombreFichero, Cargador cargador)
 			throws FileNotFoundException, IOException {
 		// **String vCampos[]=new String[MAXCAMPOS];
 		List<String> vCampos = new ArrayList<String>();
@@ -67,7 +67,7 @@ public class FicheroCarga {
 		bufferIn.close(); // cerramos el filtro
 	}
 
-	public static void writeFile() throws FileNotFoundException, IOException {
+	static void writeFile() throws FileNotFoundException, IOException {
 
 		bufferOut = new BufferedWriter(new FileWriter("record.txt"));
 		//Map.getInstance().writelog(bufferOut);

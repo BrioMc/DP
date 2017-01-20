@@ -10,9 +10,9 @@ import java.util.Set;
  *         <b> Curso 11/12 </b>
  */
 public class Graph {
-	public static final int MAXVERT = 115;
-	public static final int INFINITE = 9999;
-	public static final int NOVALUE = -1;
+	private static final int MAXVERT = 115;
+	private static final int INFINITE = 9999;
+	private static final int NOVALUE = -1;
 
 	/** Numero de nodes del grafo */
 	private int numNodes;
@@ -34,10 +34,7 @@ public class Graph {
 
 	/**
 	 * Metodo constructor por defecto de la clase grafo
-	 * 
-	 * @param ""
-	 *            No recibe parametros
-	 * @return No retorna ningun valor
+	 *
 	 */
 	public Graph() {
 		int x, y;
@@ -148,10 +145,7 @@ public class Graph {
 
 	/**
 	 * Metodo que muestra los arcos del grafo (la matriz de adyacencia)
-	 * 
-	 * @param ""
-	 *            No recibe parametros
-	 * @return No retorna ningun valor
+	 *
 	 */
 	public void showArcs() {
 		int x, y;
@@ -222,9 +216,7 @@ public class Graph {
 
 	/**
 	 * Metodo que muestra el vector de nodes del grafo
-	 * 
-	 * @param ""
-	 *            No recibe parametros
+	 *
 	 * @return No retorna ningun valor
 	 */
 	public void shownodes() {
@@ -242,12 +234,8 @@ public class Graph {
 	 *            es el primer node
 	 * @param destination
 	 *            es el segundo node
-	 * @param origin
-	 *            es el primer node
-	 * @param sig
-	 *            parametro de entrada salida que devuelve el siguiente node en
-	 *            la ruta entre origin y destination
-	 * @return No retorna ningun valor
+	 * @return sig  Parametro de entrada salida que devuelve el siguiente node en
+	 *        		    la ruta entre origin y destination
 	 */
 	public int next(int origin, int destination) {
 		int sig = -1; // Si no hay camino posible
@@ -286,10 +274,8 @@ public class Graph {
 
 	/**
 	 * Metodo que comprueba si el grafo esta vacio
-	 * 
-	 * @param ""
-	 *            No recibe parametros
-	 * @return Retorna un valor booleano que indica si el grafo esta o no vacio
+	 *
+	 *@return Retorna un valor booleano que indica si el grafo esta o no vacio
 	 */
 	public boolean isEmpty() {
 		return (numNodes == 0);
@@ -333,12 +319,10 @@ public class Graph {
 
 	/**
 	 * Metodo que realiza el algoritmo de Floyd sobre el grafo
-	 * 
-	 * @param ""
-	 *            No recibe parametros
+	 *
 	 * @return No retorna ningun valor
 	 */
-	public void floyd() {
+	void floyd() {
 		int i, j, k;
 
 		// Obtener la matriz de adyacencia en P
@@ -361,9 +345,7 @@ public class Graph {
 
 	/**
 	 * Metodo que muestra las matrices de coste y camino de Floyd
-	 * 
-	 * @param ""
-	 *            No recibe parametros
+	 *
 	 * @return No retorna ningun valor
 	 */
 	public void showFloydC() {
@@ -389,12 +371,10 @@ public class Graph {
 
 	/**
 	 * Metodo que realiza el algoritmo de Warshall sobre el grafo
-	 * 
-	 * @param ""
-	 *            No recibe parametros
+	 *
 	 * @return No retorna ningun valor
 	 */
-	public void warshall() {
+	void warshall() {
 		int i, j, k;
 
 		// Obtener la matriz de adyacencia en P
@@ -411,9 +391,7 @@ public class Graph {
 
 	/**
 	 * Metodo que muestra la matriz de Warshall
-	 * 
-	 * @param ""
-	 *            No recibe parametros
+	 *
 	 * @return No retorna ningun valor
 	 */
 	public void showPW() {

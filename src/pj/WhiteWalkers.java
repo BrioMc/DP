@@ -1,7 +1,7 @@
 package pj;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2ï¿½
  */
 import api.Queue;
 import map.Map;
@@ -51,7 +51,7 @@ public class WhiteWalkers extends Pj {
 		whiteWalkersWays();
 	}
 
-	public void whiteWalkersWays() {
+	private void whiteWalkersWays() {
 		Map m = Map.getInstance();
 		ArrayList<Integer> x = new ArrayList<>();
 

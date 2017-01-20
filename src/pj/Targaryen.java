@@ -24,7 +24,7 @@ public class Targaryen extends Pj {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void targaryenWays() {
+	private void targaryenWays() {
 		Map m = Map.getInstance();
 		ArrayList<Integer> x = new ArrayList<>();
 		x.add(this.room);
@@ -38,7 +38,7 @@ public class Targaryen extends Pj {
 		asigRute(x);
 	}
 
-	public int[] look(int act, Dir d) {
+	private int[] look(int act, Dir d) {
 		int[] x = new int[4];
 		// right,front,left, back
 		if (d == Dir.S) {
@@ -199,6 +199,3 @@ public class Targaryen extends Pj {
 	}
 }
 
-/**
-* 
-*/

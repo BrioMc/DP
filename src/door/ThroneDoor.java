@@ -7,7 +7,7 @@ import api.Tree;
  * Ignacio Caro Cumplido 
  * Javier Ballesteros Moron
  * EC1
- * 2º
+ * 2ï¿½
  */
 
 /**
@@ -87,7 +87,7 @@ public class ThroneDoor {
 	/**
 	 * Shows the state of the lock inOrden.
 	 */
-	public String showLock() {
+	private String showLock() {
 
 		return lock.inOrden();
 
@@ -96,7 +96,7 @@ public class ThroneDoor {
 	/**
 	 * Shows the state of the tested keys inOrden.
 	 */
-	public String showTested() {
+	private String showTested() {
 		return tested.inOrden();
 	}
 

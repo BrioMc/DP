@@ -12,7 +12,7 @@ import pj.Targaryen;
 import pj.WhiteWalkers;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2ï¿½
  */
 public class Square implements Compare<Square> {
 	/** Square identif */
@@ -32,7 +32,7 @@ public class Square implements Compare<Square> {
 	 * @param i
 	 *            is the ID we want to assign to the square
 	 */
-	public Square(int i) {
+	Square(int i) {
 		this.id = i;
 		this.freq = 0;
 		this.keys = new ArrayList<Key>();
@@ -56,7 +56,7 @@ public class Square implements Compare<Square> {
 	 * 
 	 * @param mark
 	 */
-	public void setMark(Integer mark) {
+	void setMark(Integer mark) {
 		this.mark = mark;
 	}
 
@@ -64,7 +64,7 @@ public class Square implements Compare<Square> {
 	 * 
 	 * @return
 	 */
-	public Integer getMark() {
+	Integer getMark() {
 		return mark;
 	}
 
@@ -92,7 +92,7 @@ public class Square implements Compare<Square> {
 	 * 
 	 * @return
 	 */
-	public Integer getFreq() {
+	Integer getFreq() {
 		return freq;
 	}
 
@@ -100,7 +100,7 @@ public class Square implements Compare<Square> {
 	 * 
 	 * @param freq
 	 */
-	public void setFreq(Integer freq) {
+	void setFreq(Integer freq) {
 		this.freq = freq;
 	}
 
@@ -108,7 +108,7 @@ public class Square implements Compare<Square> {
 	 * Method which shows all the keys stored in the square arrayList
 	 */
 
-	public String showKeys() {
+	String showKeys() {
 		String m = "";
 		m += ("(square:" + getId() + ": ");
 		for (int x = 0; x < this.keys.size(); x++) {
@@ -146,7 +146,7 @@ public class Square implements Compare<Square> {
 	 * 
 	 * 
 	 */
-	public String showPj() {
+	String showPj() {
 		String m = "";
 		for (int i = 0; i < pjs.size(); i++) {
 
@@ -213,7 +213,7 @@ public class Square implements Compare<Square> {
 	/**
 	 * 
 	 */
-	public void resetTurn() {
+	void resetTurn() {
 		for (int y = 0; y < pjs.size(); y++) {
 			Pj temp = pjs.get(y);
 			temp.resetT();
@@ -225,7 +225,7 @@ public class Square implements Compare<Square> {
 	 * @param i
 	 * @param m
 	 */
-	public void proccessT(int i) {
+	void proccessT(int i) {
 		for (int y = 0; y < pjs.size(); y++) {
 			
 			if (!pjs.get(y).getMove() && pjs.get(y).getTurn() <= i) {
