@@ -1,9 +1,15 @@
 package pj;
 
+
+
+import actions.PickKey;
 import map.Map;
 import map.Square;
 
-public class Targaryen extends Pj {
+
+
+public class Targaryen extends Pj  {
+
 	/**
 	 * Parameterized constructor
 	 * 
@@ -14,11 +20,18 @@ public class Targaryen extends Pj {
 	 */
 	public Targaryen(String name, char M, int turn, int Room) {
 		super(name, M, turn, Room);
+		super.keyAction= new PickKey();
+		
 	
 
 		// TODO Auto-generated constructor stub
 	}
 
+	 public void actionPj() {
+		 
+		 super.actionPj();
+		 
+	}
 	/**
 	 * 
 	 * @param x
@@ -60,8 +73,16 @@ public class Targaryen extends Pj {
 	 * @return
 	 */
 	public String showPj() {
-		// TODO Auto-generated method stub
-		return super.showPj("Targaryen");
+		String pj = "";
+		pj = ("(Targaryen:" + getTag() + ":" + getRoom() + ":" + currTurn + ":");
+		
+			for (int x = 0; x < this.keys.size(); x++) {
+				pj += (keys.get(x).toString() + " ");
+			
+			pj += (")");
+
+		}
+		return pj;
 	}
 }
 

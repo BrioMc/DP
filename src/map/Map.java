@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import door.Key;
@@ -111,110 +112,6 @@ public class Map {
 		}
 
 		return wa;
-	}
-
-	/**
-	 * 
-	 * @param rnd
-	 * @param x
-	 * @return
-	 */
-	protected boolean notEmptySquare(int rnd, char x) {
-
-		int nw = rnd - getDimY() - 1;
-		int ne = rnd - getDimY() + 1;
-		int sw = rnd + getDimY() - 1;
-		int se = rnd + getDimY() + 1;
-		int s = rnd + getDimY();
-		int w = rnd - 1;
-		int e = rnd + 1;
-		int n = rnd - getDimY();
-		boolean vacia = false;
-
-		switch (x) {
-		case ('n'):
-
-			 if ((graph.getArc(rnd, w) != 1 && graph.getArc(rnd, w) > 1
-			 || graph.getArc(w, nw) != 1 && graph.getArc(w, nw) > 1
-			 || graph.getArc(nw, n) != 1 && graph.getArc(nw, n) > 1)
-			 && (graph.getArc(n, ne) != 1 && graph.getArc(n, ne) > 1
-			 || graph.getArc(ne, e) != 1 && graph.getArc(ne, e) > 1
-			 || graph.getArc(rnd, e) != 1 && graph.getArc(rnd, e) > 1)) {
-			 vacia = true;
-			 }
-			// if (distance(rnd, n) > 3) {
-			// vacia = true;
-			// }
-			// if ((graph.getArc(rnd, w) != 1 || graph.getArc(w, nw) != 1 ||
-			// graph.getArc(nw, n) != 1)
-			// && (graph.getArc(n, ne) != 1 || graph.getArc(ne, e) != 1 ||
-			// graph.getArc(rnd, e) != 1)) {
-			// vacia = true;
-			// }
-
-			break;
-		case ('s'):
-//			if (distance(rnd, s) > 3) {
-//				vacia = true;
-//			}
-			 if ((graph.getArc(rnd, w) != 1 && graph.getArc(rnd, w) > 1
-			 || graph.getArc(w, sw) != 1 && graph.getArc(w, sw) > 1
-			 || graph.getArc(sw, s) != 1 && graph.getArc(sw, s) > 1)
-			 && (graph.getArc(s, se) != 1 && graph.getArc(s, se) > 1
-			 || graph.getArc(se, e) != 1 && graph.getArc(se, e) > 1
-			 || graph.getArc(rnd, e) != 1 && graph.getArc(rnd, e) > 1)) {
-			 vacia = true;
-			 }
-			// if ((graph.getArc(rnd, w) != 1 || graph.getArc(w, sw) != 1 ||
-			// graph.getArc(sw, s) != 1)
-			// && (graph.getArc(s, se) != 1 || graph.getArc(se, e) != 1 ||
-			// graph.getArc(rnd, e) != 1)) {
-			// vacia = true;
-			// }
-			break;
-		case ('w'):
-//			if (distance(rnd, w) > 3) {
-//				vacia = true;
-//			}
-			 if ((graph.getArc(rnd, n) != 1 && graph.getArc(rnd, n) > 1
-			 || graph.getArc(n, nw) != 1 && graph.getArc(n, nw) > 1
-			 || graph.getArc(nw, w) != 1 && graph.getArc(nw, w) > 1)
-			 && (graph.getArc(w, sw) != 1 && graph.getArc(w, sw) > 1
-			 || graph.getArc(sw, s) != 1 && graph.getArc(sw, s) > 1
-			 || graph.getArc(rnd, s) != 1 && graph.getArc(rnd, s) > 1)) {
-			 vacia = true;
-			 }
-			// if ((graph.getArc(rnd, n) != 1 || graph.getArc(n, nw) != 1 ||
-			// graph.getArc(nw, w) != 1
-			// && (graph.getArc(w, sw) != 1 || graph.getArc(sw, s) != 1 ||
-			// graph.getArc(rnd, s) != 1))) {
-			// vacia = true;
-			// }
-
-			break;
-		case ('e'):
-//			if (distance(rnd, e) > 3) {
-//				vacia = true;
-//			}
-			 if ((graph.getArc(rnd, n) != 1 && graph.getArc(rnd, n) > 1
-			 || graph.getArc(n, ne) != 1 && graph.getArc(n, ne) > 1
-			 || graph.getArc(ne, e) != 1 && graph.getArc(ne, e) > 1)
-			 && (graph.getArc(e, se) != 1 && graph.getArc(e, se) > 1
-			 || graph.getArc(se, s) != 1 && graph.getArc(se, s) > 1
-			 || graph.getArc(rnd, s) != 1 && graph.getArc(rnd, s) > 1)) {
-			 vacia = true;
-			 }
-			// if ((graph.getArc(rnd, n) != 1 || graph.getArc(n, ne) != 1 ||
-			// graph.getArc(ne, e) != 1)
-			// && (graph.getArc(e, se) != 1 || graph.getArc(se, s) != 1 ||
-			// graph.getArc(s, rnd) != 1)) {
-			// vacia = true;
-			// }
-			break;
-
-		}
-
-		return vacia;
 	}
 
 	/**
@@ -423,38 +320,31 @@ public class Map {
 			int n = rnd - getDimY();
 			boolean[] x = retWalls(i, j);
 			// N
-			if (x[0] && notEmptySquare(rnd, 'n')) {
+			if (x[0] && distance(rnd, n) > 3) {
 				graph.newArc(rnd, n, 1);
 				graph.newArc(n, rnd, 1);
 				count++;
-				System.out.println(rnd);
-				paintMap();
 			}
 			// S
-			else if (x[1] && notEmptySquare(rnd, 's')) {
+			else if (x[1] && distance(rnd, s) > 3) {
 				graph.newArc(rnd, s, 1);
 				graph.newArc(s, rnd, 1);
 				count++;
-				System.out.println(rnd);
-				paintMap();
-
 			} // W
-			else if (x[2] && notEmptySquare(rnd, 'w')) {
+			else if (x[2] && distance(rnd, w) > 3) {
 				graph.newArc(rnd, w, 1);
 				graph.newArc(w, rnd, 1);
 
-				System.out.println(rnd);
-				paintMap();
 				count++;
 			} // E
-			else if (x[3] && notEmptySquare(rnd, 'e')) {
+			else if (x[3] && distance(rnd, e) > 3) {
 				graph.newArc(rnd, e, 1);
 				graph.newArc(e, rnd, 1);
-				System.out.println(rnd);
-				paintMap();
 				count++;
 			}
 		}
+		graph.floyd();
+		graph.warshall();
 
 	}
 
@@ -496,6 +386,8 @@ public class Map {
 
 		}
 		walls.addAll(selected);
+		graph.floyd();
+		graph.warshall();
 		// doShortcut();
 
 	}
@@ -671,6 +563,57 @@ public class Map {
 		return ma;
 	}
 
+	public void ways(ArrayList<ArrayList<Integer>> m, ArrayList<Integer> x, int roomAct) {
+	
+		x.add(roomAct);
+		if (roomAct == doorRoom) {
+			m.add(x);
+		} else {
+
+			Set<Integer> ady = new LinkedHashSet<Integer>();
+
+			graph.adyacentes(roomAct, ady);
+			for (Integer i : ady) {
+
+				if (!x.contains(i)) {
+					ways(m, x, i);
+					x.remove(x.size() - 1);
+
+				}
+
+			}
+
+		}
+	}
+
+	/**
+	 * 
+	 * @param x
+	 * @param origin
+	 */
+	public void mostFreq(ArrayList<Integer> x, Integer origin) {
+
+		x.add(origin);
+		if (origin == (dimY * dimX) - 1) {
+			Square room;
+			for (int i = 0; i < x.size(); i++) {
+
+				room = getSquare(x.get(i));
+				room.setFreq(room.getFreq() + 1);
+			}
+		} else {
+			Set<Integer> ady = new LinkedHashSet<Integer>();
+			graph.adyacentes(origin, ady);
+			for (Integer i : ady) {
+				if (!x.contains(i)) {
+					mostFreq(x, i);
+					x.remove(x.size() - 1);
+				}
+			}
+		}
+
+	}
+
 	/**
 	 * 
 	 * @param bufferOut
@@ -781,8 +724,8 @@ public class Map {
 	}
 
 	public static void main(String args[]) {
-		int dimX = 5;
-		int dimY = 10;
+		int dimX = 6;
+		int dimY = 6;
 		int doorRoom = (dimX * dimY) - 1;
 		int altLock = 3;
 		// int maxTurns = 50;
@@ -888,14 +831,26 @@ public class Map {
 		// execute their actions
 		// in a chronologically order (the characters that arrived first are the
 		// first in leaving the square)
-		// for (int i = 0; i < maxTurns; i++) {
-		// map.paintMap();
-		// map.process(i);
-		// }
+
 		// map.graph.showArcs();
 		map.Kruskal();
 		map.doShortcut();
-		map.paintMap();
+		for (int i = 0; i < 50; i++) {
+
+			map.process(i);
+			map.paintMap();
+		}
+		ArrayList<ArrayList<Integer>> x = new ArrayList<>();
+		ArrayList<Integer> m = new ArrayList<>();
+		map.ways(x, m, 0);
+
+		for (j = 0; j < x.size(); j++) {
+			for (int l = 0; l < x.get(j).size(); l++) {
+				System.out.print(x.get(j).get(l) + " ");
+
+			}
+			System.out.println();
+		}
 
 	}
 

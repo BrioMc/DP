@@ -1,17 +1,20 @@
 package pj;
 
+import java.util.ArrayList;
+
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
-import java.util.ArrayList;
+
 
 import api.Compare;
 import door.Key;
 import map.Dir;
 import map.Map;
 import map.Square;
+import actions.*;
 
-public abstract class Pj implements Compare<Pj> {
+public abstract class Pj implements Compare<Pj>{
 	/** Pj Identifier */
 	protected Integer id;
 	/** Pj Name */
@@ -25,12 +28,13 @@ public abstract class Pj implements Compare<Pj> {
 	/** Tag Identifier */
 	protected char tag;
 	/** List of keys that pj has */
-	protected ArrayList<Key> keys;
+	public ArrayList<Key> keys;
 	/** Movement Flag */
 	protected boolean move;
 	/** Current turn */
 	protected int currTurn;
-	/** House tag */
+	/**Type of key action */
+	protected KeyAction keyAction;
 
 
 	/**
@@ -49,7 +53,6 @@ public abstract class Pj implements Compare<Pj> {
 		this.turnInitial = turn;
 		this.currTurn = 0;
 		this.rutes = new Dir[200];
-		this.keys = new ArrayList<Key>();
 		this.keys = new ArrayList<Key>();
 	}
 
@@ -155,7 +158,6 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param map
 	 * @param c
 	 */
-	protected abstract void keyAction(Square[][] map);
 
 	/**
 	 * Method for movement action, if can do movement, then delete from actual
@@ -216,53 +218,12 @@ public abstract class Pj implements Compare<Pj> {
 	 * @return True if door is open
 	 */
 
-	protected abstract boolean actionDoor(Map x){
-		boolean doorRoom = false;
-		
+	protected abstract boolean actionDoor(Map x);
 
-		case 'W':
-		case 'L':
-			if(this.room =x.getDoor()){
-				x.getDoor().closeDoor();
-				doorRoom = true;
-			}
-
-			break;
-		case 'T':
-		case 'S':
-			if (!x.getDoor().isOp()) {
-				if (!keys.isEmpty()) {
-					if (x.getDoor().open(keys.remove(keys.size() - 1))) {
-						x.getMap()[this.getRoom() / x.getTMap()][this.getRoom() % x.getTMap()].removePj(this);
-						x.getThrone().insertPj(this);
-
-					}
-				}
-			} else {
-				x.getMap()[this.getRoom() / x.getTMap()][this.getRoom() % x.getTMap()].removePj(this);
-				x.getThrone().insertPj(this);
-
-			}
-			doorRoom = true;
-			break;
-		default:
-			break;
-		case 'C':
-			x.getDoor().closeDoor();
-			;
-			break;
-		case 'O':
-			if (x.getDoor().open(keys.remove(keys.size()))) {
-				x.getMap()[0][0].removePj(this);
-				x.getThrone().insertPj(this);
-			}
-			break;
-
-		}
-		return doorRoom;
-
+	
+	public void actionKey(Map x){
+		keyAction.keyAction(x.getMap(), this);
 	}
-
 	/**
 	 * Method for action pj
 	 * 
@@ -270,15 +231,14 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param i
 	 * @param c
 	 */
-	 public void actionPj() {
+	 protected void actionPj() {
 		Map x = Map.getInstance();
 		if (x.getDRoom() == getRoom())
 			actionDoor(x);
 		
 		if ((this.currTurn - 1) < this.rutes.length) 
 			move(this.rutes[this.currTurn - 1], x.getMap());
-
-		keyAction(x.getMap());
+		actionKey(x);
 		}
 
 	/**
@@ -290,18 +250,8 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param house
 	 * @return
 	 */
-	public String showPj(String house) {
-		String pj = "";
-		pj = ("(" + house + ":" + getTag() + ":" + getRoom() + ":" + currTurn + ":");
-		if (houseTag != 'W') {
-			for (int x = 0; x < this.keys.size(); x++) {
-				pj += (keys.get(x).toString() + " ");
-			}
-			pj += (")");
-
-		}
-		return pj;
-	}
+	public abstract String showPj() ;
+	
 
 	/**
 	 * CompareTo

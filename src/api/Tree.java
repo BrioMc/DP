@@ -1,8 +1,5 @@
 package api;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-
 import door.Key;
 
 /**
@@ -169,12 +166,11 @@ public class Tree<T extends Compare<T>> {
 	}
 
 	/**
-	 * remove un data. Este método es utilizado por el método remove anterior.
+	 * removes data. Este metodo es utilizado por el metodo remove anterior.
 	 * 
 	 * @param data
-	 *            El data a remove
-	 * @return Devuelve el árbol resultante después de haber realizado el
-	 *         borrado
+	 *           The data to be removed
+	 * @return Returns the tree without the data
 	 */
 	private Tree<T> pRemove(T data) {
 		T dataaux;

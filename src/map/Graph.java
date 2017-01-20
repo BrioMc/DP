@@ -1,5 +1,6 @@
 package map;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -261,6 +262,27 @@ public class Graph {
 		}
 		return sig;
 	}
+
+	/**
+	 * 
+	 * @param origin
+	 * @param destination
+	 * @return return distance between origin and destination
+	 */
+	public int distance(int origin, int destination) {
+		int i = 1;
+		if (origin == destination) {
+			i = 0;
+		} else {
+			int nex = next(origin, destination);
+
+			i += distance(nex, destination);
+
+		}
+
+		return i;
+	}
+
 
 	/**
 	 * Metodo que comprueba si el grafo esta vacio

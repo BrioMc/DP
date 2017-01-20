@@ -2,13 +2,14 @@ package pj;
 
 import door.Key;
 import map.Map;
-import map.Square;
+import actions.DropKey;
 
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
 
 public class Lannister extends Pj {
+
 	/**
 	 * 
 	 * @param name
@@ -18,6 +19,7 @@ public class Lannister extends Pj {
 	 */
 	public Lannister(String name, char M, int turn, int Room) {
 		super(name, M, turn, Room);
+		super.keyAction = new DropKey();
 		Key k;
 		for (int i = 0; i < 30; i++) {
 			k = new Key(i);
@@ -33,39 +35,38 @@ public class Lannister extends Pj {
 	/**
 	 * 
 	 */
-	protected boolean actionDoor(Map x){
+	protected boolean actionDoor(Map x) {
 		boolean doorRoom = false;
 
-		if(this.room ==x.getDRoom()){
+		if (this.room == x.getDRoom()) {
 			x.getDoor().closeDoor();
 			doorRoom = true;
 		}
-			
+
 		return doorRoom;
 
 	}
-	
 
+	public void actionPj() {
 
-	protected void keyAction(Square[][] map){
-		int x = this.room / map[0].length;
-		int y = this.room % map[0].length;
-		
-		if (this.keys.size() != 0) {
-			if (this.room % 2 == 1) {
+		super.actionPj();
 
-				map[x][y].insertKey(this.keys.get(this.keys.size() - 1));
-				this.keys.remove(this.keys.get(this.keys.size() - 1));
-			}
-		}
 	}
+
 	/**
 	 * 
 	 * @return
 	 */
-	public String showPj() {
-		// TODO Auto-generated method stub
-		return super.showPj("Lannister");
-	}
 
+	public String showPj() {
+		String pj = "";
+		pj = ("(Lannister:" + getTag() + ":" + getRoom() + ":" + currTurn + ":");
+
+		for (int x = 0; x < this.keys.size(); x++) {
+			pj += (keys.get(x).toString() + " ");
+
+		}
+		pj += (")");
+		return pj;
+	}
 }

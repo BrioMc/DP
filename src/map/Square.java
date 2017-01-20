@@ -149,32 +149,31 @@ public class Square implements Compare<Square> {
 	public String showPj() {
 		String m = "";
 		for (int i = 0; i < pjs.size(); i++) {
-			Pj temp = pjs.get(i);
-			switch (temp.getHTag()) {
-			case 'S':
-				Stark stark = (Stark) pjs.get(i);
-				m = stark.showPj();
-				m += "\n";
-				break;
-			case 'W':
-				WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(i);
-				m = whiteWalkers.showPj();
-				m += "\n";
-				break;
-			case 'T':
-				Targaryen targaryen = (Targaryen) pjs.get(i);
-				m = targaryen.showPj();
-				m += "\n";
-				break;
-			case 'L':
-				Lannister lannister = (Lannister) pjs.get(i);
-				m = lannister.showPj();
-				m += "\n";
-				break;
 
-			}
-
-		}
+				if (pjs.get(i) instanceof Stark){
+					Stark stark = (Stark) pjs.get(i);
+					m = stark.showPj();
+					m += "\n";
+				}else{
+					if (pjs.get(i) instanceof WhiteWalkers){
+					WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(i);
+					m = whiteWalkers.showPj();
+					m += "\n";
+					}else{
+						if (pjs.get(i) instanceof Targaryen){
+							Targaryen targaryen = (Targaryen) pjs.get(i);
+							m = targaryen.showPj();
+							m += "\n";
+						}else{
+							if (pjs.get(i) instanceof Lannister){
+								Lannister lannister = (Lannister) pjs.get(i);
+								m = lannister.showPj();
+								m += "\n";
+							}
+						}
+					}
+				}
+			}	
 		return m;
 	}
 
@@ -228,32 +227,33 @@ public class Square implements Compare<Square> {
 	 */
 	public void proccessT(int i) {
 		for (int y = 0; y < pjs.size(); y++) {
-			Pj temp = pjs.get(y);
-			if (!temp.getMove() && temp.getTurn() <= i) {
-				temp.sumTurn();
-				temp.moveOn();
-				switch (temp.getHTag()) {
-				case 'S':
-					Stark stark = (Stark) temp;
+			
+			if (!pjs.get(y).getMove() && pjs.get(y).getTurn() <= i) {
+				pjs.get(y).sumTurn();
+				pjs.get(y).moveOn();
+				if (pjs.get(y) instanceof Stark){
+					Stark stark = (Stark) pjs.get(y);
 					stark.actionPj();
-					break;
-				case 'W':
-					WhiteWalkers whiteWalkers = (WhiteWalkers) temp;
+				}else{
+					if (pjs.get(y) instanceof WhiteWalkers){
+				
+					WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(y) ;
 					whiteWalkers.actionPj();
-					break;
-				case 'T':
-					Targaryen targaryen = (Targaryen) temp;
+					}else{
+						if (pjs.get(y) instanceof Targaryen){
+					
+				
+					Targaryen targaryen = (Targaryen) pjs.get(y);
 					targaryen.actionPj();
-					break;
-				case 'L':
-					Lannister lannister = (Lannister) temp;
-					lannister.actionPj();
-					break;
-
+						}else{
+							if (pjs.get(y) instanceof Lannister){
+								Lannister lannister = (Lannister) pjs.get(y);
+								lannister.actionPj();
+							}
+						}	
+					}
 				}
-
 			}
-
 		}
 	}
 

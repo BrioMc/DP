@@ -1,5 +1,8 @@
 package pj;
 
+
+
+import actions.PickKey;
 import map.Map;
 import map.Square;
 
@@ -8,6 +11,7 @@ import map.Square;
  */
 
 public class Stark extends Pj {
+	
 	/**
 	 * Parameterized constructor
 	 * 
@@ -17,11 +21,17 @@ public class Stark extends Pj {
 	 * @param Room
 	 */
 	public Stark(String name, char M, int turn, int Room) {
+
 		super(name, M, turn, Room);
+		super.keyAction = new PickKey();
+		
 
 		// TODO Auto-generated constructor stub
 	}
 
+	 public void actionPj() {
+		 super.actionPj();
+	}
 	/**
 	 * 
 	 */
@@ -64,8 +74,16 @@ public class Stark extends Pj {
 	 * @return
 	 */
 	public String showPj() {
-		// TODO Auto-generated method stub
-		return super.showPj("Stark");
+		String pj = "";
+		pj = ("(Stark:" + getTag() + ":" + getRoom() + ":" + currTurn + ":");
+		
+			for (int x = 0; x < this.keys.size(); x++) {
+				pj += (keys.get(x).toString() + " ");
+			
+			pj += (")");
+
+		}
+		return pj;
 	}
 
 }

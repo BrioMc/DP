@@ -5,7 +5,8 @@ package pj;
  */
 import api.Queue;
 import map.Map;
-import map.Square;
+import actions.DoNothingKey;
+
 
 public class WhiteWalkers extends Pj {
 
@@ -42,6 +43,7 @@ public class WhiteWalkers extends Pj {
 	 */
 	public WhiteWalkers(String name, char M, int turn, int Room) {
 		super(name, M, turn, Room);
+		super.keyAction = new DoNothingKey();
 		this.currTurn = 0;
 		pjsT = new Queue<Pj>();
 	}
@@ -53,6 +55,7 @@ public class WhiteWalkers extends Pj {
 		super.actionPj();
 		takepj();
 	}
+	
 	protected boolean actionDoor(Map x){
 		boolean doorRoom = false;
 
@@ -67,23 +70,22 @@ public class WhiteWalkers extends Pj {
 	
 
 
-	protected void keyAction(Square[][] map){
-		
-	}
+
 	/**
 	 * public method for watch pj's information
 	 * 
 	 * @return
 	 */
 	public String showPj() {
-		// TODO Auto-generated method stub
+		
 		String pj = "";
-		pj += super.showPj("WhiteWalkers");
+		pj = ("(whiteWalkers:" + getTag() + ":" + getRoom() + ":" + currTurn + ":");
+
 		for (int i = 0; i < pjsT.size(); i++) {
 			pj += (" " + pjsT.get(i).getTag());
 		}
 		pj += (")");
 		return pj;
 	}
-
+	
 }
