@@ -7,7 +7,7 @@ import actions.KeyAction;
 import actions.Movement;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2ï¿½
  */
 
 import api.Compare;
@@ -18,27 +18,27 @@ import map.Square;
 
 public abstract class Pj implements Compare<Pj> {
 	/** Pj Identifier */
-	protected Integer id;
+	private Integer id;
 	/** Pj Name */
-	protected String name;
+	private String name;
 	/** Turn when pj begin. */
-	protected int turnInitial;
+	private int turnInitial;
 	/** Room in which the player is */
-	protected int room;
+	int room;
 	/** Movements list */
-	protected ArrayList<Dir> rutes;
+	private ArrayList<Dir> rutes;
 	/** Tag Identifier */
-	protected char tag;
+	private char tag;
 	/** List of keys that pj has */
 	public ArrayList<Key> keys;
 	/** Movement Flag */
-	protected boolean move;
+	private boolean move;
 	/** Current turn */
-	protected int currTurn;
+	int currTurn;
 	/** Type of key action */
-	protected KeyAction keyAction;
-	/** Type of Movement */
-	protected Movement movementType;
+	KeyAction keyAction;
+
+
 	/**
 	 * Parameterized constructor
 	 * 
@@ -63,7 +63,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * 
 	 * @return id
 	 */
-	public int getId() {
+	private int getId() {
 		// TODO Auto-generated method stub
 		return id;
 	}
@@ -91,7 +91,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * 
 	 * @param i
 	 */
-	public void setRoom(int i) {
+	private void setRoom(int i) {
 		this.room = i;
 	}
 
@@ -144,7 +144,7 @@ public abstract class Pj implements Compare<Pj> {
 
 	}
 
-	public void asigRute(ArrayList<Integer> x) {
+	void asigRute(ArrayList<Integer> x) {
 		Map m = Map.getInstance();
 		while (!x.isEmpty()) {
 			int room = x.get(0);
@@ -180,7 +180,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param destination
 	 * @return
 	 */
-	protected ArrayList<Integer> shortestPath(int origin, int destination) {
+	ArrayList<Integer> shortestPath(int origin, int destination) {
 		Map m = Map.getInstance();
 		ArrayList<Integer> ways = new ArrayList<Integer>();
 		ways.add(origin);
@@ -201,7 +201,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param map
 	 *            Map on which to move
 	 */
-	protected void move(Dir i, Square[][] map) {
+	private void move(Dir i, Square[][] map) {
 
 		int x = this.room / map[0].length;
 		int y = this.room % map[0].length;
@@ -253,7 +253,7 @@ public abstract class Pj implements Compare<Pj> {
 
 	protected abstract boolean actionDoor(Map x);
 
-	public void actionKey(Map x) {
+	private void actionKey(Map x) {
 		keyAction.keyAction(x.getMap(), this);
 	}
 

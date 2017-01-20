@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import actions.DropKey;
 import actions.LannisterAndWW;
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2ï¿½
  */
 
 public class Lannister extends Pj {
@@ -36,7 +36,7 @@ public class Lannister extends Pj {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void lannisterWays() {
+	private void lannisterWays() {
 		Map m = Map.getInstance();
 		ArrayList<Integer> x = new ArrayList<>();
 

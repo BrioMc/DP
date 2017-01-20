@@ -78,12 +78,12 @@ public class Cargador {
 	 *            array que contiene los valores de cada atributo de la
 	 *            instancia
 	 */
-	public void crear(String elto, int numCampos, List<String> vCampos) {
-		// Si existe elemento y el número de campos es correcto, procesarlo...
+	void crear(String elto, int numCampos, List<String> vCampos) {
+		// Si existe elemento y el nï¿½mero de campos es correcto, procesarlo...
 		// si no, error
 		int numElto = queElemento(elto);
 
-		// Comprobación de datos bÃ¡sicos correctos
+		// Comprobaciï¿½n de datos bÃ¡sicos correctos
 		if ((numElto != -1) && (mapeo[numElto].getCampos() == numCampos)) {
 			// procesar
 			switch (numElto) {

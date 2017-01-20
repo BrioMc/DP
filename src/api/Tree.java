@@ -6,7 +6,7 @@ import door.Key;
  * Implementation of the Binary Search Tree.
  * 
  * @version 1.0
- * @author Javier Ballesteros Morón Ignacio Caro Cumplido
+ * @author Javier Ballesteros Morï¿½n Ignacio Caro Cumplido
  */
 
 public class Tree<T extends Compare<T>> {
@@ -55,7 +55,7 @@ public class Tree<T extends Compare<T>> {
 	 * 
 	 * @return the left son
 	 */
-	public Tree<T> getTLeft() {
+	private Tree<T> getTLeft() {
 		return tLeft;
 	}
 
@@ -64,7 +64,7 @@ public class Tree<T extends Compare<T>> {
 	 * 
 	 * @return Right son of the tree
 	 */
-	public Tree<T> getTRight() {
+	private Tree<T> getTRight() {
 		return tRight;
 	}
 
@@ -73,7 +73,7 @@ public class Tree<T extends Compare<T>> {
 	 * 
 	 * @return Root of the tree
 	 */
-	public T getRoot() {
+	private T getRoot() {
 		return rootData;
 	}
 
@@ -82,7 +82,7 @@ public class Tree<T extends Compare<T>> {
 	 * 
 	 * @return true if the tree is empty, false if not.
 	 */
-	public boolean empty() {
+	private boolean empty() {
 		return isEmpty;
 	}
 
@@ -299,7 +299,7 @@ public class Tree<T extends Compare<T>> {
 		return depth;
 	}
 
-	public boolean isLeaf(T data) {
+	private boolean isLeaf(T data) {
 		Tree<T> aux = null;
 		boolean leaf = false;
 		if (!empty()) {
@@ -362,8 +362,8 @@ public class Tree<T extends Compare<T>> {
 
 		Key[] datas = { new Key(20), new Key(7), new Key(18), new Key(22), new Key(5), new Key(2), new Key(1) };
 
-		for (int i = 0; i < datas.length; i++) {
-			Tree.insert(datas[i]);
+		for (Key data : datas) {
+			Tree.insert(data);
 		}
 
 		// // Insertando datas repetidos
@@ -398,7 +398,7 @@ public class Tree<T extends Compare<T>> {
 		System.out.println("la profundidad es " + Tree.depth());
 
 		// Checking if the data is inside a leaf node
-		if (Tree.isLeaf(new Key(3)) == true)
+		if (Tree.isLeaf(new Key(3)))
 			System.out.println(3 + " Es hoja");
 		else
 			System.out.println(3 + " No es hoja");
