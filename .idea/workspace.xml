@@ -3,20 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="45bfa6b2-61c1-4790-b27d-35f56146ff53" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/Tree.java" afterPath="$PROJECT_DIR$/src/api/Tree.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/door/ThroneDoor.java" afterPath="$PROJECT_DIR$/src/door/ThroneDoor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dp/cargador/Cargador.java" afterPath="$PROJECT_DIR$/src/dp/cargador/Cargador.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dp/cargador/DatoMapeo.java" afterPath="$PROJECT_DIR$/src/dp/cargador/DatoMapeo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dp/cargador/FicheroCarga.java" afterPath="$PROJECT_DIR$/src/dp/cargador/FicheroCarga.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/map/GenAleatorios.java" afterPath="$PROJECT_DIR$/src/map/GenAleatorios.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/map/Graph.java" afterPath="$PROJECT_DIR$/src/map/Graph.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/map/Map.java" afterPath="$PROJECT_DIR$/src/map/Map.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/map/Square.java" afterPath="$PROJECT_DIR$/src/map/Square.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pj/Lannister.java" afterPath="$PROJECT_DIR$/src/pj/Lannister.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pj/Pj.java" afterPath="$PROJECT_DIR$/src/pj/Pj.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pj/Stark.java" afterPath="$PROJECT_DIR$/src/pj/Stark.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pj/Targaryen.java" afterPath="$PROJECT_DIR$/src/pj/Targaryen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pj/WhiteWalkers.java" afterPath="$PROJECT_DIR$/src/pj/WhiteWalkers.java" />
     </list>
     <ignored path="Proyecto_DP.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,8 +37,8 @@
       <file leaf-file-name="Map.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/map/Map.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="712" column="16" selection-start-line="712" selection-start-column="16" selection-end-line="712" selection-end-column="16" />
+            <state relative-caret-position="909">
+              <caret line="284" column="5" selection-start-line="284" selection-start-column="5" selection-end-line="284" selection-end-column="5" />
               <folding>
                 <element signature="e#12002#12011#0" expanded="true" />
               </folding>
@@ -679,12 +665,20 @@
       <workItem from="1479321090589" duration="12070000" />
       <workItem from="1479419860056" duration="131000" />
       <workItem from="1484946397903" duration="3598000" />
-      <workItem from="1484950043838" duration="136000" />
+      <workItem from="1484950043838" duration="242000" />
     </task>
+    <task id="LOCAL-00001" summary="Encapsulación arreglada, faltan los Targaryen aun">
+      <created>1484950213146</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1484950213146</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21719000" />
+    <option name="totallyTimeSpent" value="21825000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -729,7 +723,8 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Encapsulación arreglada, faltan los Targaryen aun" />
+    <option name="LAST_COMMIT_MESSAGE" value="Encapsulación arreglada, faltan los Targaryen aun" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1127,8 +1122,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/map/Map.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="712" column="16" selection-start-line="712" selection-start-column="16" selection-end-line="712" selection-end-column="16" />
+        <state relative-caret-position="909">
+          <caret line="284" column="5" selection-start-line="284" selection-start-column="5" selection-end-line="284" selection-end-column="5" />
           <folding>
             <element signature="e#12002#12011#0" expanded="true" />
           </folding>
