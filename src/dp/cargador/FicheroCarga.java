@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import map.Map;
-
 public class FicheroCarga {
 	/**
 	 * atributo de la clase que indica el numero máximo de campos que se pueden
@@ -72,7 +70,7 @@ public class FicheroCarga {
 	public static void writeFile() throws FileNotFoundException, IOException {
 
 		bufferOut = new BufferedWriter(new FileWriter("record.txt"));
-		Map.getInstance().writelog(bufferOut);
+		//Map.getInstance().writelog(bufferOut);
 		bufferOut.close();
 	}
 

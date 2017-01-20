@@ -1,20 +1,21 @@
 package pj;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+
+import actions.KeyAction;
 
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
-
 
 import api.Compare;
 import door.Key;
 import map.Dir;
 import map.Map;
 import map.Square;
-import actions.*;
 
-public abstract class Pj implements Compare<Pj>{
+public abstract class Pj implements Compare<Pj> {
 	/** Pj Identifier */
 	protected Integer id;
 	/** Pj Name */
@@ -24,7 +25,7 @@ public abstract class Pj implements Compare<Pj>{
 	/** Room in which the player is */
 	protected int room;
 	/** Movements list */
-	protected Dir[] rutes;
+	protected ArrayList<Dir> rutes;
 	/** Tag Identifier */
 	protected char tag;
 	/** List of keys that pj has */
@@ -33,9 +34,8 @@ public abstract class Pj implements Compare<Pj>{
 	protected boolean move;
 	/** Current turn */
 	protected int currTurn;
-	/**Type of key action */
+	/** Type of key action */
 	protected KeyAction keyAction;
-
 
 	/**
 	 * Parameterized constructor
@@ -52,7 +52,7 @@ public abstract class Pj implements Compare<Pj>{
 		this.room = room;
 		this.turnInitial = turn;
 		this.currTurn = 0;
-		this.rutes = new Dir[200];
+		this.rutes = new ArrayList<Dir>();
 		this.keys = new ArrayList<Key>();
 	}
 
@@ -103,15 +103,6 @@ public abstract class Pj implements Compare<Pj>{
 	}
 
 	/**
-	 * Public method for set array rutes
-	 * 
-	 * @param rutes
-	 */
-	public void setRoutes(Dir[] rutes) {
-		this.rutes = rutes;
-	}
-
-	/**
 	 * Public method for take pj's tag
 	 * 
 	 * @return tag
@@ -128,8 +119,6 @@ public abstract class Pj implements Compare<Pj>{
 		// TODO Auto-generated method stub
 		return move;
 	}
-
-
 
 	/**
 	 * 
@@ -153,11 +142,51 @@ public abstract class Pj implements Compare<Pj>{
 
 	}
 
+	public void asigRute(ArrayList<Integer> x) {
+		Map m = Map.getInstance();
+		while (!x.isEmpty()) {
+			int room = x.get(0);
+			x.remove(0);
+			// W
+			if (room == (x.get(0) + 1)) {
+				rutes.add(Dir.W);
+			}
+			// E
+			else if (room == (x.get(0) - 1)) {
+				rutes.add(Dir.E);
+
+			}
+			// S
+			else if (room == (x.get(0) + m.getDimY())) {
+				rutes.add(Dir.S);
+
+			}
+			// N
+			else if (room == (x.get(0) - m.getDimY())) {
+				rutes.add(Dir.N);
+
+			}
+
+		}
+	}
+
 	/**
 	 * 
-	 * @param map
-	 * @param c
+	 * @param origin
+	 * @param destination
+	 * @return
 	 */
+	protected ArrayList<Integer> shortlessWay(int origin, int destination) {
+		Map m = Map.getInstance();
+		ArrayList<Integer> ways = new ArrayList<Integer>();
+		ways.add(origin);
+		while (origin != destination) {
+			origin = m.getGraph().next(origin, destination);
+			ways.add(origin);
+		}
+
+		return ways;
+	}
 
 	/**
 	 * Method for movement action, if can do movement, then delete from actual
@@ -220,10 +249,10 @@ public abstract class Pj implements Compare<Pj>{
 
 	protected abstract boolean actionDoor(Map x);
 
-	
-	public void actionKey(Map x){
+	public void actionKey(Map x) {
 		keyAction.keyAction(x.getMap(), this);
 	}
+
 	/**
 	 * Method for action pj
 	 * 
@@ -231,15 +260,15 @@ public abstract class Pj implements Compare<Pj>{
 	 * @param i
 	 * @param c
 	 */
-	 protected void actionPj() {
+	protected void actionPj() {
 		Map x = Map.getInstance();
 		if (x.getDRoom() == getRoom())
 			actionDoor(x);
-		
-		if ((this.currTurn - 1) < this.rutes.length) 
-			move(this.rutes[this.currTurn - 1], x.getMap());
+
+		if ((this.currTurn - 1) < this.rutes.size())
+			move(this.rutes.get(this.currTurn - 1), x.getMap());
 		actionKey(x);
-		}
+	}
 
 	/**
 	 * public method for watch pj's information
@@ -250,8 +279,14 @@ public abstract class Pj implements Compare<Pj>{
 	 * @param house
 	 * @return
 	 */
-	public abstract String showPj() ;
-	
+	public String showRute() {
+		String x = "(";
+		for (int i = 0; i < this.rutes.size(); i++) {
+			x += " " + rutes.get(i).toString();
+		}
+		x += ")";
+		return x;
+	}
 
 	/**
 	 * CompareTo

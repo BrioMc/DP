@@ -5,8 +5,10 @@ package pj;
  */
 import api.Queue;
 import map.Map;
-import actions.DoNothingKey;
 
+import java.util.ArrayList;
+
+import actions.DoNothingKey;
 
 public class WhiteWalkers extends Pj {
 
@@ -48,6 +50,21 @@ public class WhiteWalkers extends Pj {
 		pjsT = new Queue<Pj>();
 	}
 
+	public void whiteWalkersWays() {
+		Map m = Map.getInstance();
+		ArrayList<Integer> x = new ArrayList<>();
+
+		x = shortlessWay(m.surW(), m.norW());
+		asigRute(x);
+		x = shortlessWay(m.norW(), m.norE());
+		asigRute(x);
+		x = shortlessWay(m.norE(), m.surE());
+		asigRute(x);
+		x = shortlessWay(m.surE(), m.surW());
+		asigRute(x);
+
+	}
+
 	/**
 	 * 
 	 */
@@ -55,21 +72,18 @@ public class WhiteWalkers extends Pj {
 		super.actionPj();
 		takepj();
 	}
-	
-	protected boolean actionDoor(Map x){
+
+	protected boolean actionDoor(Map x) {
 		boolean doorRoom = false;
 
-		if(this.room ==x.getDRoom()){
+		if (this.room == x.getDRoom()) {
 			x.getDoor().closeDoor();
 			doorRoom = true;
 		}
-			
+
 		return doorRoom;
 
 	}
-	
-
-
 
 	/**
 	 * public method for watch pj's information
@@ -77,7 +91,7 @@ public class WhiteWalkers extends Pj {
 	 * @return
 	 */
 	public String showPj() {
-		
+
 		String pj = "";
 		pj = ("(whiteWalkers:" + getTag() + ":" + getRoom() + ":" + currTurn + ":");
 
@@ -87,5 +101,5 @@ public class WhiteWalkers extends Pj {
 		pj += (")");
 		return pj;
 	}
-	
+
 }

@@ -1,6 +1,7 @@
 package map;
 
 import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -144,6 +145,10 @@ public class Map {
 	 */
 	public static void generateInstance(int doorRoom, int dimX, int dimY, ThroneDoor door) {
 		instance = new Map(doorRoom, dimX, dimY, door);
+	}
+
+	public Graph getGraph() {
+		return this.graph;
 	}
 
 	/**
@@ -563,29 +568,6 @@ public class Map {
 		return ma;
 	}
 
-	public void ways(ArrayList<ArrayList<Integer>> m, ArrayList<Integer> x, int roomAct) {
-	
-		x.add(roomAct);
-		if (roomAct == doorRoom) {
-			m.add(x);
-		} else {
-
-			Set<Integer> ady = new LinkedHashSet<Integer>();
-
-			graph.adyacentes(roomAct, ady);
-			for (Integer i : ady) {
-
-				if (!x.contains(i)) {
-					ways(m, x, i);
-					x.remove(x.size() - 1);
-
-				}
-
-			}
-
-		}
-	}
-
 	/**
 	 * 
 	 * @param x
@@ -619,7 +601,7 @@ public class Map {
 	 * @param bufferOut
 	 * @throws IOException
 	 */
-	public void writelog(BufferedWriter bufferOut) throws IOException {
+	private void writelog(BufferedWriter bufferOut) throws IOException {
 		// Write Turn data
 		bufferOut.write("(turn:" + this.turn + ")");
 		bufferOut.newLine();
@@ -649,6 +631,23 @@ public class Map {
 				bufferOut.newLine();
 			}
 		}
+	}
+
+	/**
+	 * 
+	 */
+	public void writeMap() {
+		BufferedWriter bufferOut = null;
+		try {
+			bufferOut = new BufferedWriter(new FileWriter("record.txt"));
+			writelog(bufferOut);
+			bufferOut.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Map.getInstance().writelog(bufferOut);
+
 	}
 
 	/**
@@ -723,6 +722,8 @@ public class Map {
 		System.out.println();
 	}
 
+
+
 	public static void main(String args[]) {
 		int dimX = 6;
 		int dimY = 6;
@@ -784,7 +785,6 @@ public class Map {
 		// (route:E: S S E E N E N E S E S S W S E E)
 		Dir[] direccionesE = { Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S,
 				Dir.W, Dir.S, Dir.E, Dir.S };
-		starkE.setRoutes(direccionesE);
 
 		// Adding the character into the map
 		map.insertPj(starkE);
@@ -797,7 +797,6 @@ public class Map {
 		Dir[] direccionesD = { Dir.E, Dir.S, Dir.S, Dir.S, Dir.W, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.S, Dir.S,
 				Dir.E, Dir.E };
 
-		targaryenD.setRoutes(direccionesD);
 		// Adding the character into the map
 		map.insertPj(targaryenD);
 
@@ -808,7 +807,6 @@ public class Map {
 		// (route:C: N N N E S E N N E N E E S S S S S )
 		Dir[] direccionesC = { Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N, Dir.E, Dir.N, Dir.E, Dir.E,
 				Dir.S, Dir.S, Dir.S, Dir.S, Dir.S };
-		walker.setRoutes(direccionesC);
 		// Adding the character into the map
 		map.insertPj(walker);
 
@@ -817,9 +815,6 @@ public class Map {
 		// and initial square
 		Lannister lannisterT = new Lannister("Tyrion", 'T', 1, map.getDRoom());
 		// (ruta:T: N N W N N W S W W N N W S S S S S E E E E E )
-		Dir[] direccionesT = { Dir.N, Dir.N, Dir.W, Dir.N, Dir.N, Dir.W, Dir.S, Dir.W, Dir.W, Dir.N, Dir.N, Dir.W,
-				Dir.S, Dir.S, Dir.S, Dir.S, Dir.S, Dir.E, Dir.E, Dir.E, Dir.E, Dir.E };
-		lannisterT.setRoutes(direccionesT);
 		// Adding the character into the map
 		// map.paintMap();
 		map.insertPj(lannisterT);
@@ -835,23 +830,8 @@ public class Map {
 		// map.graph.showArcs();
 		map.Kruskal();
 		map.doShortcut();
-		for (int i = 0; i < 50; i++) {
+		map.paintMap();
 
-			map.process(i);
-			map.paintMap();
-		}
-		ArrayList<ArrayList<Integer>> x = new ArrayList<>();
-		ArrayList<Integer> m = new ArrayList<>();
-		map.ways(x, m, 0);
-
-		for (j = 0; j < x.size(); j++) {
-			for (int l = 0; l < x.get(j).size(); l++) {
-				System.out.print(x.get(j).get(l) + " ");
-
-			}
-			System.out.println();
-		}
 
 	}
-
 }

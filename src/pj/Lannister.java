@@ -2,6 +2,9 @@ package pj;
 
 import door.Key;
 import map.Map;
+
+import java.util.ArrayList;
+
 import actions.DropKey;
 
 /**
@@ -30,6 +33,21 @@ public class Lannister extends Pj {
 		}
 
 		// TODO Auto-generated constructor stub
+	}
+
+	public void lannisterWays() {
+		Map m = Map.getInstance();
+		ArrayList<Integer> x = new ArrayList<>();
+
+		x = shortlessWay(m.surE(), m.norE());
+		asigRute(x);
+		x = shortlessWay(m.norE(), m.norW());
+		asigRute(x);
+		x = shortlessWay(m.norW(), m.surW());
+		asigRute(x);
+		x = shortlessWay(m.surW(), m.surE());
+		asigRute(x);
+
 	}
 
 	/**
