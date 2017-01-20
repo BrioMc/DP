@@ -48,6 +48,7 @@ public class WhiteWalkers extends Pj {
 		super.keyAction = new DoNothingKey();
 		this.currTurn = 0;
 		pjsT = new Queue<Pj>();
+		whiteWalkersWays();
 	}
 
 	public void whiteWalkersWays() {

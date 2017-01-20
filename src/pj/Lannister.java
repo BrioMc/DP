@@ -31,7 +31,7 @@ public class Lannister extends Pj {
 				keys.add(k);
 			}
 		}
-
+		lannisterWays();
 		// TODO Auto-generated constructor stub
 	}
 

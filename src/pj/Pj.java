@@ -147,26 +147,28 @@ public abstract class Pj implements Compare<Pj> {
 		while (!x.isEmpty()) {
 			int room = x.get(0);
 			x.remove(0);
-			// W
-			if (room == (x.get(0) + 1)) {
-				rutes.add(Dir.W);
-			}
-			// E
-			else if (room == (x.get(0) - 1)) {
-				rutes.add(Dir.E);
+			if (!x.isEmpty()) {
+				// W
+				if (room == (x.get(0) + 1)) {
+					rutes.add(Dir.W);
+				}
+				// E
+				else if (room == (x.get(0) - 1)) {
+					rutes.add(Dir.E);
+
+				}
+				// S
+				else if (room == (x.get(0) + m.getDimY())) {
+					rutes.add(Dir.N);
+
+				}
+				// N
+				else if (room == (x.get(0) - m.getDimY())) {
+					rutes.add(Dir.S);
+
+				}
 
 			}
-			// S
-			else if (room == (x.get(0) + m.getDimY())) {
-				rutes.add(Dir.S);
-
-			}
-			// N
-			else if (room == (x.get(0) - m.getDimY())) {
-				rutes.add(Dir.N);
-
-			}
-
 		}
 	}
 
@@ -280,7 +282,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * @return
 	 */
 	public String showRute() {
-		String x = "(";
+		String x = "(rute:" + this.getTag() + ":";
 		for (int i = 0; i < this.rutes.size(); i++) {
 			x += " " + rutes.get(i).toString();
 		}

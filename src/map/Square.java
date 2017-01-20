@@ -152,22 +152,22 @@ public class Square implements Compare<Square> {
 
 				if (pjs.get(i) instanceof Stark){
 					Stark stark = (Stark) pjs.get(i);
-					m = stark.showPj();
+					m += stark.showPj();
 					m += "\n";
 				}else{
 					if (pjs.get(i) instanceof WhiteWalkers){
 					WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(i);
-					m = whiteWalkers.showPj();
+					m += whiteWalkers.showPj();
 					m += "\n";
 					}else{
 						if (pjs.get(i) instanceof Targaryen){
 							Targaryen targaryen = (Targaryen) pjs.get(i);
-							m = targaryen.showPj();
+							m += targaryen.showPj();
 							m += "\n";
 						}else{
 							if (pjs.get(i) instanceof Lannister){
 								Lannister lannister = (Lannister) pjs.get(i);
-								m = lannister.showPj();
+								m += lannister.showPj();
 								m += "\n";
 							}
 						}

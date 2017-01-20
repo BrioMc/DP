@@ -722,8 +722,6 @@ public class Map {
 		System.out.println();
 	}
 
-
-
 	public static void main(String args[]) {
 		int dimX = 6;
 		int dimY = 6;
@@ -748,15 +746,14 @@ public class Map {
 		}
 		ThroneDoor door = new ThroneDoor(combination, altLock);
 
-		Stark starkE = new Stark("Eddard", 'E', 1, 0);
-
 		// Creating the map
 		// Parameters: door square, columns number, rows number,
 		// depth for the lock
 		// The constructor must create the different squares for the map
 		Map.generateInstance(doorRoom, dimX, dimY, door);
 		Map map = Map.getInstance();
-
+		map.Kruskal();
+		map.doShortcut();
 		// Generate the keys and distribute them. In this stage, we pass to the
 		// map an array
 		// with the identifiers of the squares where the keys are going to be
@@ -785,10 +782,10 @@ public class Map {
 		// (route:E: S S E E N E N E S E S S W S E E)
 		Dir[] direccionesE = { Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S,
 				Dir.W, Dir.S, Dir.E, Dir.S };
-
+		Stark starkE = new Stark("Eddard", 'E', 1, 0);
 		// Adding the character into the map
 		map.insertPj(starkE);
-
+		System.out.println(starkE.showRute());
 		// Creating a Targaryen
 		// Parameters: name, mark, turn in which it will start the simulation
 		// and initial square
@@ -799,7 +796,7 @@ public class Map {
 
 		// Adding the character into the map
 		map.insertPj(targaryenD);
-
+		System.out.println(targaryenD.showRute());
 		// Creating a White Walker
 		// Parameters: name, mark, turn in which it will start the simulation
 		// and initial square
@@ -809,7 +806,7 @@ public class Map {
 				Dir.S, Dir.S, Dir.S, Dir.S, Dir.S };
 		// Adding the character into the map
 		map.insertPj(walker);
-
+		System.out.println(walker.showRute());
 		// Creating a Lannister
 		// Parameters: name, mark, turn in which it will start the simulation
 		// and initial square
@@ -818,7 +815,7 @@ public class Map {
 		// Adding the character into the map
 		// map.paintMap();
 		map.insertPj(lannisterT);
-
+		System.out.println(lannisterT.showRute());
 		// Executing the simulation
 		// The process method must be executed turn after turn, traversing the
 		// map from square 0
@@ -831,7 +828,6 @@ public class Map {
 		map.Kruskal();
 		map.doShortcut();
 		map.paintMap();
-
 
 	}
 }

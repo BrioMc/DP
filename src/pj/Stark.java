@@ -26,7 +26,9 @@ public class Stark extends Pj {
 
 		super(name, M, turn, Room);
 		super.keyAction = new PickKey();
-
+		ArrayList<Integer> x = new ArrayList<>();
+		starkWay(x, this.room);
+		asigRute(x);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -40,7 +42,8 @@ public class Stark extends Pj {
 	public boolean starkWay(ArrayList<Integer> x, int actRoom) {
 
 		x.add(actRoom);
-		if (actRoom == Map.getInstance().getDRoom()) {
+		Map m = Map.getInstance();
+		if (actRoom == m.getDRoom()) {
 			return true;
 		} else {
 			Set<Integer> ady = new LinkedHashSet<Integer>();
