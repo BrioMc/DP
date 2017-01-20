@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import actions.KeyAction;
+import actions.Movement;
 
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
@@ -36,7 +37,8 @@ public abstract class Pj implements Compare<Pj> {
 	protected int currTurn;
 	/** Type of key action */
 	protected KeyAction keyAction;
-
+	/** Type of Movement */
+	protected Movement movementType;
 	/**
 	 * Parameterized constructor
 	 * 
@@ -178,7 +180,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param destination
 	 * @return
 	 */
-	protected ArrayList<Integer> shortlessWay(int origin, int destination) {
+	protected ArrayList<Integer> shortestPath(int origin, int destination) {
 		Map m = Map.getInstance();
 		ArrayList<Integer> ways = new ArrayList<Integer>();
 		ways.add(origin);

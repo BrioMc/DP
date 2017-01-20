@@ -6,7 +6,7 @@ import map.Map;
 import java.util.ArrayList;
 
 import actions.DropKey;
-
+import actions.LannisterAndWW;
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
  */
@@ -23,6 +23,7 @@ public class Lannister extends Pj {
 	public Lannister(String name, char M, int turn, int Room) {
 		super(name, M, turn, Room);
 		super.keyAction = new DropKey();
+		super.movementType = new LannisterAndWW();
 		Key k;
 		for (int i = 0; i < 30; i++) {
 			k = new Key(i);
@@ -39,13 +40,13 @@ public class Lannister extends Pj {
 		Map m = Map.getInstance();
 		ArrayList<Integer> x = new ArrayList<>();
 
-		x = shortlessWay(m.surE(), m.norE());
+		x = shortestPath(m.surE(), m.norE());
 		asigRute(x);
-		x = shortlessWay(m.norE(), m.norW());
+		x = shortestPath(m.norE(), m.norW());
 		asigRute(x);
-		x = shortlessWay(m.norW(), m.surW());
+		x = shortestPath(m.norW(), m.surW());
 		asigRute(x);
-		x = shortlessWay(m.surW(), m.surE());
+		x = shortestPath(m.surW(), m.surE());
 		asigRute(x);
 
 	}

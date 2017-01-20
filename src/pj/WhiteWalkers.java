@@ -55,13 +55,13 @@ public class WhiteWalkers extends Pj {
 		Map m = Map.getInstance();
 		ArrayList<Integer> x = new ArrayList<>();
 
-		x = shortlessWay(m.surW(), m.norW());
+		x = shortestPath(m.surW(), m.norW());
 		asigRute(x);
-		x = shortlessWay(m.norW(), m.norE());
+		x = shortestPath(m.norW(), m.norE());
 		asigRute(x);
-		x = shortlessWay(m.norE(), m.surE());
+		x = shortestPath(m.norE(), m.surE());
 		asigRute(x);
-		x = shortlessWay(m.surE(), m.surW());
+		x = shortestPath(m.surE(), m.surW());
 		asigRute(x);
 
 	}

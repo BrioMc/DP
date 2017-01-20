@@ -412,19 +412,6 @@ public class Map {
 	}
 
 	/**
-	 * 
-	 * @param ady
-	 * @param i
-	 */
-	public void mostFreq(Set<Integer> ady, Integer i) {
-		if (i == getDRoom()) {
-
-		} else {
-
-		}
-	}
-
-	/**
 	 * Public method for insert pj in map
 	 * 
 	 * @param pj
@@ -573,7 +560,7 @@ public class Map {
 	 * @param x
 	 * @param origin
 	 */
-	public void mostFreq(ArrayList<Integer> x, Integer origin) {
+	private void mostFreq(ArrayList<Integer> x, Integer origin) {
 
 		x.add(origin);
 		if (origin == (dimY * dimX) - 1) {
@@ -594,6 +581,41 @@ public class Map {
 			}
 		}
 
+	}
+
+	private void bubbleSorting(int[] V){
+		int ID;
+		for (int i=1; i < V.length; i++) {
+			for (int j=0; j < V.length-i; j++) {
+				if (getSquare(V[j]).getFreq() < getSquare(V[j+1]).getFreq()) {
+					ID = getSquare(V[j]).getId();
+					V[j] = V[j+1];
+					V[j+1] = ID;
+					
+				}
+			}
+		}
+	}
+	
+	public void keyDistribution(){
+		ArrayList<Integer> x = new ArrayList<>();
+		mostFreq(x, 0);
+		int[] rooms = new int[dimY*dimX];
+		int[] keyRooms = new int[9];
+
+		for (int i = 0; i < dimY*dimX; i++) {
+			rooms[i]=getSquare(i).getId();
+		}
+		
+		bubbleSorting(rooms);
+		for(int i =0;i<9;i++){
+			keyRooms[i]=rooms[i];
+		}
+		
+		distKeys(keyRooms);
+		for(int i =0;i<keyRooms.length;i++){
+			System.out.print(keyRooms[i]+" ");
+		}
 	}
 
 	/**
@@ -770,8 +792,9 @@ public class Map {
 		// (square:11: 20 21 21 22 23)
 		// (square:12: 23 24 25 25 26)
 		// (square:13: 27 27 28 29 29)
-		int[] idSalasConLlaves = { 3, 4, 6, 8, 9, 10, 11, 12, 13 };
-		map.distKeys(idSalasConLlaves);
+		
+		map.keyDistribution();
+		map.paintMap();
 
 		// Creating the characters
 		// Creating a Stark
@@ -825,9 +848,7 @@ public class Map {
 		// first in leaving the square)
 
 		// map.graph.showArcs();
-		map.Kruskal();
-		map.doShortcut();
-		map.paintMap();
+	
 
 	}
 }
