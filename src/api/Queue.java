@@ -1,15 +1,14 @@
 package api;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2º
+ * Group: 		We are your waifu 
+ * Members:		Ignacio Caro Cumplido 
+ *				Javier Ballesteros Moron 
  */
 import java.util.LinkedList;
 
 public class Queue<E> extends LinkedList<E> {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -49,8 +48,8 @@ public class Queue<E> extends LinkedList<E> {
 	}
 
 	/**
- * 
- */
+	* 
+	*/
 	@Override
 	public E pollFirst() {
 		// TODO Auto-generated method stub

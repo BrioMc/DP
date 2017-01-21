@@ -2,33 +2,43 @@ package pj;
 
 import java.util.ArrayList;
 
+import actions.OpenDoor;
 import actions.PickKey;
 import map.Dir;
 import map.Map;
-import map.Square;
 
 public class Targaryen extends Pj {
 
 	/**
-	 * Parameterized constructor
+	 * Parametrized constructor of the class Targaryen
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param name
+	 *            : Name of the character
 	 * @param M
+	 *            : Tag of the character
 	 * @param turn
+	 *            : Initial turn of the character
 	 * @param Room
+	 *            : Starting room of the character
 	 */
 	public Targaryen(String name, char M, int turn, int Room) {
 		super(name, M, turn, Room);
 		super.keyAction = new PickKey();
+		super.doorAction = new OpenDoor();
 		targaryenWays();
 	}
 
+	/**
+	 * Method that calculates the Targaryen's paths Complexity O(n)
+	 */
 	public void targaryenWays() {
 		Map m = Map.getInstance();
 		ArrayList<Integer> x = new ArrayList<>();
-		x.add(this.room);
+		x.add(this.getRoom());
 		Dir d = Dir.S;
-		int actRoom = this.room;
+		int actRoom = this.getRoom();
 		while (actRoom != m.getDRoom()) {
 
 			actRoom = nextRommWallFollow(actRoom, d);
@@ -39,12 +49,22 @@ public class Targaryen extends Pj {
 		asigRute(x);
 	}
 
+	/**
+	 * Method which determines what direction is the Targaryen facing Complexity
+	 * O(1)
+	 * 
+	 * @param past
+	 *            : Last room where the Targaryen was
+	 * @param post
+	 *            :The next room in his path
+	 * @return d : Direction that the Targaryen is facing
+	 */
 	private Dir whereLook(Integer past, Integer post) {
 
 		Dir d = Dir.E;
 
 		if (past == (post + 1)) {
-			d = Dir.W;
+			d = Dir.O;
 		} else if (past == (post - 1)) {
 			d = Dir.E;
 		} else if (past == (post - Map.getInstance().getDimY())) {
@@ -57,10 +77,16 @@ public class Targaryen extends Pj {
 	}
 
 	/**
+	 * Method which determines the access order to the adyacent rooms based on
+	 * what direction is facing
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param act
+	 *            : Actual room
 	 * @param d
-	 * @return
+	 *            : Direction that the Targaryen is facing
+	 * @return x : room priority
 	 */
 	private int[] look(int act, Dir d) {
 		int[] x = new int[4];
@@ -77,7 +103,7 @@ public class Targaryen extends Pj {
 			x[2] = act - 1;
 			x[3] = act + Map.getInstance().getDimY();
 
-		} else if (d == Dir.W) {
+		} else if (d == Dir.O) {
 			x[0] = act - Map.getInstance().getDimY();
 			x[1] = act - 1;
 			x[2] = act + Map.getInstance().getDimY();
@@ -95,10 +121,16 @@ public class Targaryen extends Pj {
 	}
 
 	/**
+	 * Method which determines which room to move into based on the Right Hand
+	 * Rule.
 	 * 
-	 * @param actRoom
+	 * Complexity O(1)
+	 * 
+	 * @param act
+	 *            : Actual room
 	 * @param d
-	 * @return
+	 *            : Direction that the Targaryen is facing
+	 * @return x : Destination room
 	 */
 	private int nextRommWallFollow(int actRoom, Dir d) {
 		Map m = Map.getInstance();
@@ -127,64 +159,33 @@ public class Targaryen extends Pj {
 	}
 
 	/**
+	 * Public method that displays information of the character
 	 * 
+	 * @return pj : String with the information's message
 	 */
-	public void actionPj() {
-
-		super.actionPj();
-
-	}
-
-	/**
-	 * 
-	 * @param x
-	 */
-	protected boolean actionDoor(Map x) {
-		boolean doorRoom = false;
-
-		if (!x.getDoor().isOp()) {
-			if (!keys.isEmpty()) {
-				if (x.getDoor().open(keys.remove(keys.size() - 1))) {
-					x.getMap()[this.getRoom() / x.getTMap()][this.getRoom() % x.getTMap()].removePj(this);
-					x.getThrone().insertPj(this);
-
-				}
-			}
+	public String showPj() {
+		String pj = "";
+		pj = ("targaryen:" + getTag() + ":" + getRoom() + ":");
+		if (currTurn > initialTurn) {
+			pj += (currTurn - 1 + ":");
 		} else {
-			x.getMap()[this.getRoom() / x.getTMap()][this.getRoom() % x.getTMap()].removePj(this);
-			x.getThrone().insertPj(this);
+			pj += (initialTurn + ":");
 
 		}
-		doorRoom = true;
 
-		return doorRoom;
+		for (int x = 0; x < this.keys.size(); x++) {
+			pj += (" " + keys.get(x).toString());
 
-	}
-
-	protected void keyAction(Square[][] map) {
-		int x = this.room / map[0].length;
-		int y = this.room % map[0].length;
-
-		if (map[x][y].nkeys() > 0) {
-			this.keys.add(map[x][y].removeKey());
 		}
+		pj += (")");
+		return pj;
 	}
 
 	/**
 	 * 
 	 * @return
 	 */
-	public String showPj() {
-		String pj = "";
-		pj = ("(Targaryen:" + getTag() + ":" + getRoom() + ":" + currTurn + ":");
 
-		for (int x = 0; x < this.keys.size(); x++) {
-			pj += (keys.get(x).toString() + " ");
-
-		}
-		pj += (")");
-		return pj;
-	}
 }
 
 /**

@@ -2,30 +2,36 @@ package pj;
 
 import java.util.ArrayList;
 
+import actions.CloseDoor;
 import actions.DropKey;
 import door.Key;
 import map.Map;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2�
+ * Group: We are your waifu Members: Ignacio Caro Cumplido Javier Ballesteros
+ * Moron
  */
-
 public class Lannister extends Pj {
 
 	/**
+	 * Parametrized constructor of the class Lannister
 	 * 
 	 * @param name
+	 *            : Name of the character
 	 * @param M
+	 *            : Tag of the character
 	 * @param turn
+	 *            : Initial turn of the character
 	 * @param Room
+	 *            : Starting room of the character
 	 */
 	public Lannister(String name, char M, int turn, int Room) {
 		super(name, M, turn, Room);
 		super.keyAction = new DropKey();
+		super.doorAction = new CloseDoor();
 		Key k;
-		for (int i = 0; i < 30; i++) {
+		for (int i = 30; i >= 0; i--) {
 			k = new Key(i);
-			keys.add(k);
 			if (i % 2 != 0) {
 				keys.add(k);
 			}
@@ -34,6 +40,9 @@ public class Lannister extends Pj {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Method that calculates the Lannister's path
+	 */
 	private void lannisterWays() {
 		Map m = Map.getInstance();
 		ArrayList<Integer> x = new ArrayList<>();
@@ -50,37 +59,38 @@ public class Lannister extends Pj {
 	}
 
 	/**
+	 * Protected method for the actions of the character
 	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return This method returns nothing
 	 */
-	protected boolean actionDoor(Map x) {
-		boolean doorRoom = false;
-
-		if (this.room == x.getDRoom()) {
-			x.getDoor().closeDoor();
-			doorRoom = true;
-		}
-
-		return doorRoom;
-
-	}
-
 	public void actionPj() {
+		if (this.rutes.size() == 0) {
+			lannisterWays();
+		}
 
 		super.actionPj();
 
 	}
 
 	/**
+	 * Public method that displays information of the character
 	 * 
-	 * @return
+	 * @return pj : String with the information's message
 	 */
-
 	public String showPj() {
 		String pj = "";
-		pj = ("(Lannister:" + getTag() + ":" + getRoom() + ":" + currTurn + ":");
+		pj = ("lannister:" + getTag() + ":" + getRoom() + ":");
+		if (currTurn > initialTurn) {
+			pj += (currTurn - 1 + ":");
+		} else {
+			pj += (initialTurn + ":");
+
+		}
 
 		for (int x = 0; x < this.keys.size(); x++) {
-			pj += (keys.get(x).toString() + " ");
+			pj += (" " + keys.get(x).toString());
 
 		}
 		pj += (")");

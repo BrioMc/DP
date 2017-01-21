@@ -2,19 +2,37 @@ package map;
 
 import api.Compare;
 
+/**
+ * Group: 		We are your waifu 
+ * Members:		Ignacio Caro Cumplido 
+ *				Javier Ballesteros Moron 
+ */
 public class Walls implements Compare<Walls> {
-
+	
+	/**Room where the wall is */
 	private int origin;
+	/** Room where the wall is oriented to */
 	private int destination;
 
+	/**
+	 * Parametrized constructor of the class Walls
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @param x : Origin
+	 * @param y : Destination
+	 */
 	Walls(int x, int y) {
 		origin = x;
 		destination = y;
 	}
 
 	/**
+	 * Method that gets the origin
 	 * 
-	 * @return
+	 * Complexity O(1)
+	 * 
+	 * @return origin : Origin square
 	 */
 	public int getOrigin() {
 		return origin;
@@ -29,12 +47,19 @@ public class Walls implements Compare<Walls> {
 	}
 
 	/**
+	 * Method that gets the destination
 	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return destination : Destination square
 	 */
 	public void showWalls() {
 		System.out.println(origin + "->" + destination);
 	}
-
+	
+	/**
+	 * Implemented from the Compare Interface
+	 */
 	@Override
 	public int compareTo(Walls x) {
 		int equals = 0;
@@ -45,7 +70,10 @@ public class Walls implements Compare<Walls> {
 		}
 		return equals;
 	}
-
+	
+	/**
+	 * Implemented from the Compare Interface
+	 */
 	@Override
 	public boolean isEqual(Walls x) {
 		boolean equals = false;

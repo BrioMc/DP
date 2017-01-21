@@ -2,6 +2,7 @@ package pj;
 
 import java.util.ArrayList;
 
+import actions.DoorAction;
 import actions.KeyAction;
 
 /**
@@ -12,7 +13,11 @@ import api.Compare;
 import door.Key;
 import map.Dir;
 import map.Map;
-import map.Square;
+
+/**
+ * Group: We are your waifu Members: Ignacio Caro Cumplido Javier Ballesteros
+ * Moron
+ */
 
 public abstract class Pj implements Compare<Pj> {
 	/** Pj Identifier */
@@ -20,42 +25,52 @@ public abstract class Pj implements Compare<Pj> {
 	/** Pj Name */
 	private String name;
 	/** Room in which the player is */
-	int room;
+	private int room;
 	/** Movements list */
-	private ArrayList<Dir> rutes;
+	protected ArrayList<Dir> rutes;
 	/** Tag Identifier */
 	private char tag;
 	/** List of keys that pj has */
-	public ArrayList<Key> keys;
-	/** Movement Flag */
-	private boolean move;
+	protected ArrayList<Key> keys;
 	/** Current turn */
-	int currTurn;
+	protected int currTurn;
+	/** Initial turn */
+	protected int initialTurn;
 	/** Type of key action */
-	KeyAction keyAction;
+	protected KeyAction keyAction;
+	/** Type of Door action */
+	protected DoorAction doorAction;
 
 	/**
-	 * Parameterized constructor
+	 * Parameterized constructor of the class Pj
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param name
+	 *            : name of the character {@code String}
 	 * @param M
+	 *            : Tag that will be displayed on the screen {@code char}
 	 * @param turn
-	 * @param room
+	 *            : Turn when the character spawns {@code int}
+	 * @param room:
+	 *            Room where the character is initially located {@code int}
 	 */
 	protected Pj(String name, char M, int turn, int room) {
-		this.move = false;
 		this.tag = M;
 		this.name = name;
 		this.room = room;
+		this.initialTurn = turn;
 		this.currTurn = turn;
 		this.rutes = new ArrayList<Dir>();
 		this.keys = new ArrayList<Key>();
 	}
 
 	/**
-	 * Public method for take pj's identifier
+	 * Public method that obtains the pj's identifier
 	 * 
-	 * @return id
+	 * Complexity O(1)
+	 * 
+	 * @return id : ID of the character {@code int}
 	 */
 	private int getId() {
 		// TODO Auto-generated method stub
@@ -63,82 +78,110 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
-	 * Public method for take pj's name
+	 * Public method that obtains the pj's name
 	 * 
-	 * @return name
+	 * Complexity O(1)
+	 * 
+	 * @return name : name of the character {@code String}
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Public method for take pj's initial turn
+	 * Public method that obtains the pj's current turn
 	 * 
-	 * @return turn
+	 * Complexity O(1)
+	 * 
+	 * @return turn : current turn of the character {@code int}
 	 */
 	public int getTurn() {
 		return currTurn;
 	}
 
 	/**
-	 * Public method for set pj's room
 	 * 
-	 * @param i
+	 * @param x
 	 */
-	private void setRoom(int i) {
-		this.room = i;
-	}
-
-	/**
-	 * Public method for take pj's room
-	 * 
-	 * @return room
-	 */
-	public int getRoom() {
-		return room;
-	}
-
-	/**
-	 * Public method for take pj's tag
-	 * 
-	 * @return tag
-	 */
-	public char getTag() {
-		return tag;
+	public void setKey(Key x) {
+		keys.add(0, x);
 	}
 
 	/**
 	 * 
 	 * @return
 	 */
-	public boolean getMove() {
-		// TODO Auto-generated method stub
-		return move;
+	public Key getKey() {
+		return keys.remove(0);
 	}
 
 	/**
 	 * 
+	 * @return
 	 */
-	public void moveOn() {
-		this.move = true;
+	public int numKeys() {
+		return keys.size();
 	}
 
 	/**
+	 * Public method which sets the room where the character is located
 	 * 
+	 * Complexity O(1)
+	 * 
+	 * @param i
+	 *            : Room where we will put the character into {@code int}
+	 * 
+	 * @return This method returns nothing
+	 */
+	public void setRoom(int i) {
+		this.room = i;
+	}
+
+	/**
+	 * Public method which returs where is located the character
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return room : Room where the character is {@code int}
+	 */
+	public int getRoom() {
+		return room;
+	}
+
+	/**
+	 * Public method that obtains the pj's tag
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return tag : Tag that represents the character {@code int}
+	 */
+	public char getTag() {
+		return tag;
+	}
+
+	/**
+	 * Increases the character's turn
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return This method returns nothing
 	 */
 	public void sumTurn() {
 		this.currTurn++;
 	}
 
 	/**
+	 * Protected method that establishes the character's paths
 	 * 
+	 * Complexity O(n)
+	 * 
+	 * @param x
+	 *            : ArrayList with the predefined rooms where the character will
+	 *            move into
+	 * 
+	 * @return This method returns nothing
 	 */
-	public void resetT() {
-		this.move = false;
-
-	}
-
-	void asigRute(ArrayList<Integer> x) {
+	protected void asigRute(ArrayList<Integer> x) {
 		Map m = Map.getInstance();
 		while (!x.isEmpty()) {
 			int room = x.get(0);
@@ -146,7 +189,7 @@ public abstract class Pj implements Compare<Pj> {
 			if (!x.isEmpty()) {
 				// W
 				if (room == (x.get(0) + 1)) {
-					rutes.add(Dir.W);
+					rutes.add(Dir.O);
 				}
 				// E
 				else if (room == (x.get(0) - 1)) {
@@ -169,12 +212,18 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
+	 * Movement Algorithm which consists on finding the shortest path between
+	 * two rooms
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param origin
+	 *            : ID of the origin room
 	 * @param destination
-	 * @return
+	 *            : ID of the destination room
+	 * @return ways : ArrayList with the rooms in the path
 	 */
-	ArrayList<Integer> shortestPath(int origin, int destination) {
+	protected ArrayList<Integer> shortestPath(int origin, int destination) {
 		Map m = Map.getInstance();
 		ArrayList<Integer> ways = new ArrayList<Integer>();
 		ways.add(origin);
@@ -187,48 +236,49 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
-	 * Method for movement action, if can do movement, then delete from actual
-	 * room and insert in
+	 * Private method for movement action, if the character can do a movement,
+	 * then deletes it from the actual room and inserts it in another
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param i
-	 *            direction
-	 * @param map
-	 *            Map on which to move
+	 *            : direction the character must follow
+	 * @return This method returns nothing
 	 */
-	private void move(Dir i, Square[][] map) {
-
-		int x = this.room / map[0].length;
-		int y = this.room % map[0].length;
+	private void move(Dir i) {
+		Map map = Map.getInstance();
+		int x = this.room / map.getDimY();
+		int y = this.room % map.getDimY();
 		switch (i) {
 		case S:
-			if (x < map.length - 1) {
+			if (x < map.getDimX() - 1) {
 
-				map[x + 1][y].insertPj(this);
-				map[x][y].removePj(this);
-				setRoom(map[x + 1][y].getId());
+				map.getMap()[x + 1][y].insertPj(this);
+				map.getMap()[x][y].removePj(this);
+				setRoom(map.getMap()[x + 1][y].getId());
 			}
 			break;
-		case W:
+		case O:
 			if (y > 0) {
-				map[x][y - 1].insertPj(this);
-				map[x][y].removePj(this);
-				setRoom(map[x][y - 1].getId());
+				map.getMap()[x][y - 1].insertPj(this);
+				map.getMap()[x][y].removePj(this);
+				setRoom(map.getMap()[x][y - 1].getId());
 
 			}
 			break;
 		case N:
 			if (x > 0) {
-				map[x - 1][y].insertPj(this);
-				map[x][y].removePj(this);
-				setRoom(map[x - 1][y].getId());
+				map.getMap()[x - 1][y].insertPj(this);
+				map.getMap()[x][y].removePj(this);
+				setRoom(map.getMap()[x - 1][y].getId());
 
 			}
 			break;
 		case E:
-			if (y < map[0].length - 1) {
-				map[x][y + 1].insertPj(this);
-				map[x][y].removePj(this);
-				setRoom(map[x][y + 1].getId());
+			if (y < map.getDimY() - 1) {
+				map.getMap()[x][y + 1].insertPj(this);
+				map.getMap()[x][y].removePj(this);
+				setRoom(map.getMap()[x][y + 1].getId());
 
 			}
 			break;
@@ -236,52 +286,67 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
-	 * Method for action door, can be open (O) or close (C)
+	 * Protected method for the door action, implemented by interfaces
+	 * 
+	 * 
+	 * @return This method returns nothing
+	 */
+	private boolean actionDoor() {
+		return doorAction.doorAction(this);
+	}
+
+	/**
+	 * Protected method for the key action, implemented by interfaces
 	 * 
 	 * @param x
-	 *            Map
-	 * @param c
-	 *            identifier character of HouseTag
-	 * @return True if door is open
+	 *            : The map where the Character is
+	 * 
+	 * @return This method returns nothing
 	 */
-
-	protected abstract boolean actionDoor(Map x);
-
 	private void actionKey(Map x) {
 		keyAction.keyAction(x.getMap(), this);
 	}
 
 	/**
-	 * Method for action pj
+	 * Protected method for the actions of the character
 	 * 
-	 * @param x
-	 * @param i
-	 * @param c
+	 * Complexity O(1)
+	 * 
+	 * @return This method returns nothing
 	 */
-	protected void actionPj() {
+	public void actionPj() {
+		boolean door = false;
 		Map x = Map.getInstance();
+		this.sumTurn();
 		if (x.getDRoom() == getRoom())
-			actionDoor(x);
+			door = actionDoor();
 		if (!this.rutes.isEmpty()) {
-			this.sumTurn();
-			this.moveOn();
-			move(this.rutes.get(0), x.getMap());
-			if (this instanceof Lannister || this instanceof WhiteWalkers) {
-				this.rutes.add(this.rutes.get(0));
-			}
+
+			move(this.rutes.get(0));
 			this.rutes.remove(0);
 		}
-		actionKey(x);
+		if (!door)
+			actionKey(x);
 	}
 
 	/**
-	 * public method for watch pj's information
+	 * Protected abstract method for action door
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @param x
+	 *            : Map
+	 *
+	 * @return True if the door is open
 	 */
+	protected abstract String showPj();
 
 	/**
+	 * Returns a string with the path that the character will follow
 	 * 
-	 * @param house
-	 * @return
+	 * Complexity O(1)
+	 * 
+	 * @return x : String with the path that the character will follow
 	 */
 	public String showRute() {
 		String x = "(rute:" + this.getTag() + ":";
@@ -293,14 +358,14 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
-	 * CompareTo
+	 * Method implemented from the Compare interface
 	 */
 	public int compareTo(Pj t) {
 		return (this.id.compareTo(t.getId()));
 	}
 
 	/**
-	 * Equals
+	 * Method implemented from the Compare interface
 	 */
 	public boolean isEqual(Pj t) {
 		return (this.id.equals(t.getId()));

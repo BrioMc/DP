@@ -14,9 +14,9 @@ import door.ThroneDoor;
 import pj.Pj;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2�
+ * Group: We are your waifu Members: Ignacio Caro Cumplido Javier Ballesteros
+ * Moron
  */
-
 public class Map {
 	private int turn;
 	public Square[][] map;
@@ -25,13 +25,43 @@ public class Map {
 	private ThroneDoor door;
 	private int doorRoom;
 	private Square addit;
-	private ArrayList<Walls> walls;
 	private Graph graph;
 	private static Map instance;
 	private BufferedWriter bufOut;
 
 	/**
-	 * Private method for initializing the map
+	 * Parametrized constructor of the class map.
+	 *
+	 * @param doorRoom
+	 *            : The room where the Throne Door is located {@code int}
+	 * @param dimX
+	 *            : The number of rows of the map {@code int}
+	 * @param dimY
+	 *            : The number of columns of the map {@code int}
+	 * @param door
+	 *            : The door of the throne {@code ThroneDoor}
+	 */
+	private Map(int doorRoom, int dimX, int dimY, ThroneDoor door) {
+		this.map = new Square[dimX][dimY];
+		iniMap();
+		this.turn = 0;
+		this.dimX = dimX;
+		this.dimY = dimY;
+		this.door = door;
+		this.doorRoom = doorRoom;
+		this.addit = new Square(1111);
+		iniWalls();
+		this.graph = new Graph(dimX * dimY);
+		Kruskal();
+		write(writeMapG(), false);
+		doShortcut();
+		keyDistribution();
+	}
+
+	/**
+	 * Private method for initializing the map Complexity O(n^2)
+	 * 
+	 * @return This method returns nothing
 	 */
 	private void iniMap() {
 		for (int i = 0; i < map.length; i++) {
@@ -41,14 +71,15 @@ public class Map {
 		}
 	}
 
-	public int getTurn() {
-		return turn;
-	}
-
 	/**
 	 * Private method for initializing the walls in this order: N E S W
+	 * 
+	 * Complexity O(n)
+	 * 
+	 * @return This method returns nothing
 	 */
-	private void iniWalls() {
+	private ArrayList<Walls> iniWalls() {
+		ArrayList<Walls> walls = new ArrayList<>();
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
 
@@ -63,147 +94,58 @@ public class Map {
 
 			}
 		}
+		return walls;
 	}
 
 	/**
+	 * Public method used for generating the map with a Singleton.
 	 * 
-	 */
-	protected boolean[] retWalls(int i, int j) {
-		boolean[] wa = new boolean[4];
-		int n = 0, m = 0;
-		// N
-		wa[0] = false;
-		// S
-		wa[1] = false;
-		// W
-		wa[2] = false;
-		// E
-		wa[3] = false;
-
-		// charge wallBool
-		for (Walls wall : walls) {
-			n = (i * getDimY() + j);
-			m = wall.getOrigin();
-			// System.out.println(n+"-"+m);
-			if (n == m) {
-				// System.out.println("entra");
-				if (wall.getOrigin() == wall.getDestination() + getDimY()
-						&& graph.getArc(wall.getOrigin(), wall.getDestination()) != 1) {
-					// N
-					wa[0] = true;
-				}
-				if (wall.getOrigin() == wall.getDestination() - getDimY()
-						&& graph.getArc(wall.getOrigin(), wall.getDestination()) != 1) {
-					// S
-					wa[1] = true;
-				}
-				if (wall.getOrigin() == (wall.getDestination() + 1)
-						&& graph.getArc(wall.getOrigin(), wall.getDestination()) != 1) {
-					// W
-					wa[2] = true;
-				}
-				if (wall.getOrigin() == (wall.getDestination() - 1)
-						&& graph.getArc(wall.getOrigin(), wall.getDestination()) != 1) {
-					// E
-					wa[3] = true;
-				}
-
-			}
-
-		}
-
-		return wa;
-	}
-
-	/**
-	 * Parametrized constructor of the class map.
+	 * Complexity O(1)
 	 *
 	 * @param doorRoom
-	 *            : The room where the Throne Door is located (int)
+	 *            : The room where the Throne Door is located {@code int}
 	 * @param dimX
-	 *            : The number of rows of the map (int)
+	 *            : The number of rows of the map {@code int}
 	 * @param dimY
-	 *            : The number of columns of the map (int)
+	 *            : The number of columns of the map {@code int}
 	 * @param door
-	 *            : The door of the throne (ThroneDoor)
-	 */
-	private Map(int doorRoom, int dimX, int dimY, ThroneDoor door) {
-		this.map = new Square[dimX][dimY];
-		iniMap();
-		this.turn = 0;
-		this.dimX = dimX;
-		this.dimY = dimY;
-		this.door = door;
-		this.doorRoom = doorRoom;
-		this.addit = new Square(1111);
-		this.walls = new ArrayList<Walls>();
-		iniWalls();
-		this.graph = new Graph(dimX * dimY);
-		Kruskal();
-		write(writeMapG());
-		doShortcut();
-		keyDistribution();
-	}
-
-	/**
-	 * Method used for generating the map with a Singleton.
-	 *
-	 * @param doorRoom
-	 *            : The room where the Throne Door is located (int)
-	 * @param dimX
-	 *            : The number of rows of the map (int)
-	 * @param dimY
-	 *            : The number of columns of the map (int)
-	 * @param door
-	 *            : The door of the throne (ThroneDoor)
+	 *            : The door of the throne {@code ThroneDoor}
+	 * 
+	 * @return This method returns nothing
 	 */
 	public static void generateInstance(int doorRoom, int dimX, int dimY, ThroneDoor door) {
 		instance = new Map(doorRoom, dimX, dimY, door);
 	}
 
 	/**
-	 * Method for obtaining the graph of the map
+	 * Public method for obtaining an instance of the map (Singleton Design
+	 * Pattern)
+	 * 
+	 * Complexity O(1)
 	 *
-	 * @return graph : Graph with the paths between squares (Graph)
-	 */
-	public Graph getGraph() {
-		return this.graph;
-	}
-
-	/**
-	 * Method for obtaining an instance of the map (Singleton Design Pattern)
-	 *
-	 * @return instace : Instance of the class map (Map)
+	 * @return instace : Instance of the class map {@code Map}
 	 */
 	public static Map getInstance() {
 		return instance;
 	}
 
 	/**
-	 * Method that assigns an ArrayList of walls to the map.
+	 * Public method for obtaining the graph of the map
+	 * 
+	 * Complexity O(1)
 	 *
-	 * @param x
-	 *            : ArrayList that contains all the walls that we want to put
-	 *            into the map. (ArrayList<Walls>)
+	 * @return graph : Graph with the paths between squares {@code Graph}
 	 */
-	public void setWalls(ArrayList<Walls> x) {
-		walls = x;
-	}
-
-	/**
-	 * Method that shows all the walls of the map
-	 *
-	 */
-	public void showW() {
-		for (int i = 0; i < walls.size(); i++) {
-			walls.get(i).showWalls();
-		}
+	public Graph getGraph() {
+		return this.graph;
 	}
 
 	/**
 	 * Public method that returns the Throne Door
+	 * 
+	 * Complexity O(1)
 	 *
-	 * @return door : The door of the throne (ThroneDoor)
+	 * @return door : The door of the throne {@code ThroneDoor}
 	 */
 	public ThroneDoor getDoor() {
 		return door;
@@ -211,8 +153,10 @@ public class Map {
 
 	/**
 	 * Public method, returns the additional room (1111)
+	 * 
+	 * Complexity O(1)
 	 *
-	 * @return addit : The additional room with the ID 1111 (Square)
+	 * @return addit : The additional room with the ID 1111 {@code Square}
 	 */
 	public Square getThrone() {
 
@@ -221,17 +165,21 @@ public class Map {
 
 	/**
 	 * Public method, returns the door room
+	 * 
+	 * Complexity O(1)
 	 *
-	 * @return doorRoom : The id of the room where the door is (int).
+	 * @return doorRoom : The id of the room where the door is {@code int}.
 	 */
 	public int getDRoom() {
 		return this.doorRoom;
 	}
 
 	/**
+	 * Public method that obtains the matrix of rooms
+	 * 
+	 * Complexity O(1)
 	 *
-	 *
-	 * @return map : Returns the "mapping" of all the rooms (Square[][])
+	 * @return map : Returns the "mapping" of all the rooms {@code Square}
 	 */
 	public Square[][] getMap() {
 
@@ -239,73 +187,57 @@ public class Map {
 	}
 
 	/**
+	 * Private method that returns the number of rows
 	 * 
-	 * @return
+	 * Complexity O(1)
+	 * 
+	 * @return dimX : Returns the number of rows {@code int}
 	 */
 	public int getDimX() {
 		return this.dimX;
 	}
 
 	/**
+	 * Public method that returns method that returns the number of rows
 	 * 
-	 * @return
+	 * Complexity O(1)
+	 * 
+	 * @return dimY : Returns the number of columns {@code int}
 	 */
 	public int getDimY() {
 		return this.dimY;
 	}
 
 	/**
-	 * Return the map size
+	 * Public method that returns the map size
 	 * 
-	 * @return map size
+	 * Complexity O(1)
+	 * 
+	 * @return DimX*DimY - 1 (Squares froms 0 to DimX*DimY-1) {@code int}
 	 */
 	public int getTMap() {
 		return (this.map.length * this.map[0].length) - 1;
 	}
 
-	public ArrayList<Walls> getWalls() {
-		return walls;
+	/**
+	 * Public method that returns the map size
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return current turn {@code int}
+	 */
+	public int getTurn() {
+		return turn;
 	}
 
 	/**
+	 * Private method that returns a room with a given ID
 	 * 
-	 * @return
-	 */
-	public int surE() {
-		return map[dimX - 1][dimY - 1].getId();
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public int surW() {
-		return map[dimX - 1][0].getId();
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public int norW() {
-		return map[0][0].getId();
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public int norE() {
-		return map[0][dimY - 1].getId();
-	}
-
-	/**
-	 * 
-	 */
-	/**
+	 * Complexity O(1)
 	 * 
 	 * @param i
-	 * @return
+	 *            : ID of the room that we want to obtain {@code Integer}
+	 * @return x : Room wit the ID of the parameter i {@code Square}
 	 */
 	private Square getSquare(Integer i) {
 		Square x;
@@ -314,9 +246,85 @@ public class Map {
 	}
 
 	/**
+	 * Public method that returns the SouthEast corner of the map
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return ID of the SouthEast corner {@code int}
+	 */
+	public int surE() {
+		return map[dimX - 1][dimY - 1].getId();
+	}
+
+	/**
+	 * Public method that returns the SouthWest corner of the map
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return ID of the SouthWest corner {@code int}
+	 */
+	public int surW() {
+		return map[dimX - 1][0].getId();
+	}
+
+	/**
+	 * Public method that returns the NorthWest corner of the map
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return ID of the NorthWest corner {@code int}
+	 */
+	public int norW() {
+		return map[0][0].getId();
+	}
+
+	/**
+	 * Public method that returns the NorthEast corner of the map
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return ID of the NorthEast corner {@code int}
+	 */
+	public int norE() {
+		return map[0][dimY - 1].getId();
+	}
+
+	/**
+	 * Private method that returns the distance between two rooms
+	 * 
+	 * Complexity O(n)
+	 * 
+	 * @param o
+	 *            : Origin room {@code int}
+	 * @param d
+	 *            : Destination room {@code int}
+	 * 
+	 * @return i : Distance between the two rooms {@code int}
+	 * 
+	 */
+	private int distance(int o, int d) {
+		int i = 0;
+		int destination = o;
+		while (destination != d && destination != -1) {
+			destination = graph.next(destination, d);
+			i++;
+		}
+		return i;
+
+	}
+
+	/**
+	 * Private method that propagates the mark that is needed in order to
+	 * correctly torn down the walls
+	 * 
+	 * Complexity O(n)
 	 * 
 	 * @param node
+	 *            : The node we are going to put the mark into {@code Square}
 	 * @param mark
+	 *            : The mark we are going to give to the node {@code int}
+	 * 
+	 * @return This method returns nothing
 	 */
 	private void markPropagation(Square node, int mark) {
 		if (mark != node.getMark()) {
@@ -331,7 +339,113 @@ public class Map {
 	}
 
 	/**
+	 * Public method that applies the Kruskal algorithm to the map in order to
+	 * create a maze.
 	 * 
+	 * Complexity O(n^)
+	 * 
+	 * @return This method returns nothing
+	 */
+	private void Kruskal() {
+		ArrayList<Walls> selected = new ArrayList<>();
+		ArrayList<Walls> walls = iniWalls();
+		int rnd; // random number
+		int mark;
+		Walls aux;
+		Square origin;
+		Square destination;
+		// fillArcs();
+
+		while (!walls.isEmpty()) {
+			rnd = GenAleatorios.generarNumero(walls.size());
+			aux = walls.remove(rnd);
+			origin = getSquare(aux.getOrigin());
+			destination = getSquare(aux.getDestination());
+
+			if (!Objects.equals(origin.getMark(), destination.getMark())) {
+
+				this.graph.newArc(origin.getId(), destination.getId(), 1);
+				this.graph.newArc(destination.getId(), origin.getId(), 1);
+				// mark = map.map[origin.getId() /
+				// map.getLength()][origin.getId() % map.getWidth()].getMark();
+
+				mark = getSquare(aux.getDestination()).getMark();
+				markPropagation(origin, mark);
+
+			} else {
+				if ((graph.getArc(origin.getId(), destination.getId()) != 1)
+						|| (graph.getArc(destination.getId(), origin.getId()) != 1)) {
+					selected.add(aux);
+
+				}
+			}
+
+		}
+		walls.addAll(selected);
+		graph.floyd();
+		graph.warshall();
+
+	}
+
+	/**
+	 * Private method which calculates wether a room has walls in each of the
+	 * four directions (N, S, W ,E)
+	 * 
+	 * Complexity O(n)
+	 * 
+	 * TODO
+	 * 
+	 * @param i
+	 *            : Coordinates of the
+	 * 
+	 * @return wa[] : Array of booleans which returns {@code true} if there is a
+	 *         wall in a concrete direction. (wa[0] = North, wa[1] = South,
+	 *         wa[2] = West, wa[3] = East) {@ code false} if the wall does not
+	 *         exist.
+	 */
+	private boolean[] retWalls(int i, int j) {
+		boolean[] wa = new boolean[4];
+		int n = 0;
+		// N
+		wa[0] = false;
+		// S
+		wa[1] = false;
+		// W
+		wa[2] = false;
+		// E
+		wa[3] = false;
+
+		// charge wallBool
+		n = (i * getDimY() + j);
+
+		// System.out.println("entra");
+		if (graph.getArc(n, n - getDimY()) != 1) {
+			// N
+			wa[0] = true;
+		}
+		if (graph.getArc(n, n + getDimY()) != 1) {
+			// S
+			wa[1] = true;
+		}
+		if (graph.getArc(n, n - 1) != 1) {
+			// W
+			wa[2] = true;
+		}
+		if (graph.getArc(n, n + 1) != 1) {
+			// E
+			wa[3] = true;
+		}
+
+		return wa;
+	}
+
+	/**
+	 * Private method that torn down some walls after the maze is generated,
+	 * creating some shortcuts .
+	 * 
+	 * Complexity O(n)
+	 * 
+	 * @return This method returns nothing
 	 */
 	private void doShortcut() {
 		int count = 0;
@@ -378,80 +492,77 @@ public class Map {
 	}
 
 	/**
+	 * Private method that sorts the given array based on the frequency of each
+	 * room is visited
 	 * 
+	 * Complexity O(n^2)
+	 * 
+	 * @param V
+	 *            : Array with the ID of the map's rooms {@code int}
+	 * 
+	 * @return This method returns nothing
 	 */
-	private void Kruskal() {
-		ArrayList<Walls> selected = new ArrayList<>();
-		int rnd; // random number
-		int mark;
-		Walls aux;
-		Square origin;
-		Square destination;
-		// fillArcs();
-
-		while (!walls.isEmpty()) {
-			rnd = GenAleatorios.generarNumero(walls.size());
-			aux = walls.remove(rnd);
-			origin = getSquare(aux.getOrigin());
-			destination = getSquare(aux.getDestination());
-
-			if (!Objects.equals(origin.getMark(), destination.getMark())) {
-
-				this.graph.newArc(origin.getId(), destination.getId(), 1);
-				this.graph.newArc(destination.getId(), origin.getId(), 1);
-				// mark = map.map[origin.getId() /
-				// map.getLength()][origin.getId() % map.getWidth()].getMark();
-
-				mark = getSquare(aux.getDestination()).getMark();
-				markPropagation(origin, mark);
-
-			} else {
-				if ((graph.getArc(origin.getId(), destination.getId()) != 1)
-						|| (graph.getArc(destination.getId(), origin.getId()) != 1)) {
-					selected.add(aux);
+	private void bubbleSorting(int[] V) {
+		int ID;
+		for (int i = 1; i < V.length; i++) {
+			for (int j = 0; j < V.length - i; j++) {
+				if (getSquare(V[j]).getFreq() < getSquare(V[j + 1]).getFreq()) {
+					ID = getSquare(V[j]).getId();
+					V[j] = V[j + 1];
+					V[j + 1] = ID;
 
 				}
 			}
-
 		}
-		walls.addAll(selected);
-		graph.floyd();
-		graph.warshall();
-
 	}
 
 	/**
+	 * Private method that calculates the frequency which each room is visited
+	 * from an origin to the throne room Backtracking Scheme
 	 * 
+	 * Complexity O(n^2)
+	 * 
+	 * @param x
+	 *            : Empty ArrayList which will be used for calculations of the
+	 *            best paths. {@code ArrayList<Integer>}
+	 * @param origin
+	 *            : Room where the algorithm starts {@code Integer}
+	 * 
+	 * @return This method returns nothing
 	 */
-	private int distance(int o, int d) {
-		int i = 0;
-		int destination = o;
-		while (destination != d && destination != -1) {
-			destination = graph.next(destination, d);
-			i++;
+	private void mostFreq(ArrayList<Integer> x, Integer origin) {
+
+		x.add(origin);
+		if (origin == (dimY * dimX) - 1) {
+			Square room;
+			for (int i = 0; i < x.size(); i++) {
+
+				room = getSquare(x.get(i));
+				room.setFreq(room.getFreq() + 1);
+			}
+		} else {
+			Set<Integer> ady = new LinkedHashSet<Integer>();
+			graph.adyacentes(origin, ady);
+			for (Integer i : ady) {
+				if (!x.contains(i)) {
+					mostFreq(x, i);
+					x.remove(x.size() - 1);
+				}
+			}
 		}
-		return i;
 
 	}
 
 	/**
-	 * Public method for insert pj in map
+	 * Private method for key distribution across 9 given rooms
 	 * 
-	 * @param pj
-	 */
-	public void insertPj(Pj pj) {
-		int c = pj.getRoom();
-		int i = c / map[0].length;
-
-		int j = c % map[0].length;
-		map[i][j].insertPj(pj);
-
-	}
-
-	/**
-	 * Public method for key distribution
+	 * Complexity O(n^2)
 	 * 
 	 * @param rooms
+	 *            : Array with the 9 rooms where the keys will be distributed
+	 *            {@code int}
+	 * 
+	 * @return This method returns nothing
 	 */
 	private void distKeys(int[] rooms) {
 		int count = 0;
@@ -461,18 +572,18 @@ public class Map {
 		boolean tst = false;
 
 		for (int room : rooms) {
-			x = room / map.length;
-			y = room % map[1].length;
+			x = room / getDimY();
+			y = room % getDimY();
 			tst = false;
 			do {
 				Key key = new Key(count);
 				//
-				map[x][y].insertKey(key);
+				map[x][y].insertKey(key, false);
 				if (count % 2 != 0 && map[x][y].nkeys() == 5) {
 					tst = true;
 				}
 				if (count % 2 != 0 && map[x][y].nkeys() < 5 && !rest) {
-					map[x][y].insertKey(key);
+					map[x][y].insertKey(key, false);
 				}
 				rest = false;
 				// System.out.println(count);
@@ -489,22 +600,54 @@ public class Map {
 	}
 
 	/**
+	 * Private method that organizes the key distribution
 	 * 
-	 * @param turn
+	 * Complexity O(n)
+	 * 
+	 * @return This method returns nothing
 	 */
-	public void process(int turn) {
-		for (int i = 0; i < dimX; i++) {
-			for (int j = 0; j < dimY; j++) {
-				map[i][j].proccessT(turn);
-				map[i][j].resetTurn();
-			}
+	private void keyDistribution() {
+		ArrayList<Integer> x = new ArrayList<>();
+		mostFreq(x, 0);
+		int[] rooms = new int[dimY * dimX];
+		int[] keyRooms = new int[9];
+
+		for (int i = 0; i < dimY * dimX; i++) {
+			rooms[i] = getSquare(i).getId();
 		}
-		this.turn++;
+
+		bubbleSorting(rooms);
+		System.arraycopy(rooms, 0, keyRooms, 0, 9);
+
+		distKeys(keyRooms);
+		for (int keyRoom : keyRooms) {
+			System.out.print(keyRoom + " ");
+		}
 	}
 
 	/**
+	 * Public method that inserts a character in the map
 	 * 
-	 * @return
+	 * @param pj
+	 *            : Character we want to insert {@code pj}
+	 * 
+	 * @return This method returns nothing
+	 */
+	public void insertPj(Pj pj) {
+		int c = pj.getRoom();
+		int i = c / map[0].length;
+
+		int j = c % map[0].length;
+		map[i][j].insertPj(pj);
+
+	}
+
+	/**
+	 * Private method that paints the labyrinth on the screen
+	 * 
+	 * Complexity O(n^2)
+	 * 
+	 * @return ma : The whole map drawing. {@code String}
 	 */
 	private String writeMapG() {
 		String ma = "";
@@ -579,101 +722,66 @@ public class Map {
 	}
 
 	/**
+	 * Public method that updates the state of the map each turn. Once it's
+	 * done, the turn ends
 	 * 
-	 * @param x
-	 * @param origin
+	 * Complexity O(n^2)
+	 * 
+	 * @param turn
+	 *            : Current turn of the map {@code int}
+	 * 
+	 * @return This method returns nothing
 	 */
-	private void mostFreq(ArrayList<Integer> x, Integer origin) {
+	public void process(int turn) {
+		for (int i = 0; i < dimX; i++) {
+			for (int j = 0; j < dimY; j++) {
+				map[i][j].proccessT(turn);
 
-		x.add(origin);
-		if (origin == (dimY * dimX) - 1) {
-			Square room;
-			for (int i = 0; i < x.size(); i++) {
-
-				room = getSquare(x.get(i));
-				room.setFreq(room.getFreq() + 1);
-			}
-		} else {
-			Set<Integer> ady = new LinkedHashSet<Integer>();
-			graph.adyacentes(origin, ady);
-			for (Integer i : ady) {
-				if (!x.contains(i)) {
-					mostFreq(x, i);
-					x.remove(x.size() - 1);
-				}
 			}
 		}
-
+		paintMap();
+		this.turn++;
 	}
 
 	/**
+	 * Public method that exports the Pj's path to the log
 	 * 
-	 * @param V
-	 */
-	private void bubbleSorting(int[] V) {
-		int ID;
-		for (int i = 1; i < V.length; i++) {
-			for (int j = 0; j < V.length - i; j++) {
-				if (getSquare(V[j]).getFreq() < getSquare(V[j + 1]).getFreq()) {
-					ID = getSquare(V[j]).getId();
-					V[j] = V[j + 1];
-					V[j + 1] = ID;
-
-				}
-			}
-		}
-	}
-
-	/**
+	 * Complexity O(n)
 	 * 
+	 * 
+	 * @return This method returns nothing
 	 */
-	private void keyDistribution() {
-		ArrayList<Integer> x = new ArrayList<>();
-		mostFreq(x, 0);
-		int[] rooms = new int[dimY * dimX];
-		int[] keyRooms = new int[9];
+	public void writeInit() {
 
 		for (int i = 0; i < dimY * dimX; i++) {
-			rooms[i] = getSquare(i).getId();
-		}
-
-		bubbleSorting(rooms);
-		System.arraycopy(rooms, 0, keyRooms, 0, 9);
-
-		distKeys(keyRooms);
-		for (int keyRoom : keyRooms) {
-			System.out.print(keyRoom + " ");
-		}
-	}
-
-	public void addLog(String str) {
-		try {
-			bufOut = new BufferedWriter(new FileWriter("record.txt", true));
-			bufOut.write(str);
-			bufOut.close();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (map[i / dimY][i % dimY].nPj() > 0) {
+				write(map[i / dimY][i % dimY].showPathPj(), true);
+			}
 		}
 	}
 
 	/**
+	 * Private method which prints on the screen the information of every turn
 	 * 
-	 * @param bufferOut
+	 * Complexity O(n^2)
+	 * 
 	 * @throws IOException
+	 *             : If the buffered writer gives some kind of error
+	 * 
+	 * @return This method returns nothing
 	 */
-	private void writeTurn() {
+	public void writeTurn() {
+
 		try {
+			bufOut = new BufferedWriter(new FileWriter("record.txt", true));
 			// Write Turn data
-			bufOut.write("(turn:" + this.turn + ")");
+			bufOut.write("(turn:" + (this.turn - 1) + ")");
 			bufOut.newLine();
 			// Write Map data
 			bufOut.write("(map:" + getTMap() + ")");
 			bufOut.newLine();
 			// Write Door data
 			bufOut.write(door.showDoor());
-			bufOut.newLine();
 			// Write Map look
 			bufOut.write(writeMapG());
 
@@ -682,7 +790,6 @@ public class Map {
 				for (int j = 0; j < map[i].length; j++) {
 					if (map[i][j].nkeys() != 0) {
 						bufOut.write(map[i][j].showKeys());
-						bufOut.newLine();
 					}
 				}
 			}
@@ -690,20 +797,38 @@ public class Map {
 			for (int i = 0; i < map.length; i++) {
 				for (int j = 0; j < map[i].length; j++) {
 					if (map[i][j].nPj() != 0) {
-						bufOut.write(map[i][j].showPj());
+						bufOut.write("(" + map[i][j].showPj());
 
 					}
 				}
 			}
+
+			if (addit.nPj() > 0) {
+				bufOut.write("(thronemembers)\n");
+				bufOut.write("(newking:" + addit.showPj());
+
+			}
+			bufOut.close();
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void write(String x) {
+	/**
+	 * Private method which opens the buffered writer
+	 * 
+	 * Complexity O(n^2)
+	 * 
+	 * @throws IOException
+	 *             : If the buffered writer gives some kind of error
+	 * 
+	 * @return This method returns nothing
+	 */
+	public void write(String x, boolean uns) {
 		try {
-			bufOut = new BufferedWriter(new FileWriter("record.txt", true));
+			bufOut = new BufferedWriter(new FileWriter("record.txt", uns));
 			bufOut.write(x);
 			bufOut.close();
 		} catch (Exception e) {
@@ -712,27 +837,15 @@ public class Map {
 	}
 
 	/**
+	 * Public Method that paints the information of the map
 	 * 
-	 */
-	public void writeMap() {
-
-		try {
-			bufOut = new BufferedWriter(new FileWriter("record.txt", true));
-			writeTurn();
-			bufOut.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * Public Method for paint map summary
+	 * Complexity O(n^2)
+	 * 
+	 * @return This method returns nothing
 	 */
 	public void paintMap() {
 		// paint turn data
-		System.out.println("(turn:" + (this.turn-1) + ")");
+		System.out.println("(turn:" + (this.turn - 1) + ")");
 		// Paint Map data
 		System.out.println("(map:" + getTMap() + ")");
 		// Paint door data
@@ -743,6 +856,7 @@ public class Map {
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
 				if (map[i][j].nkeys() != 0) {
+
 					System.out.print(map[i][j].showKeys());
 				}
 			}
@@ -751,11 +865,30 @@ public class Map {
 		// Paint pjs in map
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
-				System.out.print(map[i][j].showPj());
+				if (map[i][j].nPj() != 0) {
+					System.out.print("(" + map[i][j].showPj());
+				}
 			}
 		}
+
+		if (addit.nPj() > 0) {
+			System.out.println(("(thronemembers)"));
+			System.out.println(("(newking:" + addit.showPj()));
+
+		}
+
 	}
 
+	/**
+	 * Private method which prints on the screen the information above the map
+	 * 
+	 * Complexity O(n^2)
+	 * 
+	 * @throws IOException
+	 *             : If the buffered writer gives some kind of error
+	 * 
+	 * @return This method returns nothing
+	 */
 	public String printInitMap() {
 		String x = "";
 		x = writeMapG();

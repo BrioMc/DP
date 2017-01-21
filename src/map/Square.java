@@ -12,7 +12,8 @@ import pj.Targaryen;
 import pj.WhiteWalkers;
 
 /**
- * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2�
+ * Group: We are your waifu Members: Ignacio Caro Cumplido Javier Ballesteros
+ * Moron
  */
 public class Square implements Compare<Square> {
 	/** Square identif */
@@ -21,18 +22,22 @@ public class Square implements Compare<Square> {
 	private ArrayList<Key> keys;
 	/** Queue with pjs in this square */
 	private Queue<Pj> pjs;
-
+	/** Integer with a mark for the square (used for Kruskal) */
 	private Integer mark;
-
+	/**
+	 * Integer with the frequency of the square (Used on the key distribution)
+	 */
 	private Integer freq;
 
 	/**
-	 * Constructor for the class Square
+	 * Package-public constructor for the class Square
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param i
-	 *            is the ID we want to assign to the square
+	 *            : The ID we want to assign to the square
 	 */
-	Square(int i) {
+	public Square(int i) {
 		this.id = i;
 		this.freq = 0;
 		this.keys = new ArrayList<Key>();
@@ -41,11 +46,12 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-	 * <<<<<<< HEAD Method to get the square's ID
+	 * Public method that gets the square's ID
 	 * 
-	 * @return {@code int} the ID of this square =======
+	 * Complexity O(1)
 	 * 
-	 * @return >>>>>>> refs/remotes/origin/master
+	 * @return id : {@code int} the ID of this square
+	 * 
 	 */
 	public int getId() {
 		// TODO Auto-generated method stub
@@ -53,62 +59,95 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
+	 * Package-Protected method that sets a mark in the square
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param mark
+	 *            : Mark we want to put
+	 * 
+	 * @return This method returns nothing
 	 */
 	void setMark(Integer mark) {
 		this.mark = mark;
 	}
 
 	/**
+	 * Package-Protected method that sets a mark in the square
 	 * 
-	 * @return
+	 * Complexity O(1)
+	 * 
+	 * @return mark : The mark of the square
 	 */
 	Integer getMark() {
 		return mark;
 	}
 
 	/**
-	 * Method to insert a key into the square's arrayList
+	 * Public method that inserts a key into the square's arrayList
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param kye
-	 *            is the key to be inserted =======
-	 * @param kye
-	 *            >>>>>>> refs/remotes/origin/master
+	 *            : The key to be inserted
+	 * 
+	 * @return This method returns nothing
 	 */
-	public void insertKey(Key kye) {
-		this.keys.add(kye);
+	public void insertKey(Key kye, boolean x) {
+		if (x) {
+
+			this.keys.add(0, kye);
+		} else {
+
+			this.keys.add(kye);
+		}
 	}
 
 	/**
+	 * Public ethod that gets a key from the square and removes it from the
+	 * square
 	 * 
-	 * @return
+	 * Complexity O(1)
+	 * 
+	 * @return The key the character will pick
 	 */
 	public Key removeKey() {
-		return this.keys.remove(this.keys.size() - 1);
+		return this.keys.remove(0);
 	}
 
 	/**
+	 * Package-Protected method that
 	 * 
-	 * @return
+	 * Complexity O(1)
+	 * 
+	 * @return freq : Returns the frequency of the square
 	 */
-	Integer getFreq() {
+	public Integer getFreq() {
 		return freq;
 	}
 
 	/**
+	 * Package-Protected method that sets the frequency of the square
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param freq
+	 *            : Frequency we want to put
+	 * 
+	 * @return This method returns nothing
 	 */
 	void setFreq(Integer freq) {
 		this.freq = freq;
 	}
 
 	/**
-	 * Method which shows all the keys stored in the square arrayList
+	 * Package-Protected method that shows all the keys in the square
+	 * 
+	 * Complexity O(n)
+	 * 
+	 * @return all the keys in the square
 	 */
-
-	String showKeys() {
+	public String showKeys() {
 		String m = "";
 		m += ("(square:" + getId() + ": ");
 		for (int x = 0; x < this.keys.size(); x++) {
@@ -119,37 +158,46 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-	 * Method to insert a pj into the square's queue
+	 * Public method which inserts a character into the square's queue
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param pj
-	 *            is the pj to be inserted ======= /**
+	 *            : The character to be inserted
 	 * 
-	 * @param pj
-	 *            >>>>>>> refs/remotes/origin/master
+	 * @return This method returns nothing
 	 */
 	public void insertPj(Pj pj) {
 		pjs.add(pj);
 	}
 
 	/**
-	 * Method to remove a character from the queue
+	 * Public method which removes a character from the queue
+	 * 
+	 * Complexity O(1)
 	 * 
 	 * @param pj
-	 *            is the pj to be removed from the queue
+	 *            : The character to be removed from the queue
+	 * 
+	 * @return This method returns nothing
 	 */
-
 	public void removePj(Pj pj) {
 		pjs.remove(pj);
 	}
 
 	/**
+	 * Package-protected method that shows the characters in the map
 	 * 
+	 * Complexity O(n)
 	 * 
+	 * @return M : String with the info of the characters in the square
 	 */
-	String showPj() {
+	public String showPj() {
 		String m = "";
 		for (int i = 0; i < pjs.size(); i++) {
-
+			if (pjs.size() > 1 && i > 0) {
+				m += "(";
+			}
 			if (pjs.get(i) instanceof Stark) {
 				Stark stark = (Stark) pjs.get(i);
 				m += stark.showPj();
@@ -178,76 +226,97 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
+	 * Package-protected method that shows the characters path
+	 * 
+	 * Complexity O(n)
+	 * 
+	 * @return M : String with the info of the characters path in the square
+	 */
+	public String showPathPj() {
+		String m = "";
+		for (int i = 0; i < pjs.size(); i++) {
+
+			if (pjs.get(i) instanceof Stark) {
+				Stark stark = (Stark) pjs.get(i);
+				m += stark.showRute();
+			} else {
+				if (pjs.get(i) instanceof WhiteWalkers) {
+					WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(i);
+					m += whiteWalkers.showRute();
+				} else {
+					if (pjs.get(i) instanceof Targaryen) {
+						Targaryen targaryen = (Targaryen) pjs.get(i);
+						m += targaryen.showRute();
+					} else {
+						if (pjs.get(i) instanceof Lannister) {
+							Lannister lannister = (Lannister) pjs.get(i);
+							m += lannister.showRute();
+						}
+					}
+				}
+			}
+		}
+		return m;
+	}
+
+	/**
 	 * Public method for getting array size
 	 * 
-	 * @return array size
+	 * Complexity O(1)
+	 * 
+	 * @return key.size() : Number of keys in the array
 	 */
 	public int nkeys() {
 		return this.keys.size();
 	}
 
 	/**
+	 * Public method that returns the number of characters in the square
+	 * Complexity O(1)
 	 * 
-	 * @return
+	 * @return pjs.size() : Number of characters in the square
 	 */
-
 	public int nPj() {
 		return this.pjs.size();
 	}
 
 	/**
+	 * Public method that returns the first character in the queue
 	 * 
-	 * @return
+	 * Complexity O(1)
+	 * 
+	 * @return psj.peek() : The first character in the queue
 	 */
 	public Pj checkPj() {
 		return pjs.peek();
 	}
 
 	/**
-	 * @return
+	 * Public method that retrieves and removes the first character in the queue
+	 * 
+	 * Complexity O(1)
+	 * 
+	 * @return pjs.pollFirst() : Fist character in the queue
 	 */
 	public Pj takePj() {
 		return pjs.pollFirst();
 	}
 
 	/**
+	 * Method that processes the state of the square each turn
 	 * 
-	 */
-	void resetTurn() {
-		for (int y = 0; y < pjs.size(); y++) {
-			if (pjs.get(y) instanceof Stark) {
-				Stark stark = (Stark) pjs.get(y);
-				stark.resetT();
-			} else {
-				if (pjs.get(y) instanceof WhiteWalkers) {
-
-					WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(y);
-					whiteWalkers.resetT();
-				} else {
-					if (pjs.get(y) instanceof Targaryen) {
-
-						Targaryen targaryen = (Targaryen) pjs.get(y);
-						targaryen.resetT();
-					} else {
-						if (pjs.get(y) instanceof Lannister) {
-							Lannister lannister = (Lannister) pjs.get(y);
-							lannister.resetT();
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/**
+	 * Complexity O(n)
 	 * 
 	 * @param i
-	 * @param m
+	 *            : Current turn
+	 * 
+	 * @return This method returns nothing
 	 */
 	void proccessT(int i) {
 		int y = 0;
 		while (y < pjs.size()) {
-			if (!pjs.get(y).getMove() && pjs.get(y).getTurn() == i) {
+
+			if (pjs.get(y).getTurn() == i) {
 
 				if (pjs.get(y) instanceof Stark) {
 					Stark stark = (Stark) pjs.get(y);
@@ -277,33 +346,18 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-	 * <<<<<<< HEAD Compares two squares in a numerically way
-	 * 
-	 * @param t
-	 *            is the square we want to compare to
-	 * @return {@code 0} if this {@code Square} equals the argument
-	 *         {@code Square} t ID, {@code 1} if this {@code Square} ID is
-	 *         greater than the argument {@code Square} t ID and {@code -1} if
-	 *         this {@code Square} ID is lower than the argument {@code Square}
-	 *         t ID.
+	 * Implemented from the Compare Interface
 	 */
 
 	public int compareTo(Square t) {
-		// TODO Auto-generated method stub
 		return this.id.compareTo(t.getId());
 	}
 
 	/**
-	 * <<<<<<< HEAD Compares two squares in a logic way
-	 * 
-	 * @param t
-	 *            is the square we want to compare to
-	 * @return {@code true} if this {@code sqaure} equals the argument
-	 *         {@code square} t ID, Otherwise returns {@code false}.
+	 * Implemented from the Compare Interface
 	 */
 
 	public boolean isEqual(Square t) {
-		// TODO Auto-generated method stub
 		return this.id.equals(t.getId());
 	}
 

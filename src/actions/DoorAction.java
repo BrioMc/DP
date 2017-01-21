@@ -1,19 +1,17 @@
 package actions;
 
-import map.Square;
 import pj.Pj;
 /**
  * Group: 		We are your waifu 
  * Members:		Ignacio Caro Cumplido 
  *				Javier Ballesteros Moron 
  */
-public interface KeyAction {
-		/** Interface method for implementing key actions
+public interface DoorAction {
+			/** Interface method for implementing door actions
 	 *  Complexity O(1)
 	 *  
-	 *  @param map : Matrix with all the rooms
 	 *  @param pj : Character
 	 *  @return this method returns nothing
 	 */
-	void keyAction(Square[][] map, Pj pj);
+	boolean doorAction(Pj pj);
 }

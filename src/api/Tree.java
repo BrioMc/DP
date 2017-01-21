@@ -3,10 +3,9 @@ package api;
 import door.Key;
 
 /**
- * Implementation of the Binary Search Tree.
- * 
- * @version 1.0
- * @author Javier Ballesteros Mor�n Ignacio Caro Cumplido
+ * Group: 		We are your waifu 
+ * Members:		Ignacio Caro Cumplido 
+ *				Javier Ballesteros Moron 
  */
 
 public class Tree<T extends Compare<T>> {

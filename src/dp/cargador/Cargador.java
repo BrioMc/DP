@@ -38,7 +38,7 @@ public class Cargador {
 	 */
 	Cargador() {
 		mapeo = new DatoMapeo[NUMELTOSCONF];
-		mapeo[0] = new DatoMapeo("MAPA", 5);
+		mapeo[0] = new DatoMapeo("MAP", 5);
 		mapeo[1] = new DatoMapeo("STARK", 4);
 		mapeo[2] = new DatoMapeo("TARGARYEN", 4);
 		mapeo[3] = new DatoMapeo("LANNISTER", 4);
@@ -141,7 +141,6 @@ public class Cargador {
 	private void crearStark(int numCampos, List<String> vCampos) {
 
 		Stark stark = new Stark(vCampos.get(1), vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)), 0);
-		Map.getInstance().write(stark.showRute());
 		Map.getInstance().insertPj(stark);
 		// Registrar Stark en el mapa
 	}
@@ -157,7 +156,6 @@ public class Cargador {
 	private void crearTargaryen(int numCampos, List<String> vCampos) {
 		Targaryen targaryen = new Targaryen(vCampos.get(1), vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)),
 				0);
-		Map.getInstance().write(targaryen.showRute());
 
 		Map.getInstance().insertPj(targaryen);
 		// Registrar Targaryen en el mapa
@@ -174,7 +172,6 @@ public class Cargador {
 	private void crearLannister(int numCampos, List<String> vCampos) {
 		Lannister lannister = new Lannister(vCampos.get(1), vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)),
 				Map.getInstance().getDRoom());
-		Map.getInstance().write(lannister.showRute());
 
 		Map.getInstance().insertPj(lannister);
 		// Registrar Lannister en el mapa
@@ -191,7 +188,6 @@ public class Cargador {
 	private void crearCaminante(int numCampos, List<String> vCampos) {
 		WhiteWalkers whiteWalkers = new WhiteWalkers(vCampos.get(1), vCampos.get(2).charAt(0),
 				Integer.parseInt(vCampos.get(3)), Map.getInstance().surW());
-		Map.getInstance().write(whiteWalkers.showRute());
 
 		Map.getInstance().insertPj(whiteWalkers);
 		// Registrar Baratheon en el mapa

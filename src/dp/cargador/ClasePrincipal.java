@@ -24,12 +24,13 @@ public class ClasePrincipal {
 			 * Método que procesa línea a línea el fichero de entrada
 			 * inicio.txt
 			 */
-			FicheroCarga.procesarFichero("inicio6x6_a5.txt", cargador);
+			FicheroCarga.procesarFichero("init10x6_h5.txt", cargador);
 			Map map = Map.getInstance();
-			map.writeMap();
-			for (int i = 0; i < 50; i++) {
+			map.writeInit();
+			for (int i = 0; i < 50 && map.getThrone().nPj() == 0; i++) {
 				map.process(i);
-				map.paintMap();
+				map.writeTurn();
+
 			}
 
 			FicheroCarga.writeFile();

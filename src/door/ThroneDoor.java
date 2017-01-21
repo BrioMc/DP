@@ -3,12 +3,11 @@ package door;
 import api.Tree;
 
 /**
- * We are your waifu 
- * Ignacio Caro Cumplido 
- * Javier Ballesteros Moron
- * EC1
- * 2�
+ * Group: 		We are your waifu 
+ * Members:		Ignacio Caro Cumplido 
+ *				Javier Ballesteros Moron 
  */
+
 
 /**
  * 
@@ -97,31 +96,24 @@ public class ThroneDoor {
 	}
 
 	/**
-	 * Method which returns wether the door is open or closed open=true
-	 * closed=false
+	 * Method which returns whether the door is open or closed. 
 	 * 
-	 * @return state of the door
+	 * 
+	 * @return isOpen : true id open, otherwise false.
 	 */
 	public boolean isOp() {
 		return isOpen;
 	}
 
-	// /**
-	// * Method which checks the state of the door and, in case of being open,
-	// * returns the corresponding message.
-	// *
-	// * @return state of the door
-	// */
-	// public boolean estaAbierta() {
-	// return isOpen;
-	//
-	// }
+
 	/**
+	 * Method which returns the door's information ready to be displayed
 	 * 
+	 * @return m : String with the Door's information
 	 */
 	public String showDoor() {
 		String m = "";
-		m += ("(Door");
+		m += ("(door");
 		if (isOp()) {
 			m += (":open:");
 		} else {
@@ -137,10 +129,11 @@ public class ThroneDoor {
 	}
 
 	/**
+	 * Method required for opening the door
 	 * 
-	 * @param key
-	 *            Key which is introduced with a value !=Null
-	 * @return
+	 * @param key : Key which is introduced with a value !=Null
+	 * 
+	 * @return isOpen : True if the method manages to open the door. False if the door remains closed.
 	 */
 	public boolean open(Key key) {
 		if (!tested.belongs(key)) {

@@ -1,6 +1,6 @@
---Mapa
-MAPA#6#6#35#5#
---Personajes de la simulación
+--Map
+MAP#10#6#59#5#
+--Characters in the simulation
 STARK#John#J#1#
 TARGARYEN#Daenerys#D#1#
 CAMINANTE#IceWalker#I#2#
