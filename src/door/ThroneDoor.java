@@ -33,24 +33,20 @@ public class ThroneDoor {
 		depth = dp;
 		lock = new Tree<Key>();
 		lock = new Tree<Key>();
-		comb = new Key[200];
-	}
 
-	/**
-	 * Parametrized constructor with the depth and the Key's array as parameters
-	 * 
-	 * @param keys
-	 *            {@code Key[]}
-	 * @param depthn
-	 *            * parametros.
-	 */
-	public ThroneDoor(Key[] keys, int depthn) {
-		isOpen = false;
-		depth = depthn;
-		lock = new Tree<Key>();
-		tested = new Tree<Key>();
-		comb = keys;
-		cfglock(0, keys.length - 1);
+		int[] listaIdKeys = new int[15];
+		int j = 1;
+		for (int i = 0; i < 15; i++) {
+			listaIdKeys[i] = j;
+			j = j + 2;
+		}
+		Key[] combination = new Key[15];
+		for (int i = 0; i < combination.length; i++) {
+			combination[i] = new Key(listaIdKeys[i]);
+		}
+		comb = combination;
+		cfglock(0, combination.length - 1);
+
 	}
 
 	/**
@@ -125,7 +121,7 @@ public class ThroneDoor {
 	 */
 	public String showDoor() {
 		String m = "";
-		System.out.print("(Door");
+		m += ("(Door");
 		if (isOp()) {
 			m += (":open:");
 		} else {
@@ -135,6 +131,7 @@ public class ThroneDoor {
 		m += showLock();
 		m += (":");
 		m += showTested();
+		m += ")";
 		m += ("\n");
 		return m;
 	}

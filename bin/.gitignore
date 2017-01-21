@@ -1,8 +1,10 @@
-/dp/
-/exceptions/
-/map/
-/pj/
+/.DS_Store
+/Icon_
 /actions/
 /api/
 /cargador/
 /door/
+/dp/
+/exceptions/
+/map/
+/pj/

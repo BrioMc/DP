@@ -1,21 +1,96 @@
-(turno:0)
-(mapa:15)
-(Door:close:3: 15:)
- _ _ _ _
-|2   _ _|
-| | |_ _|
-|_| |_|_|
-|C   _ T|
-(sala:3: 0 1 1 2 3 )
-(sala:4: 3 4 5 5 6 )
-(sala:6: 7 7 8 9 9 )
-(sala:8: 10 11 11 12 13 )
-(sala:9: 13 14 15 15 16 )
-(sala:10: 17 17 18 19 19 )
-(sala:11: 20 21 21 22 23 )
-(sala:12: 23 24 25 25 26 )
-(sala:13: 27 27 28 29 29 )
-(Stark:E:0:0:)
-(Targaryen:D:0:0:)
-(WhiteWalkers:C:12:0:)
-(Lannister:T:15:0:0 1 1 2 3 3 4 5 5 6 7 7 8 9 9 10 11 11 12 13 13 14 15 15 16 17 17 18 19 19 20 21 21 22 23 23 24 25 25 26 27 27 28 29 29 )
+ _ _ _ _ _ _
+|_ _  |_ _  |
+|_    |_    |
+|_ _|_  | |_|
+|  _     _| |
+|_ _|_|  _  |
+|_ _ _ _ _|_|
+(rute:J: E E S S E S S E E S)
+(rute:D: E E S W W E S W E N E S E S W W W S E W N E E S N E S S W W W E E E E E)
+(rute:I: E E E N N N W N N W W E E S S E S E N N E N S W S S W S E E S W W W W W)
+(rute:S: E E S S E S S E E S)
+(rute:T: N W W N E N N E N S W S S W N W N N W W E E S S E S S S W W W E E E E E)
+(rute:A: E E S W W E S W E N E S E S W W W S E W N E E S N E S S W W W E E E E E)
+(turn:0)
+(map:35)
+(Door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+
+ _ _ _ _ _ _
+|4 _  |_ _  |
+|_    |_    |
+|_ _|_  | |_|
+|  _     _| |
+|_ _|_|  _  |
+|I _ _ _ _ T|
+(square:0: 0 1 1 2 3 )
+
+(square:1: 3 4 5 5 6 )
+
+(square:2: 7 7 8 9 9 )
+
+(square:8: 10 11 11 12 13 )
+
+(square:14: 13 14 15 15 16 )
+
+(square:15: 17 17 18 19 19 )
+
+(square:21: 20 21 21 22 23 )
+
+(square:27: 23 24 25 25 26 )
+
+(square:35: 27 27 28 29 29 )
+
+(Stark:J:0:1:)
+(Targaryen:D:0:1:)
+(Stark:S:0:2:)
+(Targaryen:A:0:2:)
+(whiteWalkers:I:30:2:)
+(Lannister:T:35:1:0 1 1 2 3 3 4 5 5 6 7 7 8 9 9 10 11 11 12 13 13 14 15 15 16 17 17 18 19 19 20 21 21 22 23 23 24 25 25 26 27 27 28 29 29 )
+ _ _ _ _ _ _
+|_ _  |_ _  |
+|_    |_    |
+|_ _|_  | |_|
+|  _     _| |
+|_ _|_|  _  |
+|_ _ _ _ _|_|
+(rute:J: E E S S E S S E E S)
+(rute:D: E E S W W E S W E N E S E S W W W S E W N E E S N E S S W W W E E E E E)
+(rute:I: E E E N N N W N N W W E E S S E S E N N E N S W S S W S E E S W W W W W)
+(rute:S: E E S S E S S E E S)
+(rute:T: N W W N E N N E N S W S S W N W N N W W E E S S E S S S W W W E E E E E)
+(rute:A: E E S W W E S W E N E S E S W W W S E W N E E S N E S S W W W E E E E E)
+(turn:0)
+(map:35)
+(Door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+
+ _ _ _ _ _ _
+|4 _  |_ _  |
+|_    |_    |
+|_ _|_  | |_|
+|  _     _| |
+|_ _|_|  _  |
+|I _ _ _ _ T|
+(square:0: 0 1 1 2 3 )
+
+(square:1: 3 4 5 5 6 )
+
+(square:2: 7 7 8 9 9 )
+
+(square:8: 10 11 11 12 13 )
+
+(square:14: 13 14 15 15 16 )
+
+(square:15: 17 17 18 19 19 )
+
+(square:21: 20 21 21 22 23 )
+
+(square:27: 23 24 25 25 26 )
+
+(square:35: 27 27 28 29 29 )
+
+(Stark:J:0:1:)
+(Targaryen:D:0:1:)
+(Stark:S:0:2:)
+(Targaryen:A:0:2:)
+(whiteWalkers:I:30:2:)
+(Lannister:T:35:1:0 1 1 2 3 3 4 5 5 6 7 7 8 9 9 10 11 11 12 13 13 14 15 15 16 17 17 18 19 19 20 21 21 22 23 23 24 25 25 26 27 27 28 29 29 )

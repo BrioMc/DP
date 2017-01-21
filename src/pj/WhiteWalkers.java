@@ -46,7 +46,7 @@ public class WhiteWalkers extends Pj {
 	public WhiteWalkers(String name, char M, int turn, int Room) {
 		super(name, M, turn, Room);
 		super.keyAction = new DoNothingKey();
-		this.currTurn = 0;
+		this.currTurn = turn;
 		pjsT = new Queue<Pj>();
 		whiteWalkersWays();
 	}

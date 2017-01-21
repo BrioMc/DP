@@ -3,15 +3,15 @@ package map;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
 
 import door.Key;
 import door.ThroneDoor;
-import pj.Lannister;
 import pj.Pj;
-import pj.Stark;
-import pj.Targaryen;
-import pj.WhiteWalkers;
 
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2�
@@ -28,6 +28,7 @@ public class Map {
 	private ArrayList<Walls> walls;
 	private Graph graph;
 	private static Map instance;
+	private BufferedWriter bufOut;
 
 	/**
 	 * Private method for initializing the map
@@ -38,6 +39,10 @@ public class Map {
 				map[i][j] = new Square(i * map[i].length + j);
 			}
 		}
+	}
+
+	public int getTurn() {
+		return turn;
 	}
 
 	/**
@@ -77,8 +82,6 @@ public class Map {
 
 		// charge wallBool
 		for (Walls wall : walls) {
-			// n = walls.get(z).getOrigin() / map[i].length;
-			// m = walls.get(z).getOrigin() % map[i].length;
 			n = (i * getDimY() + j);
 			m = wall.getOrigin();
 			// System.out.println(n+"-"+m);
@@ -115,10 +118,14 @@ public class Map {
 	/**
 	 * Parametrized constructor of the class map.
 	 *
-	 * @param doorRoom : The room where the Throne Door is located (int)
-	 * @param dimX : The number of rows of the map (int)
-	 * @param dimY : The number of columns of the map (int)
-	 * @param door : The door of the throne (ThroneDoor)
+	 * @param doorRoom
+	 *            : The room where the Throne Door is located (int)
+	 * @param dimX
+	 *            : The number of rows of the map (int)
+	 * @param dimY
+	 *            : The number of columns of the map (int)
+	 * @param door
+	 *            : The door of the throne (ThroneDoor)
 	 */
 	private Map(int doorRoom, int dimX, int dimY, ThroneDoor door) {
 		this.map = new Square[dimX][dimY];
@@ -132,22 +139,30 @@ public class Map {
 		this.walls = new ArrayList<Walls>();
 		iniWalls();
 		this.graph = new Graph(dimX * dimY);
+		Kruskal();
+		write(writeMapG());
+		doShortcut();
+		keyDistribution();
 	}
 
 	/**
-	 *  Method used for generating the map with a Singleton.
+	 * Method used for generating the map with a Singleton.
 	 *
-	 * @param doorRoom : The room where the Throne Door is located (int)
-	 * @param dimX : The number of rows of the map (int)
-	 * @param dimY : The number of columns of the map (int)
-	 * @param door : The door of the throne (ThroneDoor)
+	 * @param doorRoom
+	 *            : The room where the Throne Door is located (int)
+	 * @param dimX
+	 *            : The number of rows of the map (int)
+	 * @param dimY
+	 *            : The number of columns of the map (int)
+	 * @param door
+	 *            : The door of the throne (ThroneDoor)
 	 */
 	public static void generateInstance(int doorRoom, int dimX, int dimY, ThroneDoor door) {
 		instance = new Map(doorRoom, dimX, dimY, door);
 	}
 
 	/**
-	 *  Method for obtaining the graph of the map
+	 * Method for obtaining the graph of the map
 	 *
 	 * @return graph : Graph with the paths between squares (Graph)
 	 */
@@ -156,7 +171,7 @@ public class Map {
 	}
 
 	/**
-	 *  Method for obtaining an instance of the map (Singleton Design Pattern)
+	 * Method for obtaining an instance of the map (Singleton Design Pattern)
 	 *
 	 * @return instace : Instance of the class map (Map)
 	 */
@@ -167,14 +182,16 @@ public class Map {
 	/**
 	 * Method that assigns an ArrayList of walls to the map.
 	 *
-	 * @param x : ArrayList that contains all the walls that we want to put into the map. (ArrayList<Walls>)
+	 * @param x
+	 *            : ArrayList that contains all the walls that we want to put
+	 *            into the map. (ArrayList<Walls>)
 	 */
 	public void setWalls(ArrayList<Walls> x) {
 		walls = x;
 	}
 
 	/**
-	 *  Method that shows all the walls of the map
+	 * Method that shows all the walls of the map
 	 *
 	 */
 	public void showW() {
@@ -203,7 +220,7 @@ public class Map {
 	}
 
 	/**
-	 *  Public method, returns the door room
+	 * Public method, returns the door room
 	 *
 	 * @return doorRoom : The id of the room where the door is (int).
 	 */
@@ -225,7 +242,7 @@ public class Map {
 	 * 
 	 * @return
 	 */
-	private int getDimX() {
+	public int getDimX() {
 		return this.dimX;
 	}
 
@@ -238,7 +255,7 @@ public class Map {
 	}
 
 	/**
-	 *  Return the map size
+	 * Return the map size
 	 * 
 	 * @return map size
 	 */
@@ -255,7 +272,7 @@ public class Map {
 	 * @return
 	 */
 	public int surE() {
-		return map[map.length - 1][map[0].length - 1].getId();
+		return map[dimX - 1][dimY - 1].getId();
 	}
 
 	/**
@@ -263,7 +280,7 @@ public class Map {
 	 * @return
 	 */
 	public int surW() {
-		return map[map.length - 1][0].getId();
+		return map[dimX - 1][0].getId();
 	}
 
 	/**
@@ -279,7 +296,7 @@ public class Map {
 	 * @return
 	 */
 	public int norE() {
-		return map[0][map[0].length - 1].getId();
+		return map[0][dimY - 1].getId();
 	}
 
 	/**
@@ -291,9 +308,8 @@ public class Map {
 	 * @return
 	 */
 	private Square getSquare(Integer i) {
-		Map map = Map.getInstance();
 		Square x;
-		x = map.map[i / map.getDimY()][i % map.getDimY()];
+		x = map[i / getDimY()][i % getDimY()];
 		return x;
 	}
 
@@ -364,7 +380,7 @@ public class Map {
 	/**
 	 * 
 	 */
-	public void Kruskal() {
+	private void Kruskal() {
 		ArrayList<Walls> selected = new ArrayList<>();
 		int rnd; // random number
 		int mark;
@@ -401,7 +417,6 @@ public class Map {
 		walls.addAll(selected);
 		graph.floyd();
 		graph.warshall();
-		// doShortcut();
 
 	}
 
@@ -478,8 +493,8 @@ public class Map {
 	 * @param turn
 	 */
 	public void process(int turn) {
-		for (int i = 0; i < map.length; i++) {
-			for (int j = 0; j < map[i].length; j++) {
+		for (int i = 0; i < dimX; i++) {
+			for (int j = 0; j < dimY; j++) {
 				map[i][j].proccessT(turn);
 				map[i][j].resetTurn();
 			}
@@ -591,36 +606,55 @@ public class Map {
 
 	}
 
-	private void bubbleSorting(int[] V){
+	/**
+	 * 
+	 * @param V
+	 */
+	private void bubbleSorting(int[] V) {
 		int ID;
-		for (int i=1; i < V.length; i++) {
-			for (int j=0; j < V.length-i; j++) {
-				if (getSquare(V[j]).getFreq() < getSquare(V[j+1]).getFreq()) {
+		for (int i = 1; i < V.length; i++) {
+			for (int j = 0; j < V.length - i; j++) {
+				if (getSquare(V[j]).getFreq() < getSquare(V[j + 1]).getFreq()) {
 					ID = getSquare(V[j]).getId();
-					V[j] = V[j+1];
-					V[j+1] = ID;
-					
+					V[j] = V[j + 1];
+					V[j + 1] = ID;
+
 				}
 			}
 		}
 	}
-	
-	private void keyDistribution(){
+
+	/**
+	 * 
+	 */
+	private void keyDistribution() {
 		ArrayList<Integer> x = new ArrayList<>();
 		mostFreq(x, 0);
-		int[] rooms = new int[dimY*dimX];
+		int[] rooms = new int[dimY * dimX];
 		int[] keyRooms = new int[9];
 
-		for (int i = 0; i < dimY*dimX; i++) {
-			rooms[i]=getSquare(i).getId();
+		for (int i = 0; i < dimY * dimX; i++) {
+			rooms[i] = getSquare(i).getId();
 		}
-		
+
 		bubbleSorting(rooms);
 		System.arraycopy(rooms, 0, keyRooms, 0, 9);
-		
+
 		distKeys(keyRooms);
 		for (int keyRoom : keyRooms) {
 			System.out.print(keyRoom + " ");
+		}
+	}
+
+	public void addLog(String str) {
+		try {
+			bufOut = new BufferedWriter(new FileWriter("record.txt", true));
+			bufOut.write(str);
+			bufOut.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -629,35 +663,51 @@ public class Map {
 	 * @param bufferOut
 	 * @throws IOException
 	 */
-	private void writelog(BufferedWriter bufferOut) throws IOException {
-		// Write Turn data
-		bufferOut.write("(turn:" + this.turn + ")");
-		bufferOut.newLine();
-		// Write Map data
-		bufferOut.write("(map:" + getTMap() + ")");
-		bufferOut.newLine();
-		// Write Door data
-		bufferOut.write(door.showDoor());
-		bufferOut.newLine();
-		// Write Map look
-		bufferOut.write(writeMapG());
-		bufferOut.newLine();
-		// Write squares with keys
-		for (int i = 0; i < map.length; i++) {
-			for (int j = 0; j < map[i].length; j++) {
-				if (map[i][j].nkeys() != 0) {
-					bufferOut.write(map[i][j].showKeys());
-					bufferOut.newLine();
+	private void writeTurn() {
+		try {
+			// Write Turn data
+			bufOut.write("(turn:" + this.turn + ")");
+			bufOut.newLine();
+			// Write Map data
+			bufOut.write("(map:" + getTMap() + ")");
+			bufOut.newLine();
+			// Write Door data
+			bufOut.write(door.showDoor());
+			bufOut.newLine();
+			// Write Map look
+			bufOut.write(writeMapG());
+
+			// Write squares with keys
+			for (int i = 0; i < map.length; i++) {
+				for (int j = 0; j < map[i].length; j++) {
+					if (map[i][j].nkeys() != 0) {
+						bufOut.write(map[i][j].showKeys());
+						bufOut.newLine();
+					}
 				}
 			}
-		}
-		// Write Pjs
-		for (int i = 0; i < map.length; i++) {
-			for (int j = 0; j < map[i].length; j++) {
+			// Write Pjs
+			for (int i = 0; i < map.length; i++) {
+				for (int j = 0; j < map[i].length; j++) {
+					if (map[i][j].nPj() != 0) {
+						bufOut.write(map[i][j].showPj());
 
-				bufferOut.write(map[i][j].showPj());
-				bufferOut.newLine();
+					}
+				}
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void write(String x) {
+		try {
+			bufOut = new BufferedWriter(new FileWriter("record.txt", true));
+			bufOut.write(x);
+			bufOut.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -665,16 +715,15 @@ public class Map {
 	 * 
 	 */
 	public void writeMap() {
-		BufferedWriter bufferOut = null;
+
 		try {
-			bufferOut = new BufferedWriter(new FileWriter("record.txt"));
-			writelog(bufferOut);
-			bufferOut.close();
+			bufOut = new BufferedWriter(new FileWriter("record.txt", true));
+			writeTurn();
+			bufOut.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// Map.getInstance().writelog(bufferOut);
 
 	}
 
@@ -683,7 +732,7 @@ public class Map {
 	 */
 	public void paintMap() {
 		// paint turn data
-		System.out.println("(turn:" + this.turn + ")");
+		System.out.println("(turn:" + (this.turn-1) + ")");
 		// Paint Map data
 		System.out.println("(map:" + getTMap() + ")");
 		// Paint door data
@@ -698,6 +747,7 @@ public class Map {
 				}
 			}
 		}
+
 		// Paint pjs in map
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
@@ -706,155 +756,111 @@ public class Map {
 		}
 	}
 
+	public String printInitMap() {
+		String x = "";
+		x = writeMapG();
+		x += ("(turn:" + this.turn + ")");
+		x += ("(map:" + getTMap() + ")");
+		return x;
+	}
+
 	/**
 	 * 
 	 * @param args
 	 */
-	public void paintMarks() {
-		for (int x = 0; x < map[0].length; x++) {
-			System.out.print(" _");
-		}
 
-		System.out.println();
-		for (int i = 0; i < map.length; i++) {
-			System.out.print("|");
-			for (int j = 0; j < map[i].length; j++) {
-				boolean[] wa = retWalls(i, j);
-				// Show if have 1 pj only in square
-				System.out.print(map[i][j].getMark());
-				if (j != map[0].length - 1) {
-					// Paint botton wall if exist
-					if (wa[1] || i == map.length - 1) {
-						System.out.print("_");
-					} else {
-						System.out.print(" ");
-					}
-					// Paint left wall if exist
-					if (wa[3]) {
-						System.out.print("|");
-					} else {
-						System.out.print(" ");
-					}
-				} else {
-					if (wa[1] || i == map.length - 1) {
-						System.out.print("_");
-					} else {
-						System.out.print(" ");
-					}
-				}
-			}
-			System.out.print("|");
-			System.out.println();
-		}
-
-		System.out.println();
-	}
-
-	public static void main(String args[]) {
-		int dimX = 6;
-		int dimY = 6;
-		int doorRoom = (dimX * dimY) - 1;
-		int altLock = 3;
-		// int maxTurns = 50;
-		int numKeys = 15;
-
-		// Creating and configuring the door. It is not specified here since
-		// it was specified in the previous stage
-		// Add the door to the map (it will be stored into the Throne square)
-
-		int[] listaIdKeys = new int[numKeys];
-		int j = 1;
-		for (int i = 0; i < numKeys; i++) {
-			listaIdKeys[i] = j;
-			j = j + 2;
-		}
-		Key[] combination = new Key[numKeys];
-		for (int i = 0; i < combination.length; i++) {
-			combination[i] = new Key(listaIdKeys[i]);
-		}
-		ThroneDoor door = new ThroneDoor(combination, altLock);
-
-		// Creating the map
-		// Parameters: door square, columns number, rows number,
-		// depth for the lock
-		// The constructor must create the different squares for the map
-		Map.generateInstance(doorRoom, dimX, dimY, door);
-		Map map = Map.getInstance();
-		map.Kruskal();
-		map.doShortcut();
-		// Generate the keys and distribute them. In this stage, we pass to the
-		// map an array
-		// with the identifiers of the squares where the keys are going to be
-		// distributed
-
-		// The generation of the keys will be performed by the map
-		// The distribution is as follows:
-		// (square:3: 0 1 1 2 3)
-		// (square:4: 3 4 5 5 6)
-		// (square:6: 7 7 8 9 9)
-		// (square:8: 10 11 11 12 13)
-		// (square:9: 13 14 15 15 16)
-		// (square:10: 17 17 18 19 19)
-		// (square:11: 20 21 21 22 23)
-		// (square:12: 23 24 25 25 26)
-		// (square:13: 27 27 28 29 29)
-		
-		map.keyDistribution();
-		map.paintMap();
-
-		// Creating the characters
-		// Creating a Stark
-		// Parameters: name, mark, turn in which it will start the simulation
-		// and initial square
-
-		// Creating the route for the Stark:
-		// (route:E: S S E E N E N E S E S S W S E E)
-		Dir[] direccionesE = { Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S,
-				Dir.W, Dir.S, Dir.E, Dir.S };
-		Stark starkE = new Stark("Eddard", 'E', 1, 0);
-		// Adding the character into the map
-		map.insertPj(starkE);
-		System.out.println(starkE.showRute());
-		// Creating a Targaryen
-		// Parameters: name, mark, turn in which it will start the simulation
-		// and initial square
-		Targaryen targaryenD = new Targaryen("Daenerys", 'D', 1, 0);
-		// (route:D: E S S S W S E E N E S S E E)
-		Dir[] direccionesD = { Dir.E, Dir.S, Dir.S, Dir.S, Dir.W, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.S, Dir.S,
-				Dir.E, Dir.E };
-
-		// Adding the character into the map
-		map.insertPj(targaryenD);
-		System.out.println(targaryenD.showRute());
-		// Creating a White Walker
-		// Parameters: name, mark, turn in which it will start the simulation
-		// and initial square
-		WhiteWalkers walker = new WhiteWalkers("Caminante", 'C', 1, map.surW());
-		// (route:C: N N N E S E N N E N E E S S S S S )
-		Dir[] direccionesC = { Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N, Dir.E, Dir.N, Dir.E, Dir.E,
-				Dir.S, Dir.S, Dir.S, Dir.S, Dir.S };
-		// Adding the character into the map
-		map.insertPj(walker);
-		System.out.println(walker.showRute());
-		// Creating a Lannister
-		// Parameters: name, mark, turn in which it will start the simulation
-		// and initial square
-		Lannister lannisterT = new Lannister("Tyrion", 'T', 1, map.getDRoom());
-		// (ruta:T: N N W N N W S W W N N W S S S S S E E E E E )
-		// Adding the character into the map
-		// map.paintMap();
-		map.insertPj(lannisterT);
-		System.out.println(lannisterT.showRute());
-		// Executing the simulation
-		// The process method must be executed turn after turn, traversing the
-		// map from square 0
-		// to the last square and the characters stored in each square must
-		// execute their actions
-		// in a chronologically order (the characters that arrived first are the
-		// first in leaving the square)
-
-		// map.graph.showArcs();
-	
-
-	}
+	// public static void main(String args[]) {
+	// int dimX = 6;
+	// int dimY = 6;
+	// int doorRoom = (dimX * dimY) - 1;
+	// int altLock = 3;
+	// // int maxTurns = 50;
+	// int numKeys = 15;
+	//
+	// // Creating and configuring the door. It is not specified here since
+	// // it was specified in the previous stage
+	// // Add the door to the map (it will be stored into the Throne square)
+	//
+	// int[] listaIdKeys = new int[numKeys];
+	// int j = 1;
+	// for (int i = 0; i < numKeys; i++) {
+	// listaIdKeys[i] = j;
+	// j = j + 2;
+	// }
+	// Key[] combination = new Key[numKeys];
+	// for (int i = 0; i < combination.length; i++) {
+	// combination[i] = new Key(listaIdKeys[i]);
+	// }
+	// ThroneDoor door = new ThroneDoor(combination, altLock);
+	//
+	// // Creating the map
+	// // Parameters: door square, columns number, rows number,
+	// // depth for the lock
+	// // The constructor must create the different squares for the map
+	// Map.generateInstance(doorRoom, dimX, dimY, door);
+	// Map map = Map.getInstance();
+	// map.Kruskal();
+	// map.doShortcut();
+	// // Generate the keys and distribute them. In this stage, we pass to the
+	// // map an array
+	// // with the identifiers of the squares where the keys are going to be
+	// // distributed
+	//
+	// // The generation of the keys will be performed by the map
+	// // The distribution is as follows:
+	// // (square:3: 0 1 1 2 3)
+	// // (square:4: 3 4 5 5 6)
+	// // (square:6: 7 7 8 9 9)
+	// // (square:8: 10 11 11 12 13)
+	// // (square:9: 13 14 15 15 16)
+	// // (square:10: 17 17 18 19 19)
+	// // (square:11: 20 21 21 22 23)
+	// // (square:12: 23 24 25 25 26)
+	// // (square:13: 27 27 28 29 29)
+	//
+	// map.keyDistribution();
+	// map.paintMap();
+	//
+	// // Creating the characters
+	// // Creating a Stark
+	// // Parameters: name, mark, turn in which it will start the simulation
+	// // and initial square
+	//
+	// // Creating the route for the Stark:
+	// // (route:E: S S E E N E N E S E S S W S E E)
+	// Stark starkE = new Stark("Eddard", 'E', 1, 0);
+	// // Adding the character into the map
+	// map.insertPj(starkE);
+	// System.out.println(starkE.showRute());
+	// // Creating a Targaryen
+	// // Parameters: name, mark, turn in which it will start the simulation
+	// // and initial square
+	// // (route:D: E S S S W S E E N E S S E E)
+	// Targaryen targaryenD = new Targaryen("Daenerys", 'D', 1, 0);
+	// map.insertPj(targaryenD);
+	// System.out.println(targaryenD.showRute());
+	//
+	// WhiteWalkers walker = new WhiteWalkers("Caminante", 'C', 1, map.surW());
+	// map.insertPj(walker);
+	// System.out.println(walker.showRute());
+	// // Creating a Lannister
+	// // Parameters: name, mark, turn in which it will start the simulation
+	// // and initial square
+	// Lannister lannisterT = new Lannister("Tyrion", 'T', 1, map.getDRoom());
+	// // (ruta:T: N N W N N W S W W N N W S S S S S E E E E E )
+	// // Adding the character into the map
+	// // map.paintMap();
+	// map.insertPj(lannisterT);
+	// System.out.println(lannisterT.showRute());
+	// // Executing the simulation
+	// // The process method must be executed turn after turn, traversing the
+	// // map from square 0
+	// // to the last square and the characters stored in each square must
+	// // execute their actions
+	// // in a chronologically order (the characters that arrived first are the
+	// // first in leaving the square)
+	//
+	// // map.graph.showArcs();
+	//
+	// }
 }

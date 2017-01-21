@@ -1,12 +1,11 @@
 package pj;
 
-import door.Key;
-import map.Map;
-
 import java.util.ArrayList;
 
 import actions.DropKey;
-import actions.LannisterAndWW;
+import door.Key;
+import map.Map;
+
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2�
  */
@@ -23,7 +22,6 @@ public class Lannister extends Pj {
 	public Lannister(String name, char M, int turn, int Room) {
 		super(name, M, turn, Room);
 		super.keyAction = new DropKey();
-		super.movementType = new LannisterAndWW();
 		Key k;
 		for (int i = 0; i < 30; i++) {
 			k = new Key(i);

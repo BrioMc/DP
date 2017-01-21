@@ -21,10 +21,9 @@ public class Targaryen extends Pj {
 		super(name, M, turn, Room);
 		super.keyAction = new PickKey();
 		targaryenWays();
-		// TODO Auto-generated constructor stub
 	}
 
-	private void targaryenWays() {
+	public void targaryenWays() {
 		Map m = Map.getInstance();
 		ArrayList<Integer> x = new ArrayList<>();
 		x.add(this.room);
@@ -33,11 +32,36 @@ public class Targaryen extends Pj {
 		while (actRoom != m.getDRoom()) {
 
 			actRoom = nextRommWallFollow(actRoom, d);
+			d = whereLook(x.get(x.size() - 1), actRoom);
 			x.add(actRoom);
+
 		}
 		asigRute(x);
 	}
 
+	private Dir whereLook(Integer past, Integer post) {
+
+		Dir d = Dir.E;
+
+		if (past == (post + 1)) {
+			d = Dir.W;
+		} else if (past == (post - 1)) {
+			d = Dir.E;
+		} else if (past == (post - Map.getInstance().getDimY())) {
+			d = Dir.S;
+		} else if (past == (post + Map.getInstance().getDimY())) {
+			d = Dir.N;
+		}
+
+		return d;
+	}
+
+	/**
+	 * 
+	 * @param act
+	 * @param d
+	 * @return
+	 */
 	private int[] look(int act, Dir d) {
 		int[] x = new int[4];
 		// right,front,left, back
@@ -83,18 +107,7 @@ public class Targaryen extends Pj {
 		// Check right from pj position
 		if (m.getGraph().adyacente(actRoom, v[0])) {
 			nextR = v[0];
-			if (d == Dir.N) {
-				d = Dir.E;
-			} else if (d == Dir.S) {
-				d = Dir.W;
 
-			} else if (d == Dir.W) {
-				d = Dir.N;
-
-			} else if (d == Dir.E) {
-				d = Dir.S;
-
-			}
 		}
 		// Check down from pj position
 		else if (m.getGraph().adyacente(actRoom, v[1])) {
@@ -104,34 +117,10 @@ public class Targaryen extends Pj {
 		// Check left from pj position
 		else if (m.getGraph().adyacente(actRoom, v[2])) {
 			nextR = v[2];
-			if (d == Dir.N) {
-				d = Dir.W;
-			} else if (d == Dir.S) {
-				d = Dir.E;
-
-			} else if (d == Dir.W) {
-				d = Dir.S;
-
-			} else if (d == Dir.E) {
-				d = Dir.N;
-
-			}
 		}
 		// Check up from pj position
 		else if (m.getGraph().adyacente(actRoom, v[3])) {
 			nextR = v[3];
-			if (d == Dir.N) {
-				d = Dir.S;
-			} else if (d == Dir.S) {
-				d = Dir.N;
-
-			} else if (d == Dir.W) {
-				d = Dir.E;
-
-			} else if (d == Dir.E) {
-				d = Dir.W;
-
-			}
 		}
 
 		return nextR;
@@ -192,10 +181,12 @@ public class Targaryen extends Pj {
 		for (int x = 0; x < this.keys.size(); x++) {
 			pj += (keys.get(x).toString() + " ");
 
-			pj += (")");
-
 		}
+		pj += (")");
 		return pj;
 	}
 }
 
+/**
+* 
+*/

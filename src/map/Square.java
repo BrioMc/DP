@@ -150,30 +150,30 @@ public class Square implements Compare<Square> {
 		String m = "";
 		for (int i = 0; i < pjs.size(); i++) {
 
-				if (pjs.get(i) instanceof Stark){
-					Stark stark = (Stark) pjs.get(i);
-					m += stark.showPj();
-					m += "\n";
-				}else{
-					if (pjs.get(i) instanceof WhiteWalkers){
+			if (pjs.get(i) instanceof Stark) {
+				Stark stark = (Stark) pjs.get(i);
+				m += stark.showPj();
+				m += "\n";
+			} else {
+				if (pjs.get(i) instanceof WhiteWalkers) {
 					WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(i);
 					m += whiteWalkers.showPj();
 					m += "\n";
-					}else{
-						if (pjs.get(i) instanceof Targaryen){
-							Targaryen targaryen = (Targaryen) pjs.get(i);
-							m += targaryen.showPj();
+				} else {
+					if (pjs.get(i) instanceof Targaryen) {
+						Targaryen targaryen = (Targaryen) pjs.get(i);
+						m += targaryen.showPj();
+						m += "\n";
+					} else {
+						if (pjs.get(i) instanceof Lannister) {
+							Lannister lannister = (Lannister) pjs.get(i);
+							m += lannister.showPj();
 							m += "\n";
-						}else{
-							if (pjs.get(i) instanceof Lannister){
-								Lannister lannister = (Lannister) pjs.get(i);
-								m += lannister.showPj();
-								m += "\n";
-							}
 						}
 					}
 				}
-			}	
+			}
+		}
 		return m;
 	}
 
@@ -215,8 +215,27 @@ public class Square implements Compare<Square> {
 	 */
 	void resetTurn() {
 		for (int y = 0; y < pjs.size(); y++) {
-			Pj temp = pjs.get(y);
-			temp.resetT();
+			if (pjs.get(y) instanceof Stark) {
+				Stark stark = (Stark) pjs.get(y);
+				stark.resetT();
+			} else {
+				if (pjs.get(y) instanceof WhiteWalkers) {
+
+					WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(y);
+					whiteWalkers.resetT();
+				} else {
+					if (pjs.get(y) instanceof Targaryen) {
+
+						Targaryen targaryen = (Targaryen) pjs.get(y);
+						targaryen.resetT();
+					} else {
+						if (pjs.get(y) instanceof Lannister) {
+							Lannister lannister = (Lannister) pjs.get(y);
+							lannister.resetT();
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -226,34 +245,34 @@ public class Square implements Compare<Square> {
 	 * @param m
 	 */
 	void proccessT(int i) {
-		for (int y = 0; y < pjs.size(); y++) {
-			
-			if (!pjs.get(y).getMove() && pjs.get(y).getTurn() <= i) {
-				pjs.get(y).sumTurn();
-				pjs.get(y).moveOn();
-				if (pjs.get(y) instanceof Stark){
+		int y = 0;
+		while (y < pjs.size()) {
+			if (!pjs.get(y).getMove() && pjs.get(y).getTurn() == i) {
+
+				if (pjs.get(y) instanceof Stark) {
 					Stark stark = (Stark) pjs.get(y);
 					stark.actionPj();
-				}else{
-					if (pjs.get(y) instanceof WhiteWalkers){
-				
-					WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(y) ;
-					whiteWalkers.actionPj();
-					}else{
-						if (pjs.get(y) instanceof Targaryen){
-					
-				
-					Targaryen targaryen = (Targaryen) pjs.get(y);
-					targaryen.actionPj();
-						}else{
-							if (pjs.get(y) instanceof Lannister){
+				} else {
+					if (pjs.get(y) instanceof WhiteWalkers) {
+
+						WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(y);
+						whiteWalkers.actionPj();
+					} else {
+						if (pjs.get(y) instanceof Targaryen) {
+
+							Targaryen targaryen = (Targaryen) pjs.get(y);
+							targaryen.actionPj();
+						} else {
+							if (pjs.get(y) instanceof Lannister) {
 								Lannister lannister = (Lannister) pjs.get(y);
 								lannister.actionPj();
 							}
-						}	
+						}
 					}
 				}
+				y--;
 			}
+			y++;
 		}
 	}
 

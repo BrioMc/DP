@@ -108,9 +108,8 @@ public class Stark extends Pj {
 		for (int x = 0; x < this.keys.size(); x++) {
 			pj += (keys.get(x).toString() + " ");
 
-			pj += (")");
-
 		}
+		pj += (")");
 		return pj;
 	}
 

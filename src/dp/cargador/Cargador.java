@@ -141,9 +141,7 @@ public class Cargador {
 	private void crearStark(int numCampos, List<String> vCampos) {
 
 		Stark stark = new Stark(vCampos.get(1), vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)), 0);
-		Dir[] direccionesE = { Dir.S, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.N, Dir.E, Dir.S, Dir.E, Dir.S, Dir.S,
-				Dir.W, Dir.S, Dir.E, Dir.S };
-		stark.setRoutes(direccionesE);
+		Map.getInstance().write(stark.showRute());
 		Map.getInstance().insertPj(stark);
 		// Registrar Stark en el mapa
 	}
@@ -159,10 +157,8 @@ public class Cargador {
 	private void crearTargaryen(int numCampos, List<String> vCampos) {
 		Targaryen targaryen = new Targaryen(vCampos.get(1), vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)),
 				0);
-		Dir[] direccionesD = { Dir.E, Dir.S, Dir.S, Dir.S, Dir.W, Dir.S, Dir.E, Dir.E, Dir.N, Dir.E, Dir.S, Dir.S,
-				Dir.E, Dir.E };
+		Map.getInstance().write(targaryen.showRute());
 
-		targaryen.setRoutes(direccionesD);
 		Map.getInstance().insertPj(targaryen);
 		// Registrar Targaryen en el mapa
 	}
@@ -178,9 +174,8 @@ public class Cargador {
 	private void crearLannister(int numCampos, List<String> vCampos) {
 		Lannister lannister = new Lannister(vCampos.get(1), vCampos.get(2).charAt(0), Integer.parseInt(vCampos.get(3)),
 				Map.getInstance().getDRoom());
-		Dir[] direccionesT = { Dir.N, Dir.N, Dir.W, Dir.N, Dir.N, Dir.W, Dir.S, Dir.W, Dir.W, Dir.N, Dir.N, Dir.W,
-				Dir.S, Dir.S, Dir.S, Dir.S, Dir.S, Dir.E, Dir.E, Dir.E, Dir.E, Dir.E };
-		lannister.setRoutes(direccionesT);
+		Map.getInstance().write(lannister.showRute());
+
 		Map.getInstance().insertPj(lannister);
 		// Registrar Lannister en el mapa
 	}
@@ -196,9 +191,8 @@ public class Cargador {
 	private void crearCaminante(int numCampos, List<String> vCampos) {
 		WhiteWalkers whiteWalkers = new WhiteWalkers(vCampos.get(1), vCampos.get(2).charAt(0),
 				Integer.parseInt(vCampos.get(3)), Map.getInstance().surW());
-		Dir[] direccionesC = { Dir.N, Dir.N, Dir.N, Dir.E, Dir.S, Dir.E, Dir.N, Dir.N, Dir.E, Dir.N, Dir.E, Dir.E,
-				Dir.S, Dir.S, Dir.S, Dir.S, Dir.S };
-		whiteWalkers.setRoutes(direccionesC);
+		Map.getInstance().write(whiteWalkers.showRute());
+
 		Map.getInstance().insertPj(whiteWalkers);
 		// Registrar Baratheon en el mapa
 	}

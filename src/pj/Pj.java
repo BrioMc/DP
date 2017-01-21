@@ -1,10 +1,8 @@
 package pj;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import actions.KeyAction;
-import actions.Movement;
 
 /**
  * We are your waifu Ignacio Caro Cumplido Javier Ballesteros Moron EC1 2�
@@ -21,8 +19,6 @@ public abstract class Pj implements Compare<Pj> {
 	private Integer id;
 	/** Pj Name */
 	private String name;
-	/** Turn when pj begin. */
-	private int turnInitial;
 	/** Room in which the player is */
 	int room;
 	/** Movements list */
@@ -38,7 +34,6 @@ public abstract class Pj implements Compare<Pj> {
 	/** Type of key action */
 	KeyAction keyAction;
 
-
 	/**
 	 * Parameterized constructor
 	 * 
@@ -52,8 +47,7 @@ public abstract class Pj implements Compare<Pj> {
 		this.tag = M;
 		this.name = name;
 		this.room = room;
-		this.turnInitial = turn;
-		this.currTurn = 0;
+		this.currTurn = turn;
 		this.rutes = new ArrayList<Dir>();
 		this.keys = new ArrayList<Key>();
 	}
@@ -83,7 +77,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * @return turn
 	 */
 	public int getTurn() {
-		return turnInitial;
+		return currTurn;
 	}
 
 	/**
@@ -268,9 +262,15 @@ public abstract class Pj implements Compare<Pj> {
 		Map x = Map.getInstance();
 		if (x.getDRoom() == getRoom())
 			actionDoor(x);
-
-		if ((this.currTurn - 1) < this.rutes.size())
-			move(this.rutes.get(this.currTurn - 1), x.getMap());
+		if (!this.rutes.isEmpty()) {
+			this.sumTurn();
+			this.moveOn();
+			move(this.rutes.get(0), x.getMap());
+			if (this instanceof Lannister || this instanceof WhiteWalkers) {
+				this.rutes.add(this.rutes.get(0));
+			}
+			this.rutes.remove(0);
+		}
 		actionKey(x);
 	}
 
@@ -288,7 +288,7 @@ public abstract class Pj implements Compare<Pj> {
 		for (int i = 0; i < this.rutes.size(); i++) {
 			x += " " + rutes.get(i).toString();
 		}
-		x += ")";
+		x += ")\n";
 		return x;
 	}
 

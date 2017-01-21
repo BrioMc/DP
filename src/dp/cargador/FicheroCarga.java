@@ -13,8 +13,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import map.Map;
 
 class FicheroCarga {
 	/**
@@ -37,8 +40,7 @@ class FicheroCarga {
 	 *             Puede lanzar una excepci�n en la apertura del buffer de
 	 *             lectura
 	 */
-	static void procesarFichero(String nombreFichero, Cargador cargador)
-			throws FileNotFoundException, IOException {
+	static void procesarFichero(String nombreFichero, Cargador cargador) throws FileNotFoundException, IOException {
 		// **String vCampos[]=new String[MAXCAMPOS];
 		List<String> vCampos = new ArrayList<String>();
 		String S = new String();
@@ -69,8 +71,8 @@ class FicheroCarga {
 
 	static void writeFile() throws FileNotFoundException, IOException {
 
-		bufferOut = new BufferedWriter(new FileWriter("record.txt"));
-		//Map.getInstance().writelog(bufferOut);
+		bufferOut = new BufferedWriter(new FileWriter("record.txt",true));
+
 		bufferOut.close();
 	}
 
