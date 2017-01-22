@@ -102,6 +102,7 @@ public abstract class Pj implements Compare<Pj> {
 	/**
 	 * 
 	 * @param x
+	 *            : key to add
 	 */
 	public void setKey(Key x) {
 		keys.add(0, x);
@@ -109,7 +110,7 @@ public abstract class Pj implements Compare<Pj> {
 
 	/**
 	 * 
-	 * @return
+	 * @return : first key in list
 	 */
 	public Key getKey() {
 		return keys.remove(0);
@@ -117,7 +118,7 @@ public abstract class Pj implements Compare<Pj> {
 
 	/**
 	 * 
-	 * @return
+	 * @return : list keys size
 	 */
 	public int numKeys() {
 		return keys.size();
@@ -131,7 +132,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param i
 	 *            : Room where we will put the character into {@code int}
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public void setRoom(int i) {
 		this.room = i;
@@ -164,7 +165,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * 
 	 * Complexity O(1)
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public void sumTurn() {
 		this.currTurn++;
@@ -179,7 +180,7 @@ public abstract class Pj implements Compare<Pj> {
 	 *            : ArrayList with the predefined rooms where the character will
 	 *            move into
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	protected void asigRute(ArrayList<Integer> x) {
 		Map m = Map.getInstance();
@@ -243,7 +244,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * 
 	 * @param i
 	 *            : direction the character must follow
-	 * @return This method returns nothing
+	 * 
 	 */
 	private void move(Dir i) {
 		Map map = Map.getInstance();
@@ -289,7 +290,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * Protected method for the door action, implemented by interfaces
 	 * 
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private boolean actionDoor() {
 		return doorAction.doorAction(this);
@@ -301,7 +302,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * @param x
 	 *            : The map where the Character is
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private void actionKey(Map x) {
 		keyAction.keyAction(x.getMap(), this);
@@ -312,7 +313,7 @@ public abstract class Pj implements Compare<Pj> {
 	 * 
 	 * Complexity O(1)
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public void actionPj() {
 		boolean door = false;

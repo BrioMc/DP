@@ -78,7 +78,6 @@ public class Map {
 		this.door = door;
 		this.doorRoom = doorRoom;
 		this.addit = new Square(1111);
-		iniWalls();
 		this.graph = new Graph(dimX * dimY);
 		Kruskal();
 		doShortcut();
@@ -88,7 +87,7 @@ public class Map {
 	/**
 	 * Private method for initializing the map Complexity O(n^2)
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private void iniMap() {
 		for (int i = 0; i < map.length; i++) {
@@ -103,7 +102,7 @@ public class Map {
 	 * 
 	 * Complexity O(n)
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private ArrayList<Walls> iniWalls() {
 		ArrayList<Walls> walls = new ArrayList<>();
@@ -138,7 +137,7 @@ public class Map {
 	 * @param door
 	 *            : The door of the throne {@code ThroneDoor}
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public static void generateInstance(int doorRoom, int dimX, int dimY, ThroneDoor door) {
 		instance = new Map(doorRoom, dimX, dimY, door);
@@ -243,7 +242,7 @@ public class Map {
 	 * @return DimX*DimY - 1 (Squares froms 0 to DimX*DimY-1) {@code int}
 	 */
 	public int getTMap() {
-		return (this.map.length * this.map[0].length) - 1;
+		return (this.map.length * this.getDimY()) - 1;
 	}
 
 	/**
@@ -351,7 +350,7 @@ public class Map {
 	 * @param mark
 	 *            : The mark we are going to give to the node {@code int}
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private void markPropagation(Square node, int mark) {
 		if (mark != node.getMark()) {
@@ -371,7 +370,7 @@ public class Map {
 	 * 
 	 * Complexity O(n^)
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private void Kruskal() {
 		ArrayList<Walls> walls = iniWalls();
@@ -411,7 +410,7 @@ public class Map {
 	 * 
 	 * Complexity O(n)
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private void doShortcut() {
 		int count = 0;
@@ -463,7 +462,7 @@ public class Map {
 	 * @param V
 	 *            : Array with the ID of the map's rooms {@code int}
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private void bubbleSorting(int[] V) {
 		int ID;
@@ -491,7 +490,7 @@ public class Map {
 	 * @param origin
 	 *            : Room where the algorithm starts {@code Integer}
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private void mostFreq(ArrayList<Integer> x, Integer origin) {
 
@@ -525,7 +524,7 @@ public class Map {
 	 *            : Array with the 9 rooms where the keys will be distributed
 	 *            {@code int}
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private void distKeys(int[] rooms) {
 		int count = 0;
@@ -567,7 +566,7 @@ public class Map {
 	 * 
 	 * Complexity O(n)
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	private void keyDistribution() {
 		ArrayList<Integer> x = new ArrayList<>();
@@ -581,6 +580,7 @@ public class Map {
 
 		bubbleSorting(rooms);
 		System.arraycopy(rooms, 0, keyRooms, 0, 9);
+		distKeys(keyRooms);
 
 	}
 
@@ -590,13 +590,13 @@ public class Map {
 	 * @param pj
 	 *            : Character we want to insert {@code pj}
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public void insertPj(Pj pj) {
 		int c = pj.getRoom();
-		int i = c / map[0].length;
+		int i = c / getDimY();
 
-		int j = c % map[0].length;
+		int j = c % getDimY();
 		map[i][j].insertPj(pj);
 
 	}
@@ -611,7 +611,7 @@ public class Map {
 	public String toStringMap() {
 		String ma = "";
 		int origin = 0, destination = 0;
-		for (int x = 0; x < map[0].length; x++) {
+		for (int x = 0; x < getDimY(); x++) {
 			ma += (" _");
 		}
 
@@ -636,7 +636,7 @@ public class Map {
 				}
 				// Show if have more that 1 pj in square
 				else if (map[i][j].nPj() > 1) {
-					if (j != map[0].length - 1) {
+					if (j != getDimY() - 1) {
 						ma += (String.valueOf(map[i][j].nPj()));
 						if (graph.getArc(origin, destination) != 1) {
 							ma += ("|");
@@ -650,7 +650,7 @@ public class Map {
 				// Print if square is empty
 				else {
 					destination = origin + getDimY();
-					if (j != map[0].length - 1) {
+					if (j != getDimY() - 1) {
 						// Paint botton wall if exist
 						if (graph.getArc(origin, destination) != 1 || i == map.length - 1) {
 							ma += ("_");
@@ -686,19 +686,16 @@ public class Map {
 	 * 
 	 * Complexity O(n^2)
 	 * 
-	 * @param turn
-	 *            : Current turn of the map {@code int}
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
-	public void process(int turn) {
+	public void process() {
 		for (int i = 0; i < dimX; i++) {
 			for (int j = 0; j < dimY; j++) {
-				map[i][j].proccessT(turn);
+				map[i][j].proccessT(this.turn);
 
 			}
 		}
-		paintMap();
 		this.turn++;
 	}
 
@@ -708,12 +705,12 @@ public class Map {
 	 * Complexity O(n)
 	 * 
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public void writeInit(BufferedWriter bufOut) {
 		String ma = "";
 		int origin = 0, destination = 0;
-		for (int x = 0; x < map[0].length; x++) {
+		for (int x = 0; x < getDimY(); x++) {
 			ma += (" _");
 		}
 
@@ -726,7 +723,7 @@ public class Map {
 				// Show if have 1 pj only in square
 
 				destination = origin + getDimY();
-				if (j != map[0].length - 1) {
+				if (j != getDimY() - 1) {
 					// Paint botton wall if exist
 					if (graph.getArc(origin, destination) != 1 || i == map.length - 1) {
 						ma += ("_");
@@ -769,7 +766,7 @@ public class Map {
 	 * @throws IOException
 	 *             : If the buffered writer gives some kind of error
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public void writeTurn(BufferedWriter bufOut) {
 
@@ -824,7 +821,7 @@ public class Map {
 	 * @throws IOException
 	 *             : If the buffered writer gives some kind of error
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public void write(String x, BufferedWriter bufOut) {
 		try {
@@ -839,7 +836,7 @@ public class Map {
 	 * 
 	 * Complexity O(n^2)
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public void paintMap() {
 		// paint turn data
@@ -885,7 +882,7 @@ public class Map {
 	 * @throws IOException
 	 *             : If the buffered writer gives some kind of error
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public String printInitMap() {
 		String x = "";

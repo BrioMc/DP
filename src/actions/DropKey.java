@@ -16,7 +16,7 @@ public class DropKey implements KeyAction {
 	 *            : Matrix with all the rooms
 	 * @param pj
 	 *            : Character
-	 * @return this method returns nothing
+	 * 
 	 */
 	@Override
 	public void keyAction(Square[][] map, Pj pj) {

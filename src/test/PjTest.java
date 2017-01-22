@@ -7,8 +7,19 @@ import org.junit.Test;
 public class PjTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testLannister() {
 	}
-
+	
+	@Test 
+	public void testTarg(){
+		
+	}
+	@Test 
+	public void testStark(){
+		
+	}
+	@Test 
+	public void testWalker(){
+		
+	}
 }

@@ -8,7 +8,6 @@ import api.Tree;
  *				Javier Ballesteros Moron 
  */
 
-
 /**
  * 
  * Class ThroneDoor, with all it's essential attributes: *A flag as a state of
@@ -25,7 +24,8 @@ public class ThroneDoor {
 	private int depth;
 
 	/**
-	 * Default constructor
+	 * 
+	 * @param dp
 	 */
 	public ThroneDoor(int dp) {
 		isOpen = false;
@@ -76,11 +76,14 @@ public class ThroneDoor {
 	public void closeDoor() {
 		isOpen = false;
 		lock = new Tree<Key>();
+		tested = new Tree<Key>();
 		cfglock(0, comb.length - 1);
 	}
 
 	/**
 	 * Shows the state of the lock inOrden.
+	 * 
+	 * @return : string lock inOrden
 	 */
 	private String showLock() {
 
@@ -96,7 +99,7 @@ public class ThroneDoor {
 	}
 
 	/**
-	 * Method which returns whether the door is open or closed. 
+	 * Method which returns whether the door is open or closed.
 	 * 
 	 * 
 	 * @return isOpen : true id open, otherwise false.
@@ -104,7 +107,6 @@ public class ThroneDoor {
 	public boolean isOp() {
 		return isOpen;
 	}
-
 
 	/**
 	 * Method which returns the door's information ready to be displayed
@@ -131,9 +133,11 @@ public class ThroneDoor {
 	/**
 	 * Method required for opening the door
 	 * 
-	 * @param key : Key which is introduced with a value !=Null
+	 * @param key
+	 *            : Key which is introduced with a value !=Null
 	 * 
-	 * @return isOpen : True if the method manages to open the door. False if the door remains closed.
+	 * @return isOpen : True if the method manages to open the door. False if
+	 *         the door remains closed.
 	 */
 	public boolean open(Key key) {
 		if (!tested.belongs(key)) {

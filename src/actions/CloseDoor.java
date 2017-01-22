@@ -13,7 +13,7 @@ public class CloseDoor implements DoorAction {
 	 *  Complexity O(1)
 	 *  
 	 *  @param pj : Character
-	 *  @return this method returns nothing
+	 *  
 	 */
 	@Override
 	public boolean doorAction(Pj pj) {

@@ -66,7 +66,7 @@ public class Square implements Compare<Square> {
 	 * @param mark
 	 *            : Mark we want to put
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	void setMark(Integer mark) {
 		this.mark = mark;
@@ -91,7 +91,6 @@ public class Square implements Compare<Square> {
 	 * @param kye
 	 *            : The key to be inserted
 	 * 
-	 * @return This method returns nothing
 	 */
 	public void insertKey(Key kye) {
 		int y = 0;
@@ -144,7 +143,7 @@ public class Square implements Compare<Square> {
 	 * @param freq
 	 *            : Frequency we want to put
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	void setFreq(Integer freq) {
 		this.freq = freq;
@@ -175,7 +174,6 @@ public class Square implements Compare<Square> {
 	 * @param pj
 	 *            : The character to be inserted
 	 * 
-	 * @return This method returns nothing
 	 */
 	public void insertPj(Pj pj) {
 		pjs.add(pj);
@@ -189,7 +187,6 @@ public class Square implements Compare<Square> {
 	 * @param pj
 	 *            : The character to be removed from the queue
 	 * 
-	 * @return This method returns nothing
 	 */
 	public void removePj(Pj pj) {
 		pjs.remove(pj);
@@ -320,7 +317,7 @@ public class Square implements Compare<Square> {
 	 * @param i
 	 *            : Current turn
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	void proccessT(int i) {
 		int y = 0;

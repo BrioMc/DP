@@ -15,7 +15,7 @@ public class PickKey implements KeyAction {
 	 *  
 	 *  @param map : Matrix with all the rooms
 	 *  @param pj : Character
-	 *  @return this method returns nothing
+	 *  
 	 */
 	@Override
 	public void keyAction(Square[][] map, Pj pj) {

@@ -76,11 +76,13 @@ class FicheroCarga {
 		Map map = Map.getInstance();
 		map.writeInit(bufferOut);
 		for (int i = 0; i < 100 && map.getThrone().nPj() == 0; i++) {
-			map.process(i);
+			map.process();
+			map.paintMap();
 			map.writeTurn(bufferOut);
 
 		}
 		if (map.getThrone().nPj() == 0) {
+			System.out.println("(thronemembers)");
 			map.write("(thronemembers)", bufferOut);
 		}
 		bufferOut.close();

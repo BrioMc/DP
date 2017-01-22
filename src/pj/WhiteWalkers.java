@@ -85,7 +85,7 @@ public class WhiteWalkers extends Pj {
 	 * 
 	 * Complexity O(1)
 	 * 
-	 * @return This method returns nothing
+	 * 
 	 */
 	public void actionPj() {
 		if (this.rutes.size() == 0) {
