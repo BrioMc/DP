@@ -102,7 +102,7 @@ public class WhiteWalkers extends Pj {
 	 * 
 	 * @return pj : String with the information's message
 	 */
-	public String showPj() {
+	public String toString() {
 
 		String pj = "";
 		pj = ("walker:" + getTag() + ":" + getRoom() + ":");

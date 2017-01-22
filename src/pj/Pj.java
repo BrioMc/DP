@@ -339,7 +339,7 @@ public abstract class Pj implements Compare<Pj> {
 	 *
 	 * @return True if the door is open
 	 */
-	protected abstract String showPj();
+	public abstract String toString();
 
 	/**
 	 * Returns a string with the path that the character will follow

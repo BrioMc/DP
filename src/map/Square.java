@@ -84,23 +84,33 @@ public class Square implements Compare<Square> {
 	}
 
 	/**
-	 * Public method that inserts a key into the square's arrayList
+	 * Public method that inserts a key into the square's arrayList in orden
 	 * 
-	 * Complexity O(1)
+	 * Complexity O(n)
 	 * 
 	 * @param kye
 	 *            : The key to be inserted
 	 * 
 	 * @return This method returns nothing
 	 */
-	public void insertKey(Key kye, boolean x) {
-		if (x) {
+	public void insertKey(Key kye) {
+		int y = 0;
+		boolean enct = false;
+		if (!this.keys.isEmpty()) {
+			while (y < this.keys.size() && !enct) {
+				if (kye.getId() >= this.keys.get(y).getId()) {
 
-			this.keys.add(0, kye);
+					y++;
+				} else {
+					enct = true;
+				}
+			}
+			this.keys.add(y, kye);
 		} else {
 
 			this.keys.add(kye);
 		}
+
 	}
 
 	/**
@@ -200,22 +210,22 @@ public class Square implements Compare<Square> {
 			}
 			if (pjs.get(i) instanceof Stark) {
 				Stark stark = (Stark) pjs.get(i);
-				m += stark.showPj();
+				m += stark.toString();
 				m += "\n";
 			} else {
 				if (pjs.get(i) instanceof WhiteWalkers) {
 					WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(i);
-					m += whiteWalkers.showPj();
+					m += whiteWalkers.toString();
 					m += "\n";
 				} else {
 					if (pjs.get(i) instanceof Targaryen) {
 						Targaryen targaryen = (Targaryen) pjs.get(i);
-						m += targaryen.showPj();
+						m += targaryen.toString();
 						m += "\n";
 					} else {
 						if (pjs.get(i) instanceof Lannister) {
 							Lannister lannister = (Lannister) pjs.get(i);
-							m += lannister.showPj();
+							m += lannister.toString();
 							m += "\n";
 						}
 					}

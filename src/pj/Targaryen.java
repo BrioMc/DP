@@ -40,7 +40,7 @@ public class Targaryen extends Pj {
 		Dir d = Dir.S;
 		int actRoom = this.getRoom();
 		while (actRoom != m.getDRoom()) {
-
+	
 			actRoom = nextRommWallFollow(actRoom, d);
 			d = whereLook(x.get(x.size() - 1), actRoom);
 			x.add(actRoom);
@@ -163,7 +163,7 @@ public class Targaryen extends Pj {
 	 * 
 	 * @return pj : String with the information's message
 	 */
-	public String showPj() {
+	public String toString() {
 		String pj = "";
 		pj = ("targaryen:" + getTag() + ":" + getRoom() + ":");
 		if (currTurn > initialTurn) {

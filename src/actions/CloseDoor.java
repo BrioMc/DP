@@ -1,7 +1,6 @@
 package actions;
 
 import map.Map;
-import map.Square;
 import pj.Pj;
 /**
  * Group: 		We are your waifu 

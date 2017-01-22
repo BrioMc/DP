@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,12 +48,12 @@ class FicheroCarga {
 		System.out.println("Procensando el fichero...");
 		bufferIn = new BufferedReader(new FileReader(nombreFichero));// creaci�n
 																		// del
-																		// filtro
-																		// asociado
-																		// al
-																		// flujo
-																		// de
-																		// datos
+		// filtro
+		// asociado
+		// al
+		// flujo
+		// de
+		// datos
 
 		while ((S = bufferIn.readLine()) != null) {
 			System.out.println("S: " + S);
@@ -69,10 +68,21 @@ class FicheroCarga {
 		bufferIn.close(); // cerramos el filtro
 	}
 
-	static void writeFile() throws FileNotFoundException, IOException {
+	static void writeFile(String nombreFichero) throws FileNotFoundException, IOException {
+		String nameRec = nombreFichero.substring(4, nombreFichero.length() - 4);
+		bufferOut = new BufferedWriter(new FileWriter("record" + nameRec + ".log", false));
+		bufferOut = new BufferedWriter(new FileWriter("record" + nameRec + ".log", true));
 
-		bufferOut = new BufferedWriter(new FileWriter("record.txt",true));
+		Map map = Map.getInstance();
+		map.writeInit(bufferOut);
+		for (int i = 0; i < 100 && map.getThrone().nPj() == 0; i++) {
+			map.process(i);
+			map.writeTurn(bufferOut);
 
+		}
+		if (map.getThrone().nPj() == 0) {
+			map.write("(thronemembers)", bufferOut);
+		}
 		bufferOut.close();
 	}
 

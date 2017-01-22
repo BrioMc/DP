@@ -3,9 +3,8 @@ package door;
 import api.Compare;
 
 /**
- * Group: 		We are your waifu 
- * Members:		Ignacio Caro Cumplido 
- *				Javier Ballesteros Moron 
+ * Group: We are your waifu Members: Ignacio Caro Cumplido Javier Ballesteros
+ * Moron
  */
 public class Key implements Compare<Key> {
 	/** Identifier of the key */
@@ -20,7 +19,9 @@ public class Key implements Compare<Key> {
 
 	/**
 	 * Parametrized constructor of the class Key
-	 * @param id : ID of the key
+	 * 
+	 * @param id
+	 *            : ID of the key
 	 */
 	public Key(Integer id) {
 		this.id = id;
@@ -31,7 +32,7 @@ public class Key implements Compare<Key> {
 	 * 
 	 * @return id : Key's ID
 	 */
-	private int getId() {
+	public int getId() {
 		return id;
 	}
 

@@ -1,7 +1,6 @@
 package map;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,16 +17,45 @@ import pj.Pj;
  * Moron
  */
 public class Map {
+	/**
+	 * current turn
+	 */
 	private int turn;
+	/**
+	 * Map's square
+	 */
 	public Square[][] map;
+	/**
+	 * dim X of map
+	 */
 	private int dimX;
+	/**
+	 * dim Y of map
+	 */
 	private int dimY;
+	/**
+	 * Throne door
+	 */
 	private ThroneDoor door;
+	/**
+	 * ThroneDoor Square number
+	 */
 	private int doorRoom;
+	/**
+	 * ThroneDoor Square
+	 */
+
 	private Square addit;
+	/**
+	 * Graph of map
+	 * 
+	 */
 	private Graph graph;
+	/**
+	 * Map instance
+	 * 
+	 */
 	private static Map instance;
-	private BufferedWriter bufOut;
 
 	/**
 	 * Parametrized constructor of the class map.
@@ -53,7 +81,6 @@ public class Map {
 		iniWalls();
 		this.graph = new Graph(dimX * dimY);
 		Kruskal();
-		write(writeMapG(), false);
 		doShortcut();
 		keyDistribution();
 	}
@@ -347,7 +374,6 @@ public class Map {
 	 * @return This method returns nothing
 	 */
 	private void Kruskal() {
-		ArrayList<Walls> selected = new ArrayList<>();
 		ArrayList<Walls> walls = iniWalls();
 		int rnd; // random number
 		int mark;
@@ -372,71 +398,11 @@ public class Map {
 				mark = getSquare(aux.getDestination()).getMark();
 				markPropagation(origin, mark);
 
-			} else {
-				if ((graph.getArc(origin.getId(), destination.getId()) != 1)
-						|| (graph.getArc(destination.getId(), origin.getId()) != 1)) {
-					selected.add(aux);
-
-				}
 			}
-
 		}
-		walls.addAll(selected);
 		graph.floyd();
 		graph.warshall();
 
-	}
-
-	/**
-	 * Private method which calculates wether a room has walls in each of the
-	 * four directions (N, S, W ,E)
-	 * 
-	 * Complexity O(n)
-	 * 
-	 * TODO
-	 * 
-	 * @param i
-	 *            : Coordinates of the
-	 * 
-	 * @return wa[] : Array of booleans which returns {@code true} if there is a
-	 *         wall in a concrete direction. (wa[0] = North, wa[1] = South,
-	 *         wa[2] = West, wa[3] = East) {@ code false} if the wall does not
-	 *         exist.
-	 */
-	private boolean[] retWalls(int i, int j) {
-		boolean[] wa = new boolean[4];
-		int n = 0;
-		// N
-		wa[0] = false;
-		// S
-		wa[1] = false;
-		// W
-		wa[2] = false;
-		// E
-		wa[3] = false;
-
-		// charge wallBool
-		n = (i * getDimY() + j);
-
-		// System.out.println("entra");
-		if (graph.getArc(n, n - getDimY()) != 1) {
-			// N
-			wa[0] = true;
-		}
-		if (graph.getArc(n, n + getDimY()) != 1) {
-			// S
-			wa[1] = true;
-		}
-		if (graph.getArc(n, n - 1) != 1) {
-			// W
-			wa[2] = true;
-		}
-		if (graph.getArc(n, n + 1) != 1) {
-			// E
-			wa[3] = true;
-		}
-
-		return wa;
 	}
 
 	/**
@@ -455,32 +421,29 @@ public class Map {
 			// take random square
 
 			int rnd = GenAleatorios.generarNumero(getDimX() * getDimY());
-			int i = rnd / getDimY();
-			int j = rnd % getDimY();
 			int s = rnd + getDimY();
 			int w = rnd - 1;
 			int e = rnd + 1;
 			int n = rnd - getDimY();
-			boolean[] x = retWalls(i, j);
 			// N
-			if (x[0] && distance(rnd, n) > 3) {
+			if (!graph.adyacente(rnd, n) && rnd / getDimY() != 0 && distance(rnd, n) > 3) {
 				graph.newArc(rnd, n, 1);
 				graph.newArc(n, rnd, 1);
 				count++;
 			}
 			// S
-			else if (x[1] && distance(rnd, s) > 3) {
+			else if (!graph.adyacente(rnd, s) && rnd / getDimY() != getDimY() - 1 && distance(rnd, s) > 3) {
 				graph.newArc(rnd, s, 1);
 				graph.newArc(s, rnd, 1);
 				count++;
 			} // W
-			else if (x[2] && distance(rnd, w) > 3) {
+			else if (!graph.adyacente(rnd, w) && rnd % getDimY() != 0 && distance(rnd, w) > 3) {
 				graph.newArc(rnd, w, 1);
 				graph.newArc(w, rnd, 1);
 
 				count++;
 			} // E
-			else if (x[3] && distance(rnd, e) > 3) {
+			else if (!graph.adyacente(rnd, e) && rnd % getDimY() != getDimY() - 1 && distance(rnd, e) > 3) {
 				graph.newArc(rnd, e, 1);
 				graph.newArc(e, rnd, 1);
 				count++;
@@ -578,12 +541,12 @@ public class Map {
 			do {
 				Key key = new Key(count);
 				//
-				map[x][y].insertKey(key, false);
+				map[x][y].insertKey(key);
 				if (count % 2 != 0 && map[x][y].nkeys() == 5) {
 					tst = true;
 				}
 				if (count % 2 != 0 && map[x][y].nkeys() < 5 && !rest) {
-					map[x][y].insertKey(key, false);
+					map[x][y].insertKey(key);
 				}
 				rest = false;
 				// System.out.println(count);
@@ -619,10 +582,6 @@ public class Map {
 		bubbleSorting(rooms);
 		System.arraycopy(rooms, 0, keyRooms, 0, 9);
 
-		distKeys(keyRooms);
-		for (int keyRoom : keyRooms) {
-			System.out.print(keyRoom + " ");
-		}
 	}
 
 	/**
@@ -643,13 +602,13 @@ public class Map {
 	}
 
 	/**
-	 * Private method that paints the labyrinth on the screen
+	 * Public method that paints the labyrinth on the screen
 	 * 
 	 * Complexity O(n^2)
 	 * 
 	 * @return ma : The whole map drawing. {@code String}
 	 */
-	private String writeMapG() {
+	public String toStringMap() {
 		String ma = "";
 		int origin = 0, destination = 0;
 		for (int x = 0; x < map[0].length; x++) {
@@ -751,11 +710,53 @@ public class Map {
 	 * 
 	 * @return This method returns nothing
 	 */
-	public void writeInit() {
+	public void writeInit(BufferedWriter bufOut) {
+		String ma = "";
+		int origin = 0, destination = 0;
+		for (int x = 0; x < map[0].length; x++) {
+			ma += (" _");
+		}
 
+		ma += "\n";
+		for (int i = 0; i < map.length; i++) {
+			ma += ("|");
+			for (int j = 0; j < map[i].length; j++) {
+				origin = i * getDimY() + j;
+				destination = origin + 1;
+				// Show if have 1 pj only in square
+
+				destination = origin + getDimY();
+				if (j != map[0].length - 1) {
+					// Paint botton wall if exist
+					if (graph.getArc(origin, destination) != 1 || i == map.length - 1) {
+						ma += ("_");
+					} else {
+						ma += (" ");
+					}
+					// Paint left wall if exist
+					destination = origin + 1;
+
+					if (graph.getArc(origin, destination) != 1) {
+						ma += ("|");
+					} else {
+						ma += (" ");
+					}
+				} else {
+					if (graph.getArc(origin, destination) != 1 || i == map.length - 1) {
+						ma += ("_");
+					} else {
+						ma += (" ");
+					}
+				}
+
+			}
+			ma += ("|");
+			ma += "\n";
+		}
+		write(ma, bufOut);
 		for (int i = 0; i < dimY * dimX; i++) {
 			if (map[i / dimY][i % dimY].nPj() > 0) {
-				write(map[i / dimY][i % dimY].showPathPj(), true);
+				write(map[i / dimY][i % dimY].showPathPj(), bufOut);
 			}
 		}
 	}
@@ -770,11 +771,11 @@ public class Map {
 	 * 
 	 * @return This method returns nothing
 	 */
-	public void writeTurn() {
+	public void writeTurn(BufferedWriter bufOut) {
 
 		try {
-			bufOut = new BufferedWriter(new FileWriter("record.txt", true));
 			// Write Turn data
+
 			bufOut.write("(turn:" + (this.turn - 1) + ")");
 			bufOut.newLine();
 			// Write Map data
@@ -783,7 +784,7 @@ public class Map {
 			// Write Door data
 			bufOut.write(door.showDoor());
 			// Write Map look
-			bufOut.write(writeMapG());
+			bufOut.write(toStringMap());
 
 			// Write squares with keys
 			for (int i = 0; i < map.length; i++) {
@@ -808,7 +809,6 @@ public class Map {
 				bufOut.write("(newking:" + addit.showPj());
 
 			}
-			bufOut.close();
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -826,11 +826,9 @@ public class Map {
 	 * 
 	 * @return This method returns nothing
 	 */
-	public void write(String x, boolean uns) {
+	public void write(String x, BufferedWriter bufOut) {
 		try {
-			bufOut = new BufferedWriter(new FileWriter("record.txt", uns));
 			bufOut.write(x);
-			bufOut.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -851,7 +849,7 @@ public class Map {
 		// Paint door data
 		System.out.print(door.showDoor());
 		// Paint Map look
-		System.out.print(writeMapG());
+		System.out.print(toStringMap());
 		// Paint squares with keys
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
@@ -891,7 +889,7 @@ public class Map {
 	 */
 	public String printInitMap() {
 		String x = "";
-		x = writeMapG();
+		x = toStringMap();
 		x += ("(turn:" + this.turn + ")");
 		x += ("(map:" + getTMap() + ")");
 		return x;

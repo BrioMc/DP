@@ -3,7 +3,6 @@ package dp.cargador;
 import java.util.List;
 
 import door.ThroneDoor;
-import map.Dir;
 import map.Map;
 import pj.Lannister;
 import pj.Stark;
@@ -127,6 +126,8 @@ public class Cargador {
 		ThroneDoor door = new ThroneDoor(Integer.parseInt(vCampos.get(4)));
 		Map.generateInstance(Integer.parseInt(vCampos.get(3)), Integer.parseInt(vCampos.get(2)),
 				Integer.parseInt(vCampos.get(1)), door);
+		Map.getInstance().paintMap();
+		System.out.println(Map.getInstance().getGraph().getArc(0, 1));
 		// inicializar mapa
 	}
 

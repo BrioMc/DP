@@ -11,8 +11,6 @@ package dp.cargador;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import map.Map;
-
 public class ClasePrincipal {
 	public static void main(String[] args) {
 		/**
@@ -24,16 +22,10 @@ public class ClasePrincipal {
 			 * Método que procesa línea a línea el fichero de entrada
 			 * inicio.txt
 			 */
-			FicheroCarga.procesarFichero("init10x6_h5.txt", cargador);
-			Map map = Map.getInstance();
-			map.writeInit();
-			for (int i = 0; i < 50 && map.getThrone().nPj() == 0; i++) {
-				map.process(i);
-				map.writeTurn();
+			String nombreFichero = "init10x6_h4.txt";
+			FicheroCarga.procesarFichero(nombreFichero, cargador);
 
-			}
-
-			FicheroCarga.writeFile();
+			FicheroCarga.writeFile(nombreFichero);
 		} catch (FileNotFoundException valor) {
 			System.err.println("Excepción capturada al procesar fichero: " + valor.getMessage());
 		} catch (IOException valor) {

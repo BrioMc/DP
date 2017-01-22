@@ -74,7 +74,7 @@ public class Stark extends Pj {
 	 * 
 	 * @return pj : String with the information's message
 	 */
-	public String showPj() {
+	public String toString() {
 		String pj = "";
 		pj = ("stark:" + getTag() + ":" + getRoom() + ":");
 		if (currTurn > initialTurn) {
