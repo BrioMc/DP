@@ -1,11 +1,8 @@
 package api;
 
-import door.Key;
-
 /**
- * Group: 		We are your waifu 
- * Members:		Ignacio Caro Cumplido 
- *				Javier Ballesteros Moron 
+ * Group: We are your waifu Members: Ignacio Caro Cumplido Javier Ballesteros
+ * Moron
  */
 
 public class Tree<T extends Compare<T>> {
@@ -168,7 +165,7 @@ public class Tree<T extends Compare<T>> {
 	 * removes data. Este metodo es utilizado por el metodo remove anterior.
 	 * 
 	 * @param data
-	 *           The data to be removed
+	 *            The data to be removed
 	 * @return Returns the tree without the data
 	 */
 	private Tree<T> pRemove(T data) {
@@ -235,7 +232,9 @@ public class Tree<T extends Compare<T>> {
 	}
 
 	/**
-	 * return String InOrder travel in the door.
+	 * 
+	 * 
+	 * @return String InOrder travel in the door.
 	 */
 	public String inOrden() {
 		Tree<T> aux = null;
@@ -320,31 +319,31 @@ public class Tree<T extends Compare<T>> {
 
 	// TODO
 	public int nNodos() {
-		return contarNodos(this);
+		return countNodes(this);
 	}
 
 	public int nHojas() {
-		return contarHojas(this);
+		return countLeaf(this);
 	}
 
-	private int contarNodos(Tree<T> Tree) {
+	private int countNodes(Tree<T> Tree) {
 		int total = 0;
 		if (Tree != null) {
 			total++;
-			total += contarNodos(Tree.getTLeft());
-			total += contarNodos(Tree.getTRight());
+			total += countNodes(Tree.getTLeft());
+			total += countNodes(Tree.getTRight());
 		}
 		return total;
 	}
 
-	private int contarHojas(Tree<T> Tree) {
+	private int countLeaf(Tree<T> Tree) {
 		if (Tree == null) {
 			return 0;
 		}
 		if ((Tree.tRight == null) && (Tree.tLeft == null)) {
 			return 1;
 		} else {
-			return contarHojas(Tree.tLeft) + contarHojas(Tree.tRight);
+			return countLeaf(Tree.tLeft) + countLeaf(Tree.tRight);
 		}
 	}
 
@@ -354,55 +353,56 @@ public class Tree<T extends Compare<T>> {
 	 * @param args
 	 *            Argumentos del main
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Tree<Key> Tree = new Tree<Key>();
-		System.out.println("Ejemplos sesion árbol binario de búsqueda");
-
-		Key[] datas = { new Key(20), new Key(7), new Key(18), new Key(22), new Key(5), new Key(2), new Key(1) };
-
-		for (Key data : datas) {
-			Tree.insert(data);
-		}
-
-		// // Insertando datas repetidos
-		// if (Tree.insert(new Integer(22))==false)
-		// System.out.println("El ABB no admite elementos duplicados");
-		//
-		// // Pertenencia de un data
-		// if (Tree.belongs(new Integer(22)))
-		// System.out.println("belongs");
-		// else
-		// System.out.println("NO belongs");
-		//
-		// // Recorrido en inOrden
-		// System.out.println("InOrden");
-		// Tree.inOrden();
-
-		// Probando el borrado de diferentes datas -- Descomentar estas líneas
-		// para ver qué ocurre
-		// Tree.remove(new Integer(20));
-		// System.out.println("Borrado " + 20);
-		// Tree.remove(new Integer(15));
-		// System.out.println("Borrado " + 15);
-
-		// Borrando datas del árbol
-		// for (int i = 0; i < datas.length; i++) {
-		// Tree.remove(datas[i]);
-		// System.out.println("Borrado " + datas[i]);
-		// Tree.inOrden();
-		// }
-
-		// Checking the tree depth
-		System.out.println("la profundidad es " + Tree.depth());
-
-		// Checking if the data is inside a leaf node
-		if (Tree.isLeaf(new Key(3)))
-			System.out.println(3 + " Es hoja");
-		else
-			System.out.println(3 + " No es hoja");
-
-		// Calculating how much leafs and internal nodes are in the tree
-
-	}
+	// public static void main(String[] args) {
+	// // TODO Auto-generated method stub
+	// Tree<Key> Tree = new Tree<Key>();
+	// System.out.println("Ejemplos sesion árbol binario de búsqueda");
+	//
+	// Key[] datas = { new Key(20), new Key(7), new Key(18), new Key(22), new
+	// Key(5), new Key(2), new Key(1) };
+	//
+	// for (Key data : datas) {
+	// Tree.insert(data);
+	// }
+	//
+	// // // Insertando datas repetidos
+	// // if (Tree.insert(new Integer(22))==false)
+	// // System.out.println("El ABB no admite elementos duplicados");
+	// //
+	// // // Pertenencia de un data
+	// // if (Tree.belongs(new Integer(22)))
+	// // System.out.println("belongs");
+	// // else
+	// // System.out.println("NO belongs");
+	// //
+	// // // Recorrido en inOrden
+	// // System.out.println("InOrden");
+	// // Tree.inOrden();
+	//
+	// // Probando el borrado de diferentes datas -- Descomentar estas líneas
+	// // para ver qué ocurre
+	// // Tree.remove(new Integer(20));
+	// // System.out.println("Borrado " + 20);
+	// // Tree.remove(new Integer(15));
+	// // System.out.println("Borrado " + 15);
+	//
+	// // Borrando datas del árbol
+	// // for (int i = 0; i < datas.length; i++) {
+	// // Tree.remove(datas[i]);
+	// // System.out.println("Borrado " + datas[i]);
+	// // Tree.inOrden();
+	// // }
+	//
+	// // Checking the tree depth
+	// System.out.println("la profundidad es " + Tree.depth());
+	//
+	// // Checking if the data is inside a leaf node
+	// if (Tree.isLeaf(new Key(3)))
+	// System.out.println(3 + " Es hoja");
+	// else
+	// System.out.println(3 + " No es hoja");
+	//
+	// // Calculating how much leafs and internal nodes are in the tree
+	//
+	// }
 }

@@ -709,8 +709,8 @@ public class Map {
 	 * 
 	 * Complexity O(n)
 	 * 
-	 * 
-	 * 
+	 * @param bufOut
+	 *            BufferedWriter
 	 */
 	public void writeInit(BufferedWriter bufOut) {
 		write(this.mapPicture, bufOut);
@@ -726,10 +726,8 @@ public class Map {
 	 * 
 	 * Complexity O(n^2)
 	 * 
-	 * @throws IOException
-	 *             : If the buffered writer gives some kind of error
-	 * 
-	 * 
+	 * @param bufOut
+	 *            Buffered writer
 	 */
 	public void writeTurn(BufferedWriter bufOut) {
 
@@ -781,10 +779,10 @@ public class Map {
 	 * 
 	 * Complexity O(n^2)
 	 * 
-	 * @throws IOException
-	 *             : If the buffered writer gives some kind of error
-	 * 
-	 * 
+	 * @param x
+	 *            String that we want to print
+	 * @param bufOut
+	 *            BufferedWriter
 	 */
 	public void write(String x, BufferedWriter bufOut) {
 		try {
@@ -842,10 +840,8 @@ public class Map {
 	 * 
 	 * Complexity O(n^2)
 	 * 
-	 * @throws IOException
-	 *             : If the buffered writer gives some kind of error
 	 * 
-	 * 
+	 * @return String :Returns the string containing the map data
 	 */
 	public String printInitMap() {
 		String x = "";

@@ -25,7 +25,8 @@ public class ThroneDoor {
 
 	/**
 	 * 
-	 * @param dp
+	 * 
+	 * @param dp : depth for conf Door
 	 */
 	public ThroneDoor(int dp) {
 		isOpen = false;
@@ -149,7 +150,7 @@ public class ThroneDoor {
 				}
 			} else {
 				tested.insert(key);
-				System.out.println("The key does not match with the door lock: "+ key.getId());
+				System.out.println("The key does not match with the door lock: " + key.getId());
 			}
 		} else {
 			System.out.println("This key has already been tested, it can't be repeated.");

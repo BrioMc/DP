@@ -2,18 +2,19 @@ package actions;
 
 import map.Map;
 import pj.Pj;
+
 /**
- * Group: 		We are your waifu 
- * Members:		Ignacio Caro Cumplido 
- *				Javier Ballesteros Moron 
+ * Group: We are your waifu Members: Ignacio Caro Cumplido Javier Ballesteros
+ * Moron
  */
 public class OpenDoor implements DoorAction {
 
-	/**Method that implements the action of open the door
-	 *  Complexity O(1)
-	 *  
-	 *  @param pj : Character
-	 *  
+	/**
+	 * Method that implements the action of open the door Complexity O(1)
+	 * 
+	 * @param pj
+	 *            : Character
+	 * 
 	 */
 	@Override
 	public boolean doorAction(Pj pj) {
@@ -26,6 +27,7 @@ public class OpenDoor implements DoorAction {
 					x.getMap()[pj.getRoom() / x.getDimY()][pj.getRoom() % x.getDimY()].removePj(pj);
 					pj.setRoom(1111);
 					x.getThrone().insertPj(pj);
+					doorRoom = true;
 
 				}
 			}
@@ -33,9 +35,9 @@ public class OpenDoor implements DoorAction {
 			x.getMap()[pj.getRoom() / x.getDimY()][pj.getRoom() % x.getDimY()].removePj(pj);
 			pj.setRoom(1111);
 			x.getThrone().insertPj(pj);
+			doorRoom = true;
 
 		}
-		doorRoom = true;
 
 		return doorRoom;
 	}

@@ -216,7 +216,7 @@ public class Graph {
 	/**
 	 * Metodo que muestra el vector de nodes del grafo
 	 *
-	 * @return No retorna ningun valor
+	 * 
 	 */
 	public void shownodes() {
 		System.out.println("nodeS:");
@@ -252,8 +252,8 @@ public class Graph {
 
 	/**
 	 * 
-	 * @param origin
-	 * @param destination
+	 * @param origin : square id from origin
+	 * @param destination : square id from destination
 	 * @return return distance between origin and destination
 	 */
 	public int distance(int origin, int destination) {
@@ -305,7 +305,7 @@ public class Graph {
 	 * @param ady
 	 *            En este conjunto se almacenarán los nodes adyacentes al node
 	 *            origin
-	 * @return No retorna ningun valor
+	 * 
 	 */
 	public void adyacentes(int origin, Set<Integer> ady) {
 		if ((origin >= 0) && (origin < numNodes)) {
@@ -319,7 +319,7 @@ public class Graph {
 	/**
 	 * Metodo que realiza el algoritmo de Floyd sobre el grafo
 	 *
-	 * @return No retorna ningun valor
+	 * 
 	 */
 	void floyd() {
 		int i, j, k;
@@ -345,7 +345,7 @@ public class Graph {
 	/**
 	 * Metodo que muestra las matrices de coste y camino de Floyd
 	 *
-	 * @return No retorna ningun valor
+	 * 
 	 */
 	public void showFloydC() {
 		int x, y;
@@ -371,7 +371,7 @@ public class Graph {
 	/**
 	 * Metodo que realiza el algoritmo de Warshall sobre el grafo
 	 *
-	 * @return No retorna ningun valor
+	 * 
 	 */
 	void warshall() {
 		int i, j, k;
@@ -391,7 +391,7 @@ public class Graph {
 	/**
 	 * Metodo que muestra la matriz de Warshall
 	 *
-	 * @return No retorna ningun valor
+	 * 
 	 */
 	public void showPW() {
 		int x, y;

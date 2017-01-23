@@ -22,14 +22,14 @@ public class ClasePrincipal {
 			 * Método que procesa línea a línea el fichero de entrada
 			 * inicio.txt
 			 */
-			String nombreFichero = "init6x6_h5.txt";
+			String nombreFichero = "init10x6_h4.txt";
 			FicheroCarga.procesarFichero(nombreFichero, cargador);
 
 			FicheroCarga.writeFile(nombreFichero);
 		} catch (FileNotFoundException valor) {
-			System.err.println("Excepción capturada al procesar fichero: " + valor.getMessage());
+			System.err.println("FILE NOT FOUND: " + valor.getMessage());
 		} catch (IOException valor) {
-			System.err.println("Excepción capturada al procesar fichero: " + valor.getMessage());
+			System.err.println("Error processing the file: " + valor.getMessage());
 		}
 	}
 }

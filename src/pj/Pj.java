@@ -318,6 +318,9 @@ public abstract class Pj implements Compare<Pj> {
 	public void actionPj() {
 		boolean door = false;
 		Map x = Map.getInstance();
+		if (x.getTurn() == 7) {
+			System.out.println();
+		}
 		this.sumTurn();
 		if (x.getDRoom() == getRoom())
 			door = actionDoor();
@@ -331,14 +334,10 @@ public abstract class Pj implements Compare<Pj> {
 	}
 
 	/**
-	 * Protected abstract method for action door
+	 * public abstract method for to String
 	 * 
 	 * Complexity O(1)
 	 * 
-	 * @param x
-	 *            : Map
-	 *
-	 * @return True if the door is open
 	 */
 	public abstract String toString();
 
