@@ -56,6 +56,10 @@ public class Map {
 	 * 
 	 */
 	private static Map instance;
+	/**
+	 * 
+	 */
+	private String mapPicture;
 
 	/**
 	 * Parametrized constructor of the class map.
@@ -80,6 +84,7 @@ public class Map {
 		this.addit = new Square(1111);
 		this.graph = new Graph(dimX * dimY);
 		Kruskal();
+		this.mapPicture = toStringMap();
 		doShortcut();
 		keyDistribution();
 	}
@@ -708,49 +713,7 @@ public class Map {
 	 * 
 	 */
 	public void writeInit(BufferedWriter bufOut) {
-		String ma = "";
-		int origin = 0, destination = 0;
-		for (int x = 0; x < getDimY(); x++) {
-			ma += (" _");
-		}
-
-		ma += "\n";
-		for (int i = 0; i < map.length; i++) {
-			ma += ("|");
-			for (int j = 0; j < map[i].length; j++) {
-				origin = i * getDimY() + j;
-				destination = origin + 1;
-				// Show if have 1 pj only in square
-
-				destination = origin + getDimY();
-				if (j != getDimY() - 1) {
-					// Paint botton wall if exist
-					if (graph.getArc(origin, destination) != 1 || i == map.length - 1) {
-						ma += ("_");
-					} else {
-						ma += (" ");
-					}
-					// Paint left wall if exist
-					destination = origin + 1;
-
-					if (graph.getArc(origin, destination) != 1) {
-						ma += ("|");
-					} else {
-						ma += (" ");
-					}
-				} else {
-					if (graph.getArc(origin, destination) != 1 || i == map.length - 1) {
-						ma += ("_");
-					} else {
-						ma += (" ");
-					}
-				}
-
-			}
-			ma += ("|");
-			ma += "\n";
-		}
-		write(ma, bufOut);
+		write(this.mapPicture, bufOut);
 		for (int i = 0; i < dimY * dimX; i++) {
 			if (map[i / dimY][i % dimY].nPj() > 0) {
 				write(map[i / dimY][i % dimY].showPathPj(), bufOut);

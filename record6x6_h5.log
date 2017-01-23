@@ -4,16 +4,16 @@
 |_ _|_  | |_|
 |  _     _| |
 |_ _|_|  _  |
-|_ _ _ _ _ _|
-(rute:J: E E S S E S S E E S)
-(rute:D: E E S O O E S O E N E S E S O O O S E O N E E S N E S S O O O E E E E E)
-(rute:S: E E S S E S S E E S)
-(rute:A: E E S O O E S O E N E S E S O O O S E O N E E S N E S S O O O E E E E E)
-(rute:I: E E E N N N O N N O O E E S S E S E N N E N S O S S O S E E S O O O O O)
-(rute:T: N O O N E N N E N S O S S O N O N N O O E E S S E S S S O O O E E E E E)
+|_ _ _ _ _|_|
+(path:J: E E S S E S S E E S)
+(path:D: E E S O O E S O E N E S E S O O O S E O N E E S N E S S O O O E E E E E)
+(path:S: E E S S E S S E E S)
+(path:A: E E S O O E S O E N E S E S O O O S E O N E E S N E S S O O O E E E E E)
+(path:I: E E E N N N O N N O O E E S S E S E N N E N S O S S O S E E S O O O O O)
+(path:T: N O O N E N N E N S O S S O N O N N O O E E S S E S S S O O O E E E E E)
 (turn:0)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |4 _  |_ _  |
 |_    |_    |
@@ -21,15 +21,15 @@
 |  _     _| |
 |_ _|_|  _  |
 |I _ _ _ _ T|
-(square:0: 0 1 1 2 3 )
-(square:1: 3 4 5 5 6 )
-(square:2: 7 7 8 9 9 )
-(square:8: 10 11 11 12 13 )
-(square:14: 13 14 15 15 16 )
-(square:15: 17 17 18 19 19 )
-(square:21: 20 21 21 22 23 )
-(square:27: 23 24 25 25 26 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 3 4 5 5 6)
+(square:2: 7 7 8 9 9)
+(square:8: 10 11 11 12 13)
+(square:14: 13 14 15 15 16)
+(square:15: 17 17 18 19 19)
+(square:21: 20 21 21 22 23)
+(square:27: 23 24 25 25 26)
+(square:35: 27 27 28 29 29)
 (stark:J:0:1:)
 (targaryen:D:0:1:)
 (stark:S:0:2:)
@@ -38,7 +38,7 @@
 (lannister:T:35:1: 29 27 25 23 21 19 17 15 13 11 9 7 5 3 1)
 (turn:1)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |2 2  |_ _  |
 |_    |_    |
@@ -46,15 +46,15 @@
 |  _     _| |
 |_ _|_|  _ T|
 |I _ _ _ _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 5 5 6 )
-(square:2: 7 7 8 9 9 )
-(square:8: 10 11 11 12 13 )
-(square:14: 13 14 15 15 16 )
-(square:15: 17 17 18 19 19 )
-(square:21: 20 21 21 22 23 )
-(square:27: 23 24 25 25 26 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 5 5 6)
+(square:2: 7 7 8 9 9)
+(square:8: 10 11 11 12 13)
+(square:14: 13 14 15 15 16)
+(square:15: 17 17 18 19 19)
+(square:21: 20 21 21 22 23)
+(square:27: 23 24 25 25 26)
+(square:35: 27 27 28 29 29)
 (stark:S:0:2:)
 (targaryen:A:0:2:)
 (stark:J:1:1: 3)
@@ -63,7 +63,7 @@
 (walker:I:30:2:)
 (turn:2)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |_ 2 2|_ _  |
 |_    |_    |
@@ -71,16 +71,16 @@
 |  _     _| |
 |_ _|_|  T  |
 |_ I _ _ _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 8 9 9 )
-(square:8: 10 11 11 12 13 )
-(square:14: 13 14 15 15 16 )
-(square:15: 17 17 18 19 19 )
-(square:21: 20 21 21 22 23 )
-(square:27: 23 24 25 25 26 )
-(square:28: 29 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 8 9 9)
+(square:8: 10 11 11 12 13)
+(square:14: 13 14 15 15 16)
+(square:15: 17 17 18 19 19)
+(square:21: 20 21 21 22 23)
+(square:27: 23 24 25 25 26)
+(square:28: 29)
+(square:35: 27 27 28 29 29)
 (stark:S:1:2: 5)
 (targaryen:A:1:2: 5)
 (stark:J:2:2: 7 3)
@@ -89,7 +89,7 @@
 (walker:I:31:2:)
 (turn:3)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |_ _ 2|_ _  |
 |_   2|_    |
@@ -97,16 +97,16 @@
 |  _     _| |
 |_ _|_|T _  |
 |_ _ I _ _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 9 )
-(square:8: 11 12 13 )
-(square:14: 13 14 15 15 16 )
-(square:15: 17 17 18 19 19 )
-(square:21: 20 21 21 22 23 )
-(square:27: 23 24 25 25 26 )
-(square:28: 29 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 9)
+(square:8: 11 12 13)
+(square:14: 13 14 15 15 16)
+(square:15: 17 17 18 19 19)
+(square:21: 20 21 21 22 23)
+(square:27: 23 24 25 25 26)
+(square:28: 29)
+(square:35: 27 27 28 29 29)
 (stark:S:2:3: 8 5)
 (targaryen:A:2:3: 9 5)
 (stark:J:8:3: 10 7 3)
@@ -115,7 +115,7 @@
 (walker:I:32:3:)
 (turn:4)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |_ _  |_ _  |
 |_ D 2|_    |
@@ -123,16 +123,16 @@
 |  _   T _| |
 |_ _|_|  _  |
 |_ _ _ I _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 9 )
-(square:8: 13 )
-(square:14: 14 15 15 16 )
-(square:15: 17 17 18 19 19 )
-(square:21: 20 21 21 22 23 )
-(square:27: 23 24 25 25 26 )
-(square:28: 29 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 9)
+(square:8: 13)
+(square:14: 14 15 15 16)
+(square:15: 17 17 18 19 19)
+(square:21: 20 21 21 22 23)
+(square:27: 23 24 25 25 26)
+(square:28: 29)
+(square:35: 27 27 28 29 29)
 (targaryen:D:7:4: 11 7 4)
 (stark:S:8:4: 11 8 5)
 (targaryen:A:8:4: 12 9 5)
@@ -141,7 +141,7 @@
 (walker:I:33:4:)
 (turn:5)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |_ _  |_ _  |
 |D A  |_    |
@@ -149,17 +149,17 @@
 |  _     T| |
 |_ _|_|I _  |
 |_ _ _ _ _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 9 )
-(square:8: 13 )
-(square:14: 15 15 16 )
-(square:15: 17 18 19 19 )
-(square:21: 20 21 21 22 23 )
-(square:22: 27 )
-(square:27: 23 24 25 25 26 )
-(square:28: 29 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 9)
+(square:8: 13)
+(square:14: 15 15 16)
+(square:15: 17 18 19 19)
+(square:21: 20 21 21 22 23)
+(square:22: 27)
+(square:27: 23 24 25 25 26)
+(square:28: 29)
+(square:35: 27 27 28 29 29)
 (targaryen:D:6:5: 11 7 4)
 (targaryen:A:7:5: 12 9 5)
 (stark:S:14:5: 14 11 8 5)
@@ -168,7 +168,7 @@
 (walker:I:27:5:)
 (turn:6)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |_ _  |_ _  |
 |A D  |_    |
@@ -176,18 +176,18 @@
 |  _   I _| |
 |_ _|_|  _  |
 |_ _ _ _ _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 9 )
-(square:8: 13 )
-(square:14: 15 15 16 )
-(square:15: 18 19 19 )
-(square:16: 25 )
-(square:21: 21 21 22 23 )
-(square:22: 27 )
-(square:27: 23 24 25 25 26 )
-(square:28: 29 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 9)
+(square:8: 13)
+(square:14: 15 15 16)
+(square:15: 18 19 19)
+(square:16: 25)
+(square:21: 21 21 22 23)
+(square:22: 27)
+(square:27: 23 24 25 25 26)
+(square:28: 29)
+(square:35: 27 27 28 29 29)
 (targaryen:A:6:6: 12 9 5)
 (targaryen:D:7:6: 11 7 4)
 (stark:S:15:6: 17 14 11 8 5)
@@ -195,7 +195,7 @@
 (walker:I:21:6: J)
 (turn:7)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |_ _  |_ _  |
 |_ A  |_ T  |
@@ -203,19 +203,19 @@
 |  _   S _| |
 |_ _|_|  _  |
 |_ _ _ _ _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 9 )
-(square:8: 13 )
-(square:10: 23 )
-(square:14: 15 15 16 )
-(square:15: 18 19 19 )
-(square:16: 25 )
-(square:21: 21 22 23 )
-(square:22: 27 )
-(square:27: 23 24 25 25 26 )
-(square:28: 29 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 9)
+(square:8: 13)
+(square:10: 23)
+(square:14: 15 15 16)
+(square:15: 18 19 19)
+(square:16: 25)
+(square:21: 21 22 23)
+(square:22: 27)
+(square:27: 23 24 25 25 26)
+(square:28: 29)
+(square:35: 27 27 28 29 29)
 (targaryen:A:7:7: 12 9 5)
 (lannister:T:10:7: 21 19 17 15 13 11 9 7 5 3 1)
 (targaryen:D:13:7: 11 7 4)
@@ -223,7 +223,7 @@
 (stark:S:21:7: 21 17 14 11 8 5)
 (turn:8)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |_ _  |_ _  |
 |_    |_   T|
@@ -231,19 +231,19 @@
 |  _     _| |
 |_ _|_|S _  |
 |_ _ _ _ _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 9 )
-(square:8: 13 )
-(square:10: 23 )
-(square:14: 15 15 16 )
-(square:15: 18 19 19 )
-(square:16: 25 )
-(square:21: 21 22 23 )
-(square:22: 27 )
-(square:27: 24 25 25 26 )
-(square:28: 29 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 9)
+(square:8: 13)
+(square:10: 23)
+(square:14: 15 15 16)
+(square:15: 18 19 19)
+(square:16: 25)
+(square:21: 21 22 23)
+(square:22: 27)
+(square:27: 24 25 25 26)
+(square:28: 29)
+(square:35: 27 27 28 29 29)
 (lannister:T:11:8: 21 19 17 15 13 11 9 7 5 3 1)
 (targaryen:D:12:8: 11 7 4)
 (targaryen:A:13:8: 12 9 5)
@@ -251,7 +251,7 @@
 (stark:S:27:8: 23 21 17 14 11 8 5)
 (turn:9)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |_ _  |_ _ T|
 |_   I|_    |
@@ -259,18 +259,18 @@
 |  _     _| |
 |_ _|_|  S  |
 |_ _ _ _ _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 9 )
-(square:8: 13 )
-(square:10: 23 )
-(square:14: 15 15 16 )
-(square:15: 18 19 19 )
-(square:16: 25 )
-(square:21: 21 22 23 )
-(square:22: 27 )
-(square:27: 24 25 25 26 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 9)
+(square:8: 13)
+(square:10: 23)
+(square:14: 15 15 16)
+(square:15: 18 19 19)
+(square:16: 25)
+(square:21: 21 22 23)
+(square:22: 27)
+(square:27: 24 25 25 26)
+(square:35: 27 27 28 29 29)
 (lannister:T:5:9: 21 19 17 15 13 11 9 7 5 3 1)
 (walker:I:8:9: J)
 (targaryen:A:12:9: 12 9 5)
@@ -278,7 +278,7 @@
 (stark:S:28:9: 29 23 21 17 14 11 8 5)
 (turn:10)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |_ _ I|_ _  |
 |_ D  |_   T|
@@ -286,18 +286,18 @@
 |  _     _| |
 |_ _|_|  _ S|
 |_ _ _ _ _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 9 )
-(square:8: 13 )
-(square:10: 23 )
-(square:14: 15 15 16 )
-(square:15: 18 19 19 )
-(square:16: 25 )
-(square:21: 21 22 23 )
-(square:22: 27 )
-(square:27: 24 25 25 26 )
-(square:35: 27 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 9)
+(square:8: 13)
+(square:10: 23)
+(square:14: 15 15 16)
+(square:15: 18 19 19)
+(square:16: 25)
+(square:21: 21 22 23)
+(square:22: 27)
+(square:27: 24 25 25 26)
+(square:35: 27 27 28 29 29)
 (walker:I:2:10: J)
 (targaryen:D:7:10: 11 7 4)
 (lannister:T:11:10: 21 19 17 15 13 11 9 7 5 3 1)
@@ -305,7 +305,7 @@
 (stark:S:29:10: 29 23 21 17 14 11 8 5)
 (turn:11)
 (map:35)
-(door:close:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
+(door:closed:5: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29:)
  _ _ _ _ _ _
 |_ I  |_ _  |
 |_ A D|_ T  |
@@ -313,17 +313,17 @@
 |  _     _| |
 |_ _|_|  _  |
 |_ _ _ _ _ S|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 9 )
-(square:10: 21 23 )
-(square:14: 15 15 16 )
-(square:15: 18 19 19 )
-(square:16: 25 )
-(square:21: 21 22 23 )
-(square:22: 27 )
-(square:27: 24 25 25 26 )
-(square:35: 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 9)
+(square:10: 21 23)
+(square:14: 15 15 16)
+(square:15: 18 19 19)
+(square:16: 25)
+(square:21: 21 22 23)
+(square:22: 27)
+(square:27: 24 25 25 26)
+(square:35: 27 28 29 29)
 (walker:I:1:11: J)
 (targaryen:A:7:11: 12 9 5)
 (targaryen:D:8:11: 13 11 7 4)
@@ -339,17 +339,17 @@
 |  _     _| |
 |_ _|_|  _  |
 |_ _ _ _ _ _|
-(square:0: 0 1 1 2 3 )
-(square:1: 6 )
-(square:2: 9 )
-(square:10: 21 23 )
-(square:14: 15 16 )
-(square:15: 18 19 19 )
-(square:16: 19 25 )
-(square:21: 21 22 23 )
-(square:22: 27 )
-(square:27: 24 25 25 26 )
-(square:35: 27 28 29 29 )
+(square:0: 0 1 1 2 3)
+(square:1: 6)
+(square:2: 9)
+(square:10: 21 23)
+(square:14: 15 16)
+(square:15: 18 19 19)
+(square:16: 19 25)
+(square:21: 21 22 23)
+(square:22: 27)
+(square:27: 24 25 25 26)
+(square:35: 27 28 29 29)
 (walker:I:0:12: J)
 (targaryen:A:8:12: 12 9 5)
 (targaryen:D:14:12: 15 13 11 7 4)

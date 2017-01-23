@@ -68,7 +68,7 @@ public class Square implements Compare<Square> {
 	 * 
 	 * 
 	 */
-	void setMark(Integer mark) {
+	public void setMark(Integer mark) {
 		this.mark = mark;
 	}
 
@@ -145,7 +145,7 @@ public class Square implements Compare<Square> {
 	 * 
 	 * 
 	 */
-	void setFreq(Integer freq) {
+	public void setFreq(Integer freq) {
 		this.freq = freq;
 	}
 
@@ -158,9 +158,9 @@ public class Square implements Compare<Square> {
 	 */
 	public String showKeys() {
 		String m = "";
-		m += ("(square:" + getId() + ": ");
+		m += ("(square:" + getId() + ":");
 		for (int x = 0; x < this.keys.size(); x++) {
-			m += (keys.get(x).toString() + " ");
+			m += (" " + keys.get(x).toString());
 		}
 		m += (")\n");
 		return m;
@@ -245,19 +245,19 @@ public class Square implements Compare<Square> {
 
 			if (pjs.get(i) instanceof Stark) {
 				Stark stark = (Stark) pjs.get(i);
-				m += stark.showRute();
+				m += stark.showPath();
 			} else {
 				if (pjs.get(i) instanceof WhiteWalkers) {
 					WhiteWalkers whiteWalkers = (WhiteWalkers) pjs.get(i);
-					m += whiteWalkers.showRute();
+					m += whiteWalkers.showPath();
 				} else {
 					if (pjs.get(i) instanceof Targaryen) {
 						Targaryen targaryen = (Targaryen) pjs.get(i);
-						m += targaryen.showRute();
+						m += targaryen.showPath();
 					} else {
 						if (pjs.get(i) instanceof Lannister) {
 							Lannister lannister = (Lannister) pjs.get(i);
-							m += lannister.showRute();
+							m += lannister.showPath();
 						}
 					}
 				}
@@ -319,7 +319,7 @@ public class Square implements Compare<Square> {
 	 * 
 	 * 
 	 */
-	void proccessT(int i) {
+	public void proccessT(int i) {
 		int y = 0;
 		while (y < pjs.size()) {
 

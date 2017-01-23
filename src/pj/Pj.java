@@ -349,8 +349,8 @@ public abstract class Pj implements Compare<Pj> {
 	 * 
 	 * @return x : String with the path that the character will follow
 	 */
-	public String showRute() {
-		String x = "(rute:" + this.getTag() + ":";
+	public String showPath() {
+		String x = "(path:" + this.getTag() + ":";
 		for (int i = 0; i < this.rutes.size(); i++) {
 			x += " " + rutes.get(i).toString();
 		}

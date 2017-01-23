@@ -119,7 +119,7 @@ public class ThroneDoor {
 		if (isOp()) {
 			m += (":open:");
 		} else {
-			m += (":close:");
+			m += (":closed:");
 		}
 		m += (this.depth + ":");
 		m += showLock();
@@ -148,7 +148,8 @@ public class ThroneDoor {
 					isOpen = true;
 				}
 			} else {
-				System.out.println("The key does not match with the door lock");
+				tested.insert(key);
+				System.out.println("The key does not match with the door lock: "+ key.getId());
 			}
 		} else {
 			System.out.println("This key has already been tested, it can't be repeated.");

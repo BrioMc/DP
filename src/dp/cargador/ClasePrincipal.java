@@ -22,7 +22,7 @@ public class ClasePrincipal {
 			 * Método que procesa línea a línea el fichero de entrada
 			 * inicio.txt
 			 */
-			String nombreFichero = "init10x6_h4.txt";
+			String nombreFichero = "init6x6_h5.txt";
 			FicheroCarga.procesarFichero(nombreFichero, cargador);
 
 			FicheroCarga.writeFile(nombreFichero);
